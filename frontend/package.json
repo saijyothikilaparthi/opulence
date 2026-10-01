@@ -1,0 +1,14 @@
+{
+  "name": "opulence-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Opulence — bespoke gift hampers website (static HTML/CSS/JS).",
+  "type": "module",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "start": "node dev-server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

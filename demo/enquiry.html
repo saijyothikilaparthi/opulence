@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Enquiry - Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 { margin-top: 0; color: #333; }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover { background-color: #0056b3; }
+        #responseMessage {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Submit Gift Enquiry</h2>
+
+    <div class="form-group">
+        <label for="enquiryType">Select Enquiry Type</label>
+        <select id="enquiryType" onchange="toggleFields()">
+            <option value="individual">Individual Gifting</option>
+            <option value="corporate">Corporate Gifting</option>
+            <option value="customized">Customized Hampers / Themes</option>
+        </select>
+    </div>
+
+    <form id="enquiryForm">
+        <div class="form-group">
+            <label for="name">Contact Name *</label>
+            <input type="text" id="name" required placeholder="John Doe">
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" required placeholder="9876543210">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="john@example.com">
+        </div>
+
+        <!-- Corporate specific -->
+        <div class="form-group" id="corporateGroup" style="display: none;">
+            <label for="companyName">Company Name *</label>
+            <input type="text" id="companyName" placeholder="Acme Corp">
+        </div>
+
+        <!-- Occasion / Event Selection -->
+        <div class="form-group" id="occasionGroup">
+            <label for="occasion" id="occasionLabel">Occasion</label>
+            <input type="text" id="occasion" placeholder="Birthday / Diwali / Anniversary / Delegate Gifting">
+        </div>
+
+        <!-- Customized specific -->
+        <div class="form-group" id="themeGroup" style="display: none;">
+            <label for="theme">Custom Theme / Idea</label>
+            <input type="text" id="theme" placeholder="Eco-friendly / Luxury Gold">
+        </div>
+
+        <div class="form-group">
+            <label for="quantity" id="quantityLabel">Quantity Required</label>
+            <input type="number" id="quantity" min="1" value="1">
+            <small id="quantityHelp" style="color: #666; display: none;">Minimum quantity for Corporate & Customized gifting is 20.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="budget" id="budgetLabel">Budget (₹)</label>
+            <input type="number" id="budget" step="0.01" placeholder="5000">
+        </div>
+
+        <div class="form-group">
+            <label for="requiredDate">Required By Date</label>
+            <input type="date" id="requiredDate">
+        </div>
+
+        <div class="form-group">
+            <label for="details" id="detailsLabel">Customization Details / Notes / Requirements</label>
+            <textarea id="details" rows="4" placeholder="Mention special requirements or hamper preferences..."></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="fileUrl">Reference Image URL / File Link (Optional)</label>
+            <input type="url" id="fileUrl" placeholder="https://example.com/reference.jpg">
+        </div>
+
+        <button type="submit">Submit Enquiry</button>
+    </form>
+
+    <div id="responseMessage"></div>
+</div>
+
+<script>
+function toggleFields() {
+    const type = document.getElementById("enquiryType").value;
+    const corporateGroup = document.getElementById("corporateGroup");
+    const themeGroup = document.getElementById("themeGroup");
+    const companyInput = document.getElementById("companyName");
+    const quantityInput = document.getElementById("quantity");
+    const quantityHelp = document.getElementById("quantityHelp");
+    const occasionLabel = document.getElementById("occasionLabel");
+    const occasionInput = document.getElementById("occasion");
+    const budgetLabel = document.getElementById("budgetLabel");
+
+    if (type === "corporate") {
+        corporateGroup.style.display = "block";
+        companyInput.required = true;
+        themeGroup.style.display = "none";
+        quantityInput.min = "20";
+        if (parseInt(quantityInput.value) < 20) quantityInput.value = "20";
+        quantityHelp.style.display = "block";
+        occasionLabel.innerText = "Occasion / Event / Delegate Gifting";
+        occasionInput.placeholder = "Festive / Delegate Gifting / Employee Appreciation";
+        budgetLabel.innerText = "Budget Per Item or Total (₹) (Optional)";
+    } else if (type === "customized") {
+        corporateGroup.style.display = "none";
+        companyInput.required = false;
+        themeGroup.style.display = "block";
+        quantityInput.min = "20";
+        if (parseInt(quantityInput.value) < 20) quantityInput.value = "20";
+        quantityHelp.style.display = "block";
+        occasionLabel.innerText = "Occasion";
+        occasionInput.placeholder = "Custom Theme / Event";
+        budgetLabel.innerText = "Budget (₹)";
+    } else {
+        corporateGroup.style.display = "none";
+        companyInput.required = false;
+        themeGroup.style.display = "none";
+        quantityInput.min = "1";
+        quantityInput.value = "1";
+        quantityHelp.style.display = "none";
+        occasionLabel.innerText = "Occasion";
+        occasionInput.placeholder = "Birthday / Anniversary / Wedding";
+        budgetLabel.innerText = "Budget (₹)";
+    }
+}
+
+document.getElementById("enquiryForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const enquiryType = document.getElementById("enquiryType").value;
+    const payload = {
+        enquiry_type: enquiryType,
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        email: document.getElementById("email").value || null,
+        company_name: document.getElementById("companyName").value || null,
+        occasion: document.getElementById("occasion").value || null,
+        theme: document.getElementById("theme").value || null,
+        quantity: parseInt(document.getElementById("quantity").value) || null,
+        budget: parseFloat(document.getElementById("budget").value) || null,
+        required_date: document.getElementById("requiredDate").value || null,
+        customization_details: document.getElementById("details").value || null,
+        file_url: document.getElementById("fileUrl").value || null
+    };
+
+    const resBox = document.getElementById("responseMessage");
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/enquiries", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            resBox.className = "success";
+            resBox.style.display = "block";
+            resBox.innerText = `Success! Enquiry #${result.data.enquiry_id} submitted. Status: ${result.data.status}`;
+            document.getElementById("enquiryForm").reset();
+            toggleFields();
+        } else {
+            resBox.className = "error";
+            resBox.style.display = "block";
+            resBox.innerText = "Error: " + (result.detail || result.message || "Failed to submit");
+        }
+    } catch (err) {
+        resBox.className = "error";
+        resBox.style.display = "block";
+        resBox.innerText = "Connection Error: " + err.message;
+    }
+});
+</script>
+
+</body>
+</html>
