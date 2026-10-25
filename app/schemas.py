@@ -22,6 +22,7 @@ class EnquiryCreate(BaseModel):
     required_date: Optional[date] = None
     theme: Optional[str] = Field(None, max_length=100)
     customization_details: Optional[str] = None
+    personalize_hamper: Optional[str] = None
     file_url: Optional[str] = None
 
     @field_validator("company_name")
@@ -142,5 +143,6 @@ class OrderResponse(BaseModel):
 
 class GalleryCreate(BaseModel):
     title: Optional[str] = Field(None, max_length=150)
+    category: Optional[str] = Field(None, max_length=100)
     image_url: str
     description: Optional[str] = None

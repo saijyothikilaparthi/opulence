@@ -19,6 +19,9 @@ def send_whatsapp_notification(enquiry_data: dict) -> bool:
         company = enquiry_data.get("company_name", "N/A")
         file_url = enquiry_data.get("file_url")
 
+        personalize_hamper = enquiry_data.get("personalize_hamper", "N/A")
+        customization_details = enquiry_data.get("customization_details", "N/A")
+
         message = (
             f"🔔 *New Gift Enquiry Received*\n\n"
             f"*Type:* {enquiry_type.upper() if enquiry_type else 'ENQUIRY'}\n"
@@ -28,6 +31,8 @@ def send_whatsapp_notification(enquiry_data: dict) -> bool:
             f"*Quantity:* {quantity}\n"
             f"*Budget:* ₹{budget}\n"
             f"*Occasion/Theme:* {occasion}\n"
+            f"*Personalize Hamper:* {personalize_hamper}\n"
+            f"*Customization Details:* {customization_details}\n"
         )
         if file_url:
             message += f"*Reference / Attachments:* {file_url}\n"

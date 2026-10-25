@@ -11,19 +11,23 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 @router.get("", status_code=status.HTTP_200_OK)
-def list_gallery_work():
+def list_gallery_work(category: Optional[str] = None):
     connection = get_connection()
     cursor = connection.cursor()
     try:
-        cursor.execute("SELECT id, title, image_url, description, created_at FROM gallery_work ORDER BY created_at DESC")
+        if category:
+            cursor.execute("SELECT id, title, category, image_url, description, created_at FROM gallery_work WHERE category = %s ORDER BY created_at DESC", (category,))
+        else:
+            cursor.execute("SELECT id, title, category, image_url, description, created_at FROM gallery_work ORDER BY created_at DESC")
         rows = cursor.fetchall()
         gallery = [
             {
                 "id": r[0],
                 "title": r[1],
-                "image_url": r[2],
-                "description": r[3],
-                "created_at": r[4].isoformat() if r[4] else None
+                "category": r[2],
+                "image_url": r[3],
+                "description": r[4],
+                "created_at": r[5].isoformat() if r[5] else None
             }
             for r in rows
         ]
@@ -36,6 +40,7 @@ def list_gallery_work():
 @router.post("/admin", status_code=status.HTTP_201_CREATED)
 async def upload_gallery_work(
     title: Optional[str] = Form(None),
+    category: Optional[str] = Form(None),
     description: Optional[str] = Form(None),
     image: UploadFile = File(...)
 ):
@@ -59,11 +64,11 @@ async def upload_gallery_work(
     try:
         cursor.execute(
             """
-            INSERT INTO gallery_work (title, image_url, description)
-            VALUES (%s, %s, %s)
+            INSERT INTO gallery_work (title, category, image_url, description)
+            VALUES (%s, %s, %s, %s)
             RETURNING id, image_url
             """,
-            (title, image_url, description)
+            (title, category, image_url, description)
         )
         row = cursor.fetchone()
         connection.commit()

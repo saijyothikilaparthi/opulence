@@ -15,28 +15,17 @@ def init_db():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS banners (
-            id SERIAL PRIMARY KEY,
-            title VARCHAR(200),
-            event VARCHAR(200),
-            note TEXT,
-            image_url TEXT NOT NULL,
-            is_active BOOLEAN DEFAULT TRUE,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        );
-    """)
-
+    # Ensure the public schema exists and is in the search path
     try:
-        cursor.execute("""
-            ALTER TABLE banners ADD COLUMN IF NOT EXISTS event VARCHAR(200);
-            ALTER TABLE banners ADD COLUMN IF NOT EXISTS note TEXT;
-        """)
+        cursor.execute("CREATE SCHEMA IF NOT EXISTS public;")
+        conn.commit()
     except Exception:
         conn.rollback()
+        
+    cursor.execute("SET search_path TO public;")
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS enquiries (
+        CREATE TABLE IF NOT EXISTS public.enquiries (
             id SERIAL PRIMARY KEY,
             enquiry_type VARCHAR(20) NOT NULL CHECK (enquiry_type IN ('individual', 'corporate', 'customized')),
             name VARCHAR(100) NOT NULL,
@@ -49,6 +38,7 @@ def init_db():
             required_date DATE,
             theme VARCHAR(100),
             customization_details TEXT,
+            personalize_hamper TEXT,
             file_url TEXT,
             status VARCHAR(20) DEFAULT 'pending',
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -56,7 +46,7 @@ def init_db():
     """)
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS orders (
+        CREATE TABLE IF NOT EXISTS public.orders (
             id SERIAL PRIMARY KEY,
             source VARCHAR(50) DEFAULT 'offline',
             customer_name VARCHAR(100) NOT NULL,
@@ -74,16 +64,16 @@ def init_db():
 
     try:
         cursor.execute("""
-            ALTER TABLE banners ALTER COLUMN title DROP NOT NULL;
-            ALTER TABLE orders ADD COLUMN IF NOT EXISTS payment_status VARCHAR(30) DEFAULT 'unpaid';
+            ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS payment_status VARCHAR(30) DEFAULT 'unpaid';
         """)
     except Exception:
         conn.rollback()
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS gallery_work (
+        CREATE TABLE IF NOT EXISTS public.gallery_work (
             id SERIAL PRIMARY KEY,
             title VARCHAR(150),
+            category VARCHAR(100),
             image_url TEXT NOT NULL,
             description TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

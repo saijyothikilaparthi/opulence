@@ -89,9 +89,9 @@ def create_enquiry(enquiry: EnquiryCreate):
             INSERT INTO enquiries (
                 enquiry_type, name, phone, email, company_name,
                 occasion, quantity, budget, required_date, theme,
-                customization_details, file_url, status
+                customization_details, personalize_hamper, file_url, status
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'pending')
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'pending')
             RETURNING id, created_at
             """,
             (
@@ -106,6 +106,7 @@ def create_enquiry(enquiry: EnquiryCreate):
                 enquiry.required_date,
                 enquiry.theme,
                 enquiry.customization_details,
+                enquiry.personalize_hamper,
                 enquiry.file_url,
             )
         )
@@ -152,7 +153,7 @@ def list_enquiries():
         cursor.execute("""
             SELECT id, enquiry_type, name, phone, email, company_name,
                    occasion, quantity, budget, required_date, theme,
-                   customization_details, file_url, status, created_at
+                   customization_details, personalize_hamper, file_url, status, created_at
             FROM enquiries
             ORDER BY created_at DESC
         """)
@@ -172,9 +173,10 @@ def list_enquiries():
                 "required_date": str(r[9]) if r[9] is not None else None,
                 "theme": r[10],
                 "customization_details": r[11],
-                "file_url": r[12],
-                "status": r[13],
-                "created_at": r[14].isoformat() if r[14] is not None else None,
+                "personalize_hamper": r[12],
+                "file_url": r[13],
+                "status": r[14],
+                "created_at": r[15].isoformat() if r[15] is not None else None,
             }
             for r in rows
         ]
