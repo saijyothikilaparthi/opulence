@@ -1,9 +1,81 @@
-from fastapi import APIRouter, HTTPException, status
+import os
+import uuid
+from typing import List, Optional
+from fastapi import APIRouter, HTTPException, status, UploadFile, File
 from app.database import get_connection
 from app.schemas import EnquiryCreate
 from app.services.whatsapp import send_whatsapp_notification
 
 router = APIRouter(prefix="/api/enquiries", tags=["Enquiries"])
+
+UPLOAD_DIR = "uploads/references"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
+@router.post("/upload", status_code=status.HTTP_201_CREATED)
+async def upload_enquiry_references(
+    files: Optional[List[UploadFile]] = File(None),
+    file: Optional[UploadFile] = File(None)
+):
+    """
+    Upload one or more reference photos/files for gifting enquiries.
+    Saves them in uploads/references and returns accessible static URLs.
+    """
+    all_files: List[UploadFile] = []
+    if files:
+        all_files.extend(files)
+    if file:
+        all_files.append(file)
+
+    if not all_files:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No files provided for upload."
+        )
+
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    uploaded_urls = []
+    allowed_extensions = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp", ".heic", ".heif", ".pdf"}
+
+    for upload_item in all_files:
+        ext = os.path.splitext(upload_item.filename or "")[1].lower()
+        if not ext:
+            ext = ".jpg"
+
+        is_allowed = (
+            (upload_item.content_type and (upload_item.content_type.startswith("image/") or upload_item.content_type == "application/pdf"))
+            or ext in allowed_extensions
+        )
+
+        if not is_allowed:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File '{upload_item.filename}' has unsupported format. Only images and PDF files are accepted."
+            )
+
+        unique_filename = f"{uuid.uuid4()}{ext}"
+        target_path = os.path.join(UPLOAD_DIR, unique_filename)
+
+        content = await upload_item.read()
+        # Max file size 15MB
+        if len(content) > 15 * 1024 * 1024:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"File '{upload_item.filename}' exceeds maximum allowed size of 15MB."
+            )
+
+        with open(target_path, "wb") as f:
+            f.write(content)
+
+        url_path = f"/uploads/references/{unique_filename}"
+        uploaded_urls.append(url_path)
+
+    return {
+        "success": True,
+        "message": f"Successfully uploaded {len(uploaded_urls)} reference file(s)",
+        "urls": uploaded_urls,
+        "url": uploaded_urls[0] if uploaded_urls else None
+    }
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)

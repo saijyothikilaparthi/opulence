@@ -174,11 +174,11 @@
           <span class="material-symbols-outlined text-[17px]">call</span>
         </a>
 
-        <a href="#individual-enquire" class="group relative inline-flex items-center gap-2 px-5 py-2.5 overflow-hidden text-[11px] font-mono uppercase tracking-[0.16em] font-semibold border border-gold text-charcoal hover:text-white transition-colors duration-300 shadow-xs">
+        <button type="button" onclick="openEnquiryModal({ type: 'individual', occasion: 'Individual Commission' })" class="group relative inline-flex items-center gap-2 px-5 py-2.5 overflow-hidden text-[11px] font-mono uppercase tracking-[0.16em] font-semibold border border-gold text-charcoal hover:text-white transition-colors duration-300 shadow-xs cursor-pointer">
           <span class="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out -z-0"></span>
           <span class="relative z-10">Commission Hamper</span>
           <span class="material-symbols-outlined text-[14px] relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">arrow_outward</span>
-        </a>
+        </button>
 
         <button id="mobileMenuBtn" class="lg:hidden touch-target flex items-center justify-center p-2 text-charcoal hover:text-gold transition-colors focus:outline-none" aria-label="Toggle navigation menu" aria-expanded="false">
           <span class="material-symbols-outlined text-2xl" id="menuIcon">menu</span>
@@ -220,9 +220,9 @@
         </a>
       </div>
       <div class="mt-4 pt-4 border-t border-[#E9E0D1] flex flex-col gap-3">
-        <a href="#individual-enquire" class="mobile-nav-link w-full py-3.5 bg-gold text-white text-center text-xs font-mono uppercase tracking-wider font-semibold shadow-sm hover:bg-gold-dark transition-colors">
+        <button type="button" onclick="closeMobileMenu(); openEnquiryModal({ type: 'individual', occasion: 'Individual Commission' })" class="mobile-nav-link w-full py-3.5 bg-gold text-white text-center text-xs font-mono uppercase tracking-wider font-semibold shadow-sm hover:bg-gold-dark transition-colors cursor-pointer">
           Design Your Hamper
-        </a>
+        </button>
         <div class="flex items-center justify-between text-xs font-mono text-ash pt-2">
           <span class="text-charcoal font-medium">Concierge Hotline:</span>
           <a href="tel:+918106489375" class="text-charcoal font-medium hover:text-gold underline decoration-gold">+91 81064 89375</a>
@@ -269,10 +269,10 @@
           </div>
 
           <div class="flex flex-wrap items-center gap-4 pt-2">
-            <a href="#individual-enquire" class="inline-flex items-center gap-2 px-7 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 shadow-sm">
+            <button type="button" onclick="openEnquiryModal({ type: 'individual', occasion: 'Individual Commission' })" class="inline-flex items-center gap-2 px-7 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 shadow-sm cursor-pointer">
               <span>Commission This Gift</span>
               <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
-            </a>
+            </button>
             <a href="index.html#work" class="inline-flex items-center gap-2 px-6 py-3.5 border border-[#E9E0D1] bg-white text-charcoal text-xs font-mono uppercase tracking-wider font-medium hover:border-gold hover:text-gold transition-colors">
               <span>Explore Our Work</span>
             </a>
@@ -362,10 +362,10 @@
             </div>
           </div>
           <div class="mt-6 pt-4 border-t border-[#E9E0D1]">
-            <a href="#individual-enquire" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal">
+            <button type="button" onclick="openEnquiryModal({ type: 'individual', occasion: 'The Epicurean Solitude' })" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal cursor-pointer">
               <span>Commission Similar</span>
               <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-            </a>
+            </button>
           </div>
         </div>
 
@@ -387,10 +387,10 @@
             </div>
           </div>
           <div class="mt-6 pt-4 border-t border-[#E9E0D1]">
-            <a href="#individual-enquire" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal">
+            <button type="button" onclick="openEnquiryModal({ type: 'individual', occasion: 'The Botanical Sanctuary' })" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal cursor-pointer">
               <span>Commission Similar</span>
               <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-            </a>
+            </button>
           </div>
         </div>
 
@@ -412,82 +412,42 @@
             </div>
           </div>
           <div class="mt-6 pt-4 border-t border-[#E9E0D1]">
-            <a href="#individual-enquire" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal">
+            <button type="button" onclick="openEnquiryModal({ type: 'individual', occasion: 'The Golden Memoir' })" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal cursor-pointer">
               <span>Commission Similar</span>
               <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- INQUIRY FORM SECTION -->
-    <section id="individual-enquire" class="py-14 sm:py-20 border-b border-[#E9E0D1]">
-      <div class="bg-white border border-[#E9E0D1] p-6 sm:p-10 lg:p-12 shadow-sm max-w-3xl mx-auto">
-        <div class="space-y-2 mb-8 text-center">
-          <div class="text-[11px] font-mono uppercase tracking-wider text-gold-dark font-medium">INDIVIDUAL COMMISSION BRIEF</div>
-          <h2 class="font-serif text-2xl sm:text-4xl text-charcoal font-normal">Tell Us About Them</h2>
-          <p class="text-charcoal-muted text-xs sm:text-sm font-light">
-            Share who this gift is for and what makes them unique. Our curator will design a one-of-a-kind hamper just for them.
-          </p>
+    <!-- INQUIRY CTA SECTION (MODAL TRIGGER) -->
+    <section id="individual-enquire" class="py-16 sm:py-24 border-b border-[#E9E0D1] bg-[#FAF7F2]">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#E9E0D1] text-[10px] font-mono tracking-widest uppercase text-gold-dark font-medium shadow-2xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+          <span>ATELIER PRIVATE COMMISSION</span>
         </div>
-
-        <form id="indivForm" class="space-y-4">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Your Name *</label>
-              <input type="text" name="name" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Recipient's Name & Relationship *</label>
-              <input type="text" name="loves" placeholder="e.g. Maya (Wife) or Dr. Rao (Mentor)" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Your Email *</label>
-              <input type="email" name="email" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Your Phone / WhatsApp *</label>
-              <input type="tel" name="phone" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Occasion *</label>
-              <input type="text" name="occasion" placeholder="30th Birthday, Anniversary" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Budget Guideline (₹) *</label>
-              <input type="text" name="budget" placeholder="₹4,000 – ₹10,000" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-            <div>
-              <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Delivery Date *</label>
-              <input type="date" name="date" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-            </div>
-          </div>
-
-          <div>
-            <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">Delivery Address & City *</label>
-            <input type="text" name="delivery" placeholder="Full delivery address or recipient city" required class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"/>
-          </div>
-
-          <div>
-            <label class="block text-xs font-mono text-charcoal uppercase tracking-wider mb-1">What do they love? Passions & Items</label>
-            <textarea name="note" rows="3" placeholder="Tell us about their favorite tastes, whether they drink coffee or tea, preferences for brass, books, fragrance, or dark chocolate..." class="w-full text-xs font-sans p-3 bg-[#FAF7F2] border border-[#E9E0D1] focus:border-gold focus:outline-none"></textarea>
-          </div>
-
-          <div id="indivSuccess" class="hidden p-4 bg-gold/10 border border-gold text-charcoal text-xs font-mono">
-            Thank you. Your individual commission brief has reached our studio. We will contact you shortly with a personalized concept.
-          </div>
-
-          <button type="submit" id="indivSubmitBtn" class="w-full py-4 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-colors duration-300">
-            Submit Commission Brief
+        <h2 class="font-serif text-3xl sm:text-5xl text-charcoal font-normal">
+          One Gift, Handcrafted for One Cherished Person
+        </h2>
+        <p class="text-charcoal-muted text-sm sm:text-base font-light max-w-2xl mx-auto leading-relaxed">
+          Share who this gift is for, their tastes, passions, and the milestone you are commemorating. Our studio curator will design a one-of-a-kind bespoke hamper accompanied by handwritten calligraphy.
+        </p>
+        <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button type="button" onclick="openEnquiryModal({ type: 'individual', occasion: 'Individual Commission' })" class="w-full sm:w-auto px-8 py-4 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 shadow-md flex items-center justify-center gap-2 group cursor-pointer touch-target">
+            <span>Commission This Gift</span>
+            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
           </button>
-        </form>
+          <a href="https://wa.me/918106489375?text=Hi%20Opulence%2C%20I%20would%20like%20to%20commission%20a%20bespoke%20individual%20hamper" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-7 py-4 bg-white border border-[#E9E0D1] text-charcoal text-xs font-mono uppercase tracking-wider hover:border-gold hover:text-gold transition-colors flex items-center justify-center gap-2 font-medium touch-target">
+            <span class="material-symbols-outlined text-sm text-[#25D366]">chat</span>
+            <span>Chat with Concierge</span>
+          </a>
+        </div>
+        <div class="pt-2 text-[11px] font-mono text-ash flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-gold text-sm">schedule</span>
+          <span>Zero minimums · Discreet white-glove doorstep delivery</span>
+        </div>
       </div>
     </section>
 
@@ -558,7 +518,280 @@
     </div>
   </footer>
 
-  <!-- JAVASCRIPT FOR MOBILE DRAWER & FORM SUBMIT -->
+  <!-- ATELIER COMMISSION MODAL (Pop-up on button click) -->
+  <div id="enquiryModal" class="fixed inset-0 bg-charcoal/80 backdrop-blur-md z-[200] hidden items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="enquiryModalTitle">
+    <div class="relative w-full max-w-3xl bg-white border border-[#E9E0D1] shadow-2xl p-6 sm:p-10 my-auto max-h-[92vh] overflow-y-auto delicate-grid">
+      
+      <!-- Close Button -->
+      <button type="button" onclick="closeEnquiryModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-ash hover:text-charcoal p-2 border border-[#E9E0D1] hover:border-gold transition-colors touch-target flex items-center justify-center bg-white/95 shadow-xs cursor-pointer" aria-label="Close brief modal">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+
+      <!-- Active Form Container -->
+      <div id="modalFormContainer">
+        <!-- Header -->
+        <div class="space-y-2 mb-6 sm:mb-8 pr-10">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-[#FAF7F2] border border-[#E9E0D1] text-[10px] font-mono tracking-widest uppercase text-gold-dark font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+            <span>ATELIER PRIVATE COMMISSION</span>
+          </div>
+          <h3 id="enquiryModalTitle" class="font-serif text-2xl sm:text-3xl md:text-4xl text-charcoal font-normal">
+            Commission a 1-of-1 Bespoke Hamper
+          </h3>
+          <p class="text-charcoal-muted text-xs sm:text-sm font-light leading-relaxed">
+            Every Opulence hamper is thoughtfully curated around your recipient's tastes, passions, and quirks. Complete the brief below and our concierge will connect with you within 24 hours.
+          </p>
+          <div class="inline-flex items-center gap-2 pt-1 text-[11px] font-mono text-ash">
+            <span class="material-symbols-outlined text-gold text-sm shrink-0">schedule</span>
+            <span>Zero minimums · 2–3 weeks recommended for sourcing & handwritten calligraphy</span>
+          </div>
+        </div>
+
+        <!-- Error Message Banner -->
+        <div id="modalErrorMessage" class="hidden mb-6 p-4 bg-red-50 border border-red-200 text-red-800 text-xs font-mono leading-relaxed"></div>
+
+        <!-- The Inquiry Form -->
+        <form id="modalEnquiryForm" onsubmit="submitModalEnquiry(event)" class="space-y-6">
+          
+          <!-- Field 1: enquiry_type (Enum: corporate | customized | individual) -->
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-2">
+              1. Commission Direction <span class="text-gold">*</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3" id="enquiryTypeToggleGroup">
+              <button type="button" onclick="setModalEnquiryType('corporate')" data-type="corporate" class="enquiry-type-btn p-3 border border-[#E9E0D1] bg-white text-left hover:border-gold transition-all touch-target">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-mono font-semibold uppercase text-charcoal">Corporate</span>
+                  <span class="w-2 h-2 rounded-full bg-transparent border border-ash/40"></span>
+                </div>
+                <div class="text-[11px] text-ash font-light leading-snug">Brands & client relations (50+ units)</div>
+              </button>
+
+              <button type="button" onclick="setModalEnquiryType('customized')" data-type="customized" class="enquiry-type-btn p-3 border border-[#E9E0D1] bg-white text-left hover:border-gold transition-all touch-target">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-mono font-semibold uppercase text-charcoal">Celebrations</span>
+                  <span class="w-2 h-2 rounded-full bg-transparent border border-ash/40"></span>
+                </div>
+                <div class="text-[11px] text-ash font-light leading-snug">Festivals, weddings & events (20–50 units)</div>
+              </button>
+
+              <button type="button" onclick="setModalEnquiryType('individual')" data-type="individual" class="enquiry-type-btn p-3 border-2 border-gold bg-[#FAF7F2] text-left transition-all touch-target">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-mono font-semibold uppercase text-charcoal">Individual</span>
+                  <span class="w-2 h-2 rounded-full bg-gold"></span>
+                </div>
+                <div class="text-[11px] text-ash font-light leading-snug">Single bespoke gift (1-of-1 keepsake)</div>
+              </button>
+            </div>
+            <input type="hidden" id="modalEnquiryType" name="enquiry_type" value="individual" required/>
+          </div>
+
+          <!-- Section 2: Contact Details (name, phone, email, company_name) -->
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-3">
+              2. Atelier Contact Details
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="modalFullName" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Your Full Name <span class="text-gold">*</span>
+                </label>
+                <input type="text" id="modalFullName" name="name" required minlength="1" maxlength="100" placeholder="e.g. Radhika Singhal" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div>
+                <label for="modalPhone" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Phone / WhatsApp <span class="text-gold">*</span>
+                </label>
+                <input type="tel" id="modalPhone" name="phone" required minlength="7" maxlength="20" placeholder="+91 98765 43210" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div>
+                <label for="modalEmail" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Email Address
+                </label>
+                <input type="email" id="modalEmail" name="email" maxlength="100" placeholder="radhika@example.com" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div id="modalCompanyFieldWrapper">
+                <label for="modalCompanyName" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  <span id="modalCompanyLabel">Recipient Name / Relationship</span>
+                  <span id="modalCompanyRequiredMark" class="text-gold hidden">*</span>
+                </label>
+                <input type="text" id="modalCompanyName" name="company_name" maxlength="150" placeholder="e.g. Maya (Wife) or Dr. Rao (Mentor)" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Hamper Scope (occasion, quantity, budget, required_date) -->
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-3">
+              3. Commission Scope & Timeline
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="sm:col-span-2">
+                <label for="modalOccasion" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Occasion or Milestone
+                </label>
+                <input type="text" id="modalOccasion" name="occasion" maxlength="100" placeholder="e.g. 30th Birthday, Silver Jubilee, Personal Thank You" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div>
+                <label for="modalQuantity" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Quantity (Units)
+                </label>
+                <input type="number" id="modalQuantity" name="quantity" min="1" value="1" placeholder="1" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+                <span class="text-[10px] font-mono text-ash mt-1 block" id="modalQtyHelper">Individual: Single bespoke gift</span>
+              </div>
+
+              <div>
+                <label for="modalBudget" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Budget Guideline (₹)
+                </label>
+                <input type="number" id="modalBudget" name="budget" min="0" step="500" placeholder="e.g. 6000" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="modalRequiredDate" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Target Delivery Date
+                </label>
+                <input type="date" id="modalRequiredDate" name="required_date" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+                <span class="text-[10px] font-mono text-ash mt-1 block">5–7 days express / 2–3 weeks standard</span>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="modalTheme" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Aesthetic Theme & Mood
+                </label>
+                <input type="text" id="modalTheme" name="theme" maxlength="100" placeholder="e.g. Botanical Sanctuary, Vintage Memoir, Coffee & Dark Chocolate" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Customization Details & Reference URL (customization_details, file_url) -->
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-3">
+              4. Recipient Profile & References
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label for="modalDetails" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  What do they love? Passions & Items
+                </label>
+                <textarea id="modalDetails" name="customization_details" rows="3" placeholder="Tell us about their favorite tastes, books, fragrances, coffee/tea preferences, handwritten note content, delivery address..." class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors resize-none"></textarea>
+              </div>
+
+              <!-- References: External Link and Local File Upload -->
+              <div class="space-y-3">
+                <div>
+                  <label for="modalFileUrl" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                    Reference / Moodboard URL (Optional)
+                  </label>
+                  <input type="text" inputmode="url" id="modalFileUrl" name="file_url" placeholder="https://drive.google.com/... or Figma / Pinterest link" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+                </div>
+
+                <!-- Divider -->
+                <div class="relative flex items-center justify-center my-1.5">
+                  <div class="border-t border-[#E9E0D1] w-full"></div>
+                  <span class="bg-[#FAF7F2] px-3 text-[10px] font-mono uppercase text-ash tracking-widest shrink-0">OR UPLOAD REFERENCE PICS</span>
+                </div>
+
+                <!-- Local File Upload Area -->
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label class="block text-[11px] font-mono uppercase text-ash tracking-wider">
+                      Reference Photos from Local Files (Optional)
+                    </label>
+                    <span class="text-[10px] font-mono text-ash">Max 15MB each</span>
+                  </div>
+
+                  <input type="file" id="modalFileInput" accept="image/*,.pdf" multiple class="hidden" onchange="handleModalFileSelect(this)"/>
+
+                  <div id="modalDropZone" 
+                       onclick="document.getElementById('modalFileInput').click()"
+                       ondragover="handleDragOver(event)"
+                       ondragleave="handleDragLeave(event)"
+                       ondrop="handleFileDrop(event)"
+                       class="border-2 border-dashed border-[#DCD2C2] hover:border-gold bg-[#FAF7F2] hover:bg-[#F9F5EC] p-4 text-center cursor-pointer transition-all duration-200 group">
+                    <div class="flex flex-col items-center justify-center gap-1.5">
+                      <span class="material-symbols-outlined text-2xl text-ash group-hover:text-gold transition-colors">cloud_upload</span>
+                      <div class="text-xs font-mono text-charcoal">
+                        <button type="button" class="font-semibold text-gold underline hover:text-gold-dark cursor-pointer pointer-events-none">Choose pictures from local files</button> or drag & drop here
+                      </div>
+                      <div class="text-[10px] font-mono text-ash">
+                        Supported: PNG, JPG, JPEG, WEBP, HEIC, PDF (multiple files allowed)
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Uploaded Files / Previews Container -->
+                  <div id="modalFilePreviews" class="hidden mt-3 space-y-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="pt-4 border-t border-[#E9E0D1] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-[11px] font-mono text-ash text-center sm:text-left flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-gold text-sm shrink-0">lock</span>
+              <span>All private commission briefs are strictly confidential.</span>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+              <button type="button" onclick="closeEnquiryModal()" class="w-1/3 sm:w-auto px-5 py-3.5 border border-[#E9E0D1] text-xs font-mono uppercase tracking-wider text-charcoal hover:border-charcoal transition-colors touch-target cursor-pointer">
+                Cancel
+              </button>
+              <button type="submit" id="modalSubmitBtn" class="w-2/3 sm:w-auto px-8 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 shadow-md flex items-center justify-center gap-2 group touch-target cursor-pointer">
+                <span id="modalSubmitText">Submit Commission Brief</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" id="modalSubmitIcon">send</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Success Confirmation State (shown upon submission) -->
+      <div id="modalSuccessContainer" class="hidden text-center py-6 sm:py-10 space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gold/10 border-2 border-gold flex items-center justify-center text-gold">
+          <span class="material-symbols-outlined text-3xl">done</span>
+        </div>
+        <div class="space-y-2">
+          <div class="inline-block px-3 py-1 bg-[#FAF7F2] border border-[#E9E0D1] text-[10px] font-mono uppercase tracking-wider text-gold-dark font-medium">
+            TRANSMITTED TO ATELIER
+          </div>
+          <h3 class="font-serif text-2xl sm:text-4xl text-charcoal font-normal">
+            Your Commission Brief Has Been Received
+          </h3>
+          <p class="text-charcoal-muted text-xs sm:text-base font-light max-w-md mx-auto leading-relaxed">
+            Our atelier curator will review their profile and reach out within 24 hours with custom concepts, item selections, and calligraphy samples.
+          </p>
+        </div>
+
+        <!-- Reference Tag -->
+        <div class="p-3 bg-[#FAF7F2] border border-[#E9E0D1] inline-block font-mono text-xs text-charcoal">
+          <span class="text-ash uppercase text-[10px] block">Reference Number</span>
+          <span id="modalSuccessId" class="font-semibold text-gold-dark text-sm">#OPL-INQ-PENDING</span>
+        </div>
+
+        <!-- WhatsApp Direct Chat Link -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a id="modalWhatsAppChatLink" href="https://wa.me/918106489375" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3.5 bg-[#25D366] text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-[#20ba5a] transition-all shadow-md flex items-center justify-center gap-2 touch-target">
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.88 2.791.88 3.182 0 5.768-2.587 5.768-5.766.001-3.18-2.585-5.766-5.768-5.766zm9.969 5.828c0 5.523-4.477 10-10 10-1.777 0-3.447-.464-4.896-1.275l-7.104 1.864 1.898-6.938c-.904-1.516-1.428-3.29-1.428-5.181 0-5.523 4.477-10 10-10s10 4.477 10 10z"/>
+            </svg>
+            <span>Follow Up on WhatsApp Now</span>
+          </a>
+          <button type="button" onclick="closeEnquiryModal()" class="w-full sm:w-auto px-6 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-colors touch-target cursor-pointer">
+            Return to Studio
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT FOR MOBILE DRAWER & MODAL BRIEF -->
   <script>
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
@@ -599,48 +832,386 @@
       link.addEventListener('click', closeMobileMenu);
     });
 
-    // Form submit
-    const indivForm = document.getElementById('indivForm');
-    if (indivForm) {
-      indivForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('indivSubmitBtn');
-        const successBox = document.getElementById('indivSuccess');
-        btn.textContent = 'Submitting Brief...';
-        btn.disabled = true;
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '8000'
+      ? 'http://127.0.0.1:8000'
+      : window.location.origin;
 
-        const formData = new FormData(indivForm);
+    /* ---------------- Reference File Upload & Preview Logic ---------------- */
+    let selectedModalFiles = [];
+
+    function handleModalFileSelect(input) {
+      if (!input.files || input.files.length === 0) return;
+      addModalFilesToSelection(Array.from(input.files));
+      input.value = '';
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropZone = document.getElementById('modalDropZone');
+      if (dropZone) dropZone.classList.add('border-gold', 'bg-[#F9F5EC]');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropZone = document.getElementById('modalDropZone');
+      if (dropZone) dropZone.classList.remove('border-gold', 'bg-[#F9F5EC]');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropZone = document.getElementById('modalDropZone');
+      if (dropZone) dropZone.classList.remove('border-gold', 'bg-[#F9F5EC]');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        addModalFilesToSelection(Array.from(e.dataTransfer.files));
+      }
+    }
+
+    function addModalFilesToSelection(newFiles) {
+      const allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'heic', 'heif', 'pdf'];
+      for (const file of newFiles) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const isAllowed = file.type.startsWith('image/') || file.type === 'application/pdf' || allowedExts.includes(ext);
+        if (!isAllowed) {
+          alert(`File "${file.name}" is not a supported format. Please upload photos (JPG, PNG, WEBP, HEIC) or PDF.`);
+          continue;
+        }
+        if (file.size > 15 * 1024 * 1024) {
+          alert(`File "${file.name}" exceeds the 15MB limit.`);
+          continue;
+        }
+        const alreadyExists = selectedModalFiles.some(f => f.name === file.name && f.size === file.size);
+        if (!alreadyExists) {
+          selectedModalFiles.push(file);
+        }
+      }
+      renderModalFilePreviews();
+    }
+
+    function removeModalSelectedFile(index) {
+      selectedModalFiles.splice(index, 1);
+      renderModalFilePreviews();
+    }
+
+    function clearAllSelectedFiles() {
+      selectedModalFiles = [];
+      renderModalFilePreviews();
+      const fileInput = document.getElementById('modalFileInput');
+      if (fileInput) fileInput.value = '';
+    }
+
+    function renderModalFilePreviews() {
+      const container = document.getElementById('modalFilePreviews');
+      if (!container) return;
+      if (selectedModalFiles.length === 0) {
+        container.innerHTML = '';
+        container.classList.add('hidden');
+        return;
+      }
+      container.classList.remove('hidden');
+      container.innerHTML = `
+        <div class="flex items-center justify-between text-[11px] font-mono text-ash pb-1.5 border-b border-[#E9E0D1]">
+          <span class="font-medium text-charcoal">${selectedModalFiles.length} photo(s) selected for upload</span>
+          <button type="button" onclick="clearAllSelectedFiles()" class="text-red-700 hover:text-red-900 underline cursor-pointer">Clear all</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          ${selectedModalFiles.map((file, idx) => {
+            const isImg = file.type.startsWith('image/') || ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(file.name.split('.').pop().toLowerCase());
+            const previewUrl = isImg ? URL.createObjectURL(file) : '';
+            const sizeStr = file.size > 1024 * 1024
+              ? (file.size / (1024 * 1024)).toFixed(1) + ' MB'
+              : (file.size / 1024).toFixed(0) + ' KB';
+            return `
+              <div class="flex items-center justify-between p-2 bg-white border border-[#E9E0D1] shadow-2xs group">
+                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                  ${isImg ? `
+                    <img src="${previewUrl}" class="w-10 h-10 object-cover border border-[#E9E0D1] shrink-0" alt="Preview"/>
+                  ` : `
+                    <div class="w-10 h-10 bg-[#FAF7F2] border border-[#E9E0D1] flex items-center justify-center shrink-0">
+                      <span class="material-symbols-outlined text-gold text-lg">description</span>
+                    </div>
+                  `}
+                  <div class="min-w-0 flex-1">
+                    <div class="font-mono text-[11px] text-charcoal font-medium truncate" title="${file.name}">${file.name}</div>
+                    <div class="font-mono text-[10px] text-ash">${sizeStr}</div>
+                  </div>
+                </div>
+                <button type="button" onclick="removeModalSelectedFile(${idx})" class="p-1 text-ash hover:text-red-600 transition-colors shrink-0 cursor-pointer" title="Remove photo">
+                  <span class="material-symbols-outlined text-base">close</span>
+                </button>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    /* ---------------- Modal Open / Close / Toggle ---------------- */
+    function openEnquiryModal(options = {}) {
+      const modal = document.getElementById('enquiryModal');
+      if (!modal) return;
+
+      clearAllSelectedFiles();
+
+      const formContainer = document.getElementById('modalFormContainer');
+      const successContainer = document.getElementById('modalSuccessContainer');
+      const errorBox = document.getElementById('modalErrorMessage');
+      if (formContainer) formContainer.classList.remove('hidden');
+      if (successContainer) successContainer.classList.add('hidden');
+      if (errorBox) {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+      }
+
+      if (options.type) {
+        setModalEnquiryType(options.type);
+      } else {
+        setModalEnquiryType('individual');
+      }
+
+      if (options.occasion !== undefined) {
+        const occInput = document.getElementById('modalOccasion');
+        if (occInput) occInput.value = options.occasion;
+      }
+      if (options.quantity !== undefined) {
+        const qtyInput = document.getElementById('modalQuantity');
+        if (qtyInput) qtyInput.value = options.quantity;
+      }
+      if (options.budget !== undefined) {
+        const budgetInput = document.getElementById('modalBudget');
+        if (budgetInput) budgetInput.value = options.budget;
+      }
+      if (options.theme !== undefined) {
+        const themeInput = document.getElementById('modalTheme');
+        if (themeInput) themeInput.value = options.theme;
+      }
+      if (options.details !== undefined) {
+        const detailsInput = document.getElementById('modalDetails');
+        if (detailsInput) detailsInput.value = options.details;
+      }
+
+      const dateInput = document.getElementById('modalRequiredDate');
+      if (dateInput && !dateInput.min) {
+        dateInput.min = new Date().toISOString().slice(0, 10);
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+
+      setTimeout(() => {
+        const nameInput = document.getElementById('modalFullName');
+        if (nameInput) nameInput.focus();
+      }, 150);
+    }
+
+    function closeEnquiryModal() {
+      const modal = document.getElementById('enquiryModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+      clearAllSelectedFiles();
+    }
+
+    function setModalEnquiryType(type) {
+      const typeInput = document.getElementById('modalEnquiryType');
+      if (typeInput) typeInput.value = type;
+
+      const buttons = document.querySelectorAll('.enquiry-type-btn');
+      buttons.forEach(btn => {
+        const btnType = btn.getAttribute('data-type');
+        const dot = btn.querySelector('span.rounded-full');
+        if (btnType === type) {
+          btn.className = 'enquiry-type-btn p-3 border-2 border-gold bg-[#FAF7F2] text-left transition-all touch-target';
+          if (dot) dot.className = 'w-2 h-2 rounded-full bg-gold';
+        } else {
+          btn.className = 'enquiry-type-btn p-3 border border-[#E9E0D1] bg-white text-left hover:border-gold transition-all touch-target';
+          if (dot) dot.className = 'w-2 h-2 rounded-full bg-transparent border border-ash/40';
+        }
+      });
+
+      const companyMark = document.getElementById('modalCompanyRequiredMark');
+      const qtyHelper = document.getElementById('modalQtyHelper');
+      const qtyInput = document.getElementById('modalQuantity');
+
+      if (type === 'corporate') {
+        if (companyMark) companyMark.classList.remove('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Corporate: 50+ recommended';
+        if (qtyInput && !qtyInput.value) qtyInput.placeholder = '50';
+      } else if (type === 'customized') {
+        if (companyMark) companyMark.classList.add('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Celebrations: 20–50 recommended';
+        if (qtyInput && !qtyInput.value) qtyInput.placeholder = '30';
+      } else {
+        if (companyMark) companyMark.classList.add('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Individual: Single bespoke gift';
+        if (qtyInput && !qtyInput.value) qtyInput.value = '1';
+      }
+    }
+
+    const modalEl = document.getElementById('enquiryModal');
+    if (modalEl) {
+      modalEl.addEventListener('click', (e) => {
+        if (e.target === modalEl) closeEnquiryModal();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeEnquiryModal();
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#enquiry' || window.location.hash === '#individual-enquire') {
+        openEnquiryModal({ type: 'individual', occasion: 'Individual Commission' });
+      }
+    });
+
+    async function submitModalEnquiry(e) {
+      if (e) e.preventDefault();
+      const errorBox = document.getElementById('modalErrorMessage');
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      const submitText = document.getElementById('modalSubmitText');
+      const submitIcon = document.getElementById('modalSubmitIcon');
+
+      errorBox.classList.add('hidden');
+      errorBox.textContent = '';
+      submitBtn.disabled = true;
+      submitIcon.textContent = 'hourglass_empty';
+
+      try {
+        let uploadedFileUrls = [];
+        if (selectedModalFiles && selectedModalFiles.length > 0) {
+          submitText.textContent = `Uploading ${selectedModalFiles.length} photo(s)…`;
+          const uploadData = new FormData();
+          selectedModalFiles.forEach(f => uploadData.append('files', f));
+
+          const uploadRes = await fetch(`${API_BASE}/api/enquiries/upload`, {
+            method: 'POST',
+            body: uploadData
+          });
+
+          if (!uploadRes.ok) {
+            const errJson = await uploadRes.json().catch(() => ({}));
+            throw new Error(errJson.detail || 'Failed to upload attached reference photos.');
+          }
+
+          const uploadDataJson = await uploadRes.json();
+          if (uploadDataJson.urls && uploadDataJson.urls.length > 0) {
+            uploadedFileUrls = uploadDataJson.urls;
+          }
+        }
+
+        submitText.textContent = 'Transmitting brief…';
+
+        const enquiryType = document.getElementById('modalEnquiryType').value || 'individual';
+        const name = (document.getElementById('modalFullName')?.value || '').trim();
+        const phone = (document.getElementById('modalPhone')?.value || '').trim();
+        const email = (document.getElementById('modalEmail')?.value || '').trim() || null;
+        let companyName = (document.getElementById('modalCompanyName')?.value || '').trim();
+        if (enquiryType === 'corporate' && !companyName) {
+          companyName = 'N/A';
+        } else if (!companyName) {
+          companyName = null;
+        }
+        const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
+        const qtyRaw = document.getElementById('modalQuantity')?.value;
+        const quantity = qtyRaw ? parseInt(qtyRaw) : 1;
+        const budgetRaw = (document.getElementById('modalBudget')?.value || '').toString().replace(/[^0-9.]/g, '');
+        const budget = budgetRaw ? parseFloat(budgetRaw) : null;
+        const requiredDate = document.getElementById('modalRequiredDate')?.value || null;
+        const theme = (document.getElementById('modalTheme')?.value || '').trim() || null;
+        const details = (document.getElementById('modalDetails')?.value || '').trim() || null;
+
+        let rawLink = (document.getElementById('modalFileUrl')?.value || '').trim();
+        if (rawLink && !rawLink.startsWith('http://') && !rawLink.startsWith('https://') && rawLink.includes('.')) {
+          rawLink = 'https://' + rawLink;
+        }
+        const allRefs = [];
+        if (rawLink) allRefs.push(rawLink);
+        if (uploadedFileUrls.length > 0) allRefs.push(...uploadedFileUrls);
+        const combinedFileUrl = allRefs.length > 0 ? allRefs.join(' , ') : null;
+
         const payload = {
-          enquiry_type: 'individual',
-          name: formData.get('name'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          occasion: formData.get('occasion'),
-          quantity: 1,
-          budget: formData.get('budget'),
-          date: formData.get('date'),
-          delivery: formData.get('delivery'),
-          loves: formData.get('loves') || '',
-          note: formData.get('note') || ''
+          enquiry_type: enquiryType,
+          name: name,
+          phone: phone,
+          email: email,
+          company_name: companyName,
+          occasion: occasion,
+          quantity: quantity,
+          budget: budget,
+          required_date: requiredDate,
+          theme: theme,
+          customization_details: details,
+          file_url: combinedFileUrl
         };
 
-        fetch('http://127.0.0.1:8000/api/enquiries', {
+        const response = await fetch(`${API_BASE}/api/enquiries`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
           body: JSON.stringify(payload)
-        })
-        .then(res => res.json())
-        .then(data => {
-          btn.textContent = 'Brief Submitted Successfully';
-          successBox.classList.remove('hidden');
-          indivForm.reset();
-        })
-        .catch(err => {
-          console.warn('API offline or error, showing confirmation', err);
-          btn.textContent = 'Brief Received';
-          successBox.classList.remove('hidden');
         });
-      });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.detail || `Server returned status ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('modalFormContainer').classList.add('hidden');
+          const successContainer = document.getElementById('modalSuccessContainer');
+          successContainer.classList.remove('hidden');
+
+          const enquiryId = data.data && data.data.enquiry_id ? data.data.enquiry_id : '';
+          const idEl = document.getElementById('modalSuccessId');
+          if (idEl) {
+            idEl.textContent = enquiryId ? `#OPL-${enquiryId}` : '#OPL-COMMISSION';
+          }
+
+          const waLink = document.getElementById('modalWhatsAppChatLink');
+          if (waLink) {
+            const msg = encodeURIComponent(`Hi Opulence, I just submitted individual commission brief Ref #OPL-${enquiryId || 'ONLINE'} for ${name} (${occasion || '1-of-1 Hamper'}). Excited to collaborate!`);
+            waLink.href = `https://wa.me/918106489375?text=${msg}`;
+          }
+
+          document.getElementById('modalEnquiryForm').reset();
+          clearAllSelectedFiles();
+        } else {
+          throw new Error(data.message || 'Submission could not be completed');
+        }
+      } catch (err) {
+        console.error('Modal enquiry error:', err);
+        const name = (document.getElementById('modalFullName')?.value || '').trim();
+        const phone = (document.getElementById('modalPhone')?.value || '').trim();
+        const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
+        const qtyRaw = document.getElementById('modalQuantity')?.value;
+        errorBox.innerHTML = `
+          <div class="space-y-1.5">
+            <div><strong>Notice:</strong> Unable to transmit brief directly to server (${err.message}).</div>
+            <div class="text-[11px] text-charcoal-muted">Our hotline and direct WhatsApp concierge are active 24/7. Connect immediately with our team:</div>
+            <div class="pt-1">
+              <a href="https://wa.me/918106489375?text=${encodeURIComponent(`Hi Opulence, I would like to commission an individual hamper for: ${name} (${phone}), Occasion: ${occasion || '1-of-1 Hamper'}, Quantity: ${qtyRaw || '1'}`)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] text-white font-mono text-[11px] font-semibold hover:bg-[#20ba5a] transition-colors">
+                <span>Connect with Concierge on WhatsApp</span>
+                <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        `;
+        errorBox.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Submit Commission Brief';
+        submitIcon.textContent = 'send';
+      }
     }
   </script>
 </body>

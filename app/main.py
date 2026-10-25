@@ -35,13 +35,6 @@ app.include_router(hampers.router)
 app.include_router(orders.router)
 app.include_router(gallery.router)
 
-app.include_router(enquiries.router)
-app.include_router(categories.router)
-app.include_router(products.router)
-app.include_router(hampers.router)
-app.include_router(orders.router)
-app.include_router(gallery.router)
-
 
 @app.get("/api/banners/active")
 def get_active_banner():

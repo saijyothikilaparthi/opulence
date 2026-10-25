@@ -1494,11 +1494,52 @@
                 <textarea id="modalDetails" name="customization_details" rows="3" placeholder="Tell us about recipient preferences, brand foiling/ribboning, dietary restrictions, single or multiple dispatch locations..." class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors resize-none"></textarea>
               </div>
 
-              <div>
-                <label for="modalFileUrl" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
-                  Reference / Moodboard URL (Optional)
-                </label>
-                <input type="url" id="modalFileUrl" name="file_url" placeholder="https://drive.google.com/... or Figma / Pinterest link" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              <!-- References: External Link and Local File Upload -->
+              <div class="space-y-3">
+                <div>
+                  <label for="modalFileUrl" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                    Reference / Moodboard URL (Optional)
+                  </label>
+                  <input type="text" inputmode="url" id="modalFileUrl" name="file_url" placeholder="https://drive.google.com/... or Figma / Pinterest link" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+                </div>
+
+                <!-- Divider -->
+                <div class="relative flex items-center justify-center my-1.5">
+                  <div class="border-t border-[#E9E0D1] w-full"></div>
+                  <span class="bg-[#FAF7F2] px-3 text-[10px] font-mono uppercase text-ash tracking-widest shrink-0">OR UPLOAD REFERENCE PICS</span>
+                </div>
+
+                <!-- Local File Upload Area -->
+                <div>
+                  <div class="flex items-center justify-between mb-1.5">
+                    <label class="block text-[11px] font-mono uppercase text-ash tracking-wider">
+                      Reference Photos from Local Files (Optional)
+                    </label>
+                    <span class="text-[10px] font-mono text-ash">Max 15MB each</span>
+                  </div>
+
+                  <input type="file" id="modalFileInput" accept="image/*,.pdf" multiple class="hidden" onchange="handleModalFileSelect(this)"/>
+
+                  <div id="modalDropZone" 
+                       onclick="document.getElementById('modalFileInput').click()"
+                       ondragover="handleDragOver(event)"
+                       ondragleave="handleDragLeave(event)"
+                       ondrop="handleFileDrop(event)"
+                       class="border-2 border-dashed border-[#DCD2C2] hover:border-gold bg-[#FAF7F2] hover:bg-[#F9F5EC] p-4 text-center cursor-pointer transition-all duration-200 group">
+                    <div class="flex flex-col items-center justify-center gap-1.5">
+                      <span class="material-symbols-outlined text-2xl text-ash group-hover:text-gold transition-colors">cloud_upload</span>
+                      <div class="text-xs font-mono text-charcoal">
+                        <button type="button" class="font-semibold text-gold underline hover:text-gold-dark cursor-pointer pointer-events-none">Choose pictures from local files</button> or drag & drop here
+                      </div>
+                      <div class="text-[10px] font-mono text-ash">
+                        Supported: PNG, JPG, JPEG, WEBP, HEIC, PDF (multiple files allowed)
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Uploaded Files / Previews Container -->
+                  <div id="modalFilePreviews" class="hidden mt-3 space-y-2"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -1869,9 +1910,125 @@
        6. COMMISSION & ENQUIRY MODAL (BACKEND POST /api/enquiries)
        ========================================================= */
 
+    /* ---------------- Reference File Upload & Preview Logic ---------------- */
+    let selectedModalFiles = [];
+
+    function handleModalFileSelect(input) {
+      if (!input.files || input.files.length === 0) return;
+      addModalFilesToSelection(Array.from(input.files));
+      input.value = '';
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropZone = document.getElementById('modalDropZone');
+      if (dropZone) dropZone.classList.add('border-gold', 'bg-[#F9F5EC]');
+    }
+
+    function handleDragLeave(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropZone = document.getElementById('modalDropZone');
+      if (dropZone) dropZone.classList.remove('border-gold', 'bg-[#F9F5EC]');
+    }
+
+    function handleFileDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropZone = document.getElementById('modalDropZone');
+      if (dropZone) dropZone.classList.remove('border-gold', 'bg-[#F9F5EC]');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        addModalFilesToSelection(Array.from(e.dataTransfer.files));
+      }
+    }
+
+    function addModalFilesToSelection(newFiles) {
+      const allowedExts = ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg', 'bmp', 'heic', 'heif', 'pdf'];
+      for (const file of newFiles) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const isAllowed = file.type.startsWith('image/') || file.type === 'application/pdf' || allowedExts.includes(ext);
+        if (!isAllowed) {
+          alert(`File "${file.name}" is not a supported format. Please upload photos (JPG, PNG, WEBP, HEIC) or PDF.`);
+          continue;
+        }
+        if (file.size > 15 * 1024 * 1024) {
+          alert(`File "${file.name}" exceeds the 15MB limit.`);
+          continue;
+        }
+        // Avoid adding the exact same file twice
+        const alreadyExists = selectedModalFiles.some(f => f.name === file.name && f.size === file.size);
+        if (!alreadyExists) {
+          selectedModalFiles.push(file);
+        }
+      }
+      renderModalFilePreviews();
+    }
+
+    function removeModalSelectedFile(index) {
+      selectedModalFiles.splice(index, 1);
+      renderModalFilePreviews();
+    }
+
+    function clearAllSelectedFiles() {
+      selectedModalFiles = [];
+      renderModalFilePreviews();
+      const fileInput = document.getElementById('modalFileInput');
+      if (fileInput) fileInput.value = '';
+    }
+
+    function renderModalFilePreviews() {
+      const container = document.getElementById('modalFilePreviews');
+      if (!container) return;
+      if (selectedModalFiles.length === 0) {
+        container.innerHTML = '';
+        container.classList.add('hidden');
+        return;
+      }
+      container.classList.remove('hidden');
+      container.innerHTML = `
+        <div class="flex items-center justify-between text-[11px] font-mono text-ash pb-1.5 border-b border-[#E9E0D1]">
+          <span class="font-medium text-charcoal">${selectedModalFiles.length} photo(s) selected for upload</span>
+          <button type="button" onclick="clearAllSelectedFiles()" class="text-red-700 hover:text-red-900 underline cursor-pointer">Clear all</button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          ${selectedModalFiles.map((file, idx) => {
+            const isImg = file.type.startsWith('image/') || ['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(file.name.split('.').pop().toLowerCase());
+            const previewUrl = isImg ? URL.createObjectURL(file) : '';
+            const sizeStr = file.size > 1024 * 1024
+              ? (file.size / (1024 * 1024)).toFixed(1) + ' MB'
+              : (file.size / 1024).toFixed(0) + ' KB';
+            return `
+              <div class="flex items-center justify-between p-2 bg-white border border-[#E9E0D1] shadow-2xs group">
+                <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                  ${isImg ? `
+                    <img src="${previewUrl}" class="w-10 h-10 object-cover border border-[#E9E0D1] shrink-0" alt="Preview"/>
+                  ` : `
+                    <div class="w-10 h-10 bg-[#FAF7F2] border border-[#E9E0D1] flex items-center justify-center shrink-0">
+                      <span class="material-symbols-outlined text-gold text-lg">description</span>
+                    </div>
+                  `}
+                  <div class="min-w-0 flex-1">
+                    <div class="font-mono text-[11px] text-charcoal font-medium truncate" title="${file.name}">${file.name}</div>
+                    <div class="font-mono text-[10px] text-ash">${sizeStr}</div>
+                  </div>
+                </div>
+                <button type="button" onclick="removeModalSelectedFile(${idx})" class="p-1 text-ash hover:text-red-600 transition-colors shrink-0 cursor-pointer" title="Remove photo">
+                  <span class="material-symbols-outlined text-base">close</span>
+                </button>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
     function openEnquiryModal(options = {}) {
       const modal = document.getElementById('enquiryModal');
       if (!modal) return;
+
+      // Clear any attached files from previous session
+      clearAllSelectedFiles();
 
       // Reset form views
       const formContainer = document.getElementById('modalFormContainer');
@@ -1935,6 +2092,7 @@
       modal.classList.add('hidden');
       modal.classList.remove('flex');
       document.body.classList.remove('overflow-hidden');
+      clearAllSelectedFiles();
     }
 
     function setModalEnquiryType(type) {
@@ -2019,45 +2177,78 @@
       errorBox.classList.add('hidden');
       errorBox.textContent = '';
       submitBtn.disabled = true;
-      submitText.textContent = 'Transmitting brief…';
       submitIcon.textContent = 'hourglass_empty';
 
-      const enquiryType = document.getElementById('modalEnquiryType').value || 'corporate';
-      const name = (document.getElementById('modalFullName')?.value || '').trim();
-      const phone = (document.getElementById('modalPhone')?.value || '').trim();
-      const email = (document.getElementById('modalEmail')?.value || '').trim() || null;
-      let companyName = (document.getElementById('modalCompanyName')?.value || '').trim();
-      if (enquiryType === 'corporate' && !companyName) {
-        companyName = 'N/A';
-      } else if (!companyName) {
-        companyName = null;
-      }
-      const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
-      const qtyRaw = document.getElementById('modalQuantity')?.value;
-      const quantity = qtyRaw ? parseInt(qtyRaw) : null;
-      const budgetRaw = (document.getElementById('modalBudget')?.value || '').toString().replace(/[^0-9.]/g, '');
-      const budget = budgetRaw ? parseFloat(budgetRaw) : null;
-      const requiredDate = document.getElementById('modalRequiredDate')?.value || null;
-      const theme = (document.getElementById('modalTheme')?.value || '').trim() || null;
-      const details = (document.getElementById('modalDetails')?.value || '').trim() || null;
-      const fileUrl = (document.getElementById('modalFileUrl')?.value || '').trim() || null;
-
-      const payload = {
-        enquiry_type: enquiryType,
-        name: name,
-        phone: phone,
-        email: email,
-        company_name: companyName,
-        occasion: occasion,
-        quantity: quantity,
-        budget: budget,
-        required_date: requiredDate,
-        theme: theme,
-        customization_details: details,
-        file_url: fileUrl
-      };
-
       try {
+        // Step 1: Upload attached local reference files if any
+        let uploadedFileUrls = [];
+        if (selectedModalFiles && selectedModalFiles.length > 0) {
+          submitText.textContent = `Uploading ${selectedModalFiles.length} photo(s)…`;
+          const uploadData = new FormData();
+          selectedModalFiles.forEach(f => uploadData.append('files', f));
+
+          const uploadRes = await fetch(`${API_BASE}/api/enquiries/upload`, {
+            method: 'POST',
+            body: uploadData
+          });
+
+          if (!uploadRes.ok) {
+            const errJson = await uploadRes.json().catch(() => ({}));
+            throw new Error(errJson.detail || 'Failed to upload attached reference photos.');
+          }
+
+          const uploadDataJson = await uploadRes.json();
+          if (uploadDataJson.urls && uploadDataJson.urls.length > 0) {
+            uploadedFileUrls = uploadDataJson.urls;
+          }
+        }
+
+        submitText.textContent = 'Transmitting brief…';
+
+        const enquiryType = document.getElementById('modalEnquiryType').value || 'corporate';
+        const name = (document.getElementById('modalFullName')?.value || '').trim();
+        const phone = (document.getElementById('modalPhone')?.value || '').trim();
+        const email = (document.getElementById('modalEmail')?.value || '').trim() || null;
+        let companyName = (document.getElementById('modalCompanyName')?.value || '').trim();
+        if (enquiryType === 'corporate' && !companyName) {
+          companyName = 'N/A';
+        } else if (!companyName) {
+          companyName = null;
+        }
+        const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
+        const qtyRaw = document.getElementById('modalQuantity')?.value;
+        const quantity = qtyRaw ? parseInt(qtyRaw) : null;
+        const budgetRaw = (document.getElementById('modalBudget')?.value || '').toString().replace(/[^0-9.]/g, '');
+        const budget = budgetRaw ? parseFloat(budgetRaw) : null;
+        const requiredDate = document.getElementById('modalRequiredDate')?.value || null;
+        const theme = (document.getElementById('modalTheme')?.value || '').trim() || null;
+        const details = (document.getElementById('modalDetails')?.value || '').trim() || null;
+
+        // Step 2: Combine link and uploaded files into reference URL
+        let rawLink = (document.getElementById('modalFileUrl')?.value || '').trim();
+        if (rawLink && !rawLink.startsWith('http://') && !rawLink.startsWith('https://') && rawLink.includes('.')) {
+          rawLink = 'https://' + rawLink;
+        }
+        const allRefs = [];
+        if (rawLink) allRefs.push(rawLink);
+        if (uploadedFileUrls.length > 0) allRefs.push(...uploadedFileUrls);
+        const combinedFileUrl = allRefs.length > 0 ? allRefs.join(' , ') : null;
+
+        const payload = {
+          enquiry_type: enquiryType,
+          name: name,
+          phone: phone,
+          email: email,
+          company_name: companyName,
+          occasion: occasion,
+          quantity: quantity,
+          budget: budget,
+          required_date: requiredDate,
+          theme: theme,
+          customization_details: details,
+          file_url: combinedFileUrl
+        };
+
         const response = await fetch(`${API_BASE}/api/enquiries`, {
           method: 'POST',
           headers: {
@@ -2089,18 +2280,26 @@
             const msg = encodeURIComponent(`Hi Opulence, I just submitted brief Ref #OPL-${enquiryId || 'ONLINE'} for ${name} (${occasion || 'Bespoke Hamper'}). Would love to connect!`);
             waLink.href = `https://wa.me/918106489375?text=${msg}`;
           }
+
+          // Reset the form and clear file attachments for future use
+          document.getElementById('modalEnquiryForm').reset();
+          clearAllSelectedFiles();
         } else {
           throw new Error(data.message || 'Submission could not be completed');
         }
       } catch (err) {
         console.error('Modal enquiry error:', err);
+        const name = (document.getElementById('modalFullName')?.value || '').trim();
+        const phone = (document.getElementById('modalPhone')?.value || '').trim();
+        const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
+        const qtyRaw = document.getElementById('modalQuantity')?.value;
         // Fallback: If backend is offline or errors, show clear message and WhatsApp direct transfer
         errorBox.innerHTML = `
           <div class="space-y-1.5">
             <div><strong>Notice:</strong> Unable to transmit brief directly to server (${err.message}).</div>
             <div class="text-[11px] text-charcoal-muted">Our hotline and direct WhatsApp concierge are active 24/7. Connect immediately with our team:</div>
             <div class="pt-1">
-              <a href="https://wa.me/918106489375?text=${encodeURIComponent(`Hi Opulence, I would like to submit a gifting brief for: ${name} (${phone}), Occasion: ${occasion || 'Bespoke Hamper'}, Quantity: ${quantity || 'Flexible'}`)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] text-white font-mono text-[11px] font-semibold hover:bg-[#20ba5a] transition-colors">
+              <a href="https://wa.me/918106489375?text=${encodeURIComponent(`Hi Opulence, I would like to submit a gifting brief for: ${name} (${phone}), Occasion: ${occasion || 'Bespoke Hamper'}, Quantity: ${qtyRaw || 'Flexible'}`)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] text-white font-mono text-[11px] font-semibold hover:bg-[#20ba5a] transition-colors">
                 <span>Connect with Concierge on WhatsApp</span>
                 <span class="material-symbols-outlined text-xs">arrow_forward</span>
               </a>

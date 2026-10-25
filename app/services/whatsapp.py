@@ -17,10 +17,11 @@ def send_whatsapp_notification(enquiry_data: dict) -> bool:
         budget = enquiry_data.get("budget", "N/A")
         occasion = enquiry_data.get("occasion", "N/A")
         company = enquiry_data.get("company_name", "N/A")
+        file_url = enquiry_data.get("file_url")
 
         message = (
             f"🔔 *New Gift Enquiry Received*\n\n"
-            f"*Type:* {enquiry_type.upper()}\n"
+            f"*Type:* {enquiry_type.upper() if enquiry_type else 'ENQUIRY'}\n"
             f"*Customer:* {name}\n"
             f"*Phone:* {phone}\n"
             f"*Company:* {company}\n"
@@ -28,6 +29,8 @@ def send_whatsapp_notification(enquiry_data: dict) -> bool:
             f"*Budget:* ₹{budget}\n"
             f"*Occasion/Theme:* {occasion}\n"
         )
+        if file_url:
+            message += f"*Reference / Attachments:* {file_url}\n"
 
         logger.info(f"[WhatsApp Service Mock/Active] Notification formatted:\n{message}")
         
