@@ -4,37 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gift Business - Unified Admin Console</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #F6F2EA;
+            --surface: #FFFDF8;
+            --band: #EFE7D8;
+            --ink: #1E1A14;
+            --ink-soft: #5A5046;
+            --ink-mute: #6E6152;
+            --gold: #9A7632;
+            --gold-deep: #7A5C22;
+            --gold-italic: #8A6A2A;
+            --gold-light: #D9B86E;
+            --line: #E4D9C4;
+            --line-strong: #D8C7A3;
+            --frame: #DCCFB6;
+            --placeholder: #E9E0CF;
+            --placeholder-alt: #E4DACA;
+            --on-dark: #F6F2EA;
+            --on-dark-strong: #F3EDE2;
+            --on-dark-soft: #CFC5B4;
+            --on-dark-mute: #A89C88;
+            --dark-line: #5A4E3C;
+            --footer-line: #3A3228;
+            --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+            --sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+        }
         * { box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; color: #333; }
-        header { background-color: #1a252f; color: #fff; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { margin: 0; font-size: 22px; }
-        .nav-tabs { display: flex; background-color: #2c3e50; padding: 0 30px; overflow-x: auto; }
-        .tab-btn { background: none; border: none; color: #ecf0f1; padding: 15px 20px; cursor: pointer; font-size: 14px; font-weight: 600; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.3s; }
-        .tab-btn:hover, .tab-btn.active { background-color: #34495e; border-bottom-color: #3498db; color: #fff; }
+        body { font-family: var(--sans); margin: 0; padding: 0; background-color: var(--bg); color: var(--ink); }
+        header { background-color: var(--ink); color: var(--on-dark); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        header h1 { margin: 0; font-size: 22px; font-family: var(--serif); font-weight: 500; }
+        .nav-tabs { display: flex; background-color: var(--ink-soft); padding: 0 30px; overflow-x: auto; }
+        .tab-btn { background: none; border: none; color: var(--on-dark-soft); padding: 15px 20px; cursor: pointer; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.3s; }
+        .tab-btn:hover, .tab-btn.active { background-color: var(--ink); border-bottom-color: var(--gold); color: var(--on-dark); }
         .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-        .tab-content { display: none; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .tab-content { display: none; background: var(--surface); padding: 30px; border-radius: 0; border: 1px solid var(--line); box-shadow: 0 24px 48px rgba(60, 45, 20, .08); }
         .tab-content.active { display: block; }
-        h2 { margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #2c3e50; }
+        h2 { margin-top: 0; border-bottom: 1px solid var(--line); padding-bottom: 10px; color: var(--ink); font-family: var(--serif); font-weight: 500; font-size: 32px; }
+        h3 { font-family: var(--serif); font-weight: 500; font-size: 24px; color: var(--ink); }
+        h4 { font-family: var(--serif); font-weight: 500; font-size: 20px; color: var(--ink); }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .form-group { margin-bottom: 15px; }
         .form-group.full { grid-column: span 2; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        button.submit-btn { background-color: #27ae60; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 15px; }
-        button.submit-btn:hover { background-color: #219150; }
-        button.btn-danger { background-color: #e74c3c; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
-        button.btn-danger:hover { background-color: #c0392b; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+        input, select, textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 0; font-size: 15px; font-family: var(--sans); color: var(--ink); background: #FFFFFF; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(154, 118, 50, .15); }
+        button.submit-btn { background-color: var(--ink); color: var(--on-dark); padding: 14px 24px; border: 1px solid var(--ink); border-radius: 0; cursor: pointer; font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+        button.submit-btn:hover { background-color: var(--gold-deep); border-color: var(--gold-deep); }
+        button.btn-danger { background-color: transparent; color: var(--ink); border: 1px solid var(--ink); padding: 8px 16px; border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+        button.btn-danger:hover { background-color: var(--ink); color: var(--on-dark); }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; font-size: 14px; vertical-align: top; }
-        th { background-color: #f8f9fa; color: #2c3e50; font-weight: 600; }
-        tr:nth-child(even) { background-color: #fcfcfc; }
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        .badge-pending { background-color: #f39c12; color: #fff; }
-        .badge-contacted, .badge-in-progress { background-color: #3498db; color: #fff; }
-        .badge-converted, .badge-completed { background-color: #27ae60; color: #fff; }
-        .badge-cancelled { background-color: #e74c3c; color: #fff; }
-        .action-select { padding: 4px 8px; font-size: 12px; }
+        th, td { border: 1px solid var(--line); padding: 12px; text-align: left; font-size: 14px; vertical-align: top; }
+        th { background-color: var(--band); color: var(--ink); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+        tr:nth-child(even) { background-color: var(--bg); }
+        .badge { padding: 4px 8px; border-radius: 0; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line-strong); }
+        .badge-pending { background-color: var(--surface); color: var(--ink); }
+        .badge-contacted, .badge-in-progress { background-color: var(--band); color: var(--ink); }
+        .badge-converted, .badge-completed { background-color: var(--gold-light); color: var(--ink); border-color: var(--gold); }
+        .badge-cancelled { background-color: var(--ink-mute); color: var(--on-dark); border-color: var(--ink); }
+        .action-select { padding: 6px 10px; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -47,7 +76,6 @@
 <div class="nav-tabs">
     <button class="tab-btn active" onclick="switchTab('ordersTab', this)">📦 Orders (Offline/All)</button>
     <button class="tab-btn" onclick="switchTab('enquiriesTab', this)">🌐 Website Enquiries</button>
-    <button class="tab-btn" onclick="switchTab('bannersTab', this)">🖼️ Active Banner</button>
     <button class="tab-btn" onclick="switchTab('galleryTab', this)">🎨 Work Gallery Showcase</button>
 </div>
 
@@ -57,7 +85,7 @@
     <div id="ordersTab" class="tab-content active">
         <h2>Manual & Offline Orders Management</h2>
         
-        <div style="background: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 25px;">
+        <div style="background: var(--bg); padding: 20px; border: 1px solid var(--line); margin-bottom: 25px;">
             <h4 style="margin-top:0;">Add New Order (Offline / WhatsApp / Instagram)</h4>
             <form id="orderForm" class="form-grid">
                 <div class="form-group">
@@ -139,33 +167,6 @@
         </table>
     </div>
 
-    <!-- BANNERS TAB -->
-    <div id="bannersTab" class="tab-content">
-        <h2>Promotional Banner Management</h2>
-        <p style="color: #666; font-size: 13px;">Uploading a new banner will set it as active and deactivate previous banner images.</p>
-        
-        <form id="bannerForm" style="margin-bottom: 30px;">
-            <div class="form-group">
-                <label>Banner Event / Campaign *</label>
-                <input type="text" id="bannerEvent" required placeholder="e.g. Diwali Special 2026">
-            </div>
-            <div class="form-group">
-                <label>Banner Note</label>
-                <input type="text" id="bannerNote" placeholder="e.g. Reserve bespoke curation before Oct 25">
-            </div>
-            <div class="form-group">
-                <label>Upload Banner Image *</label>
-                <input type="file" id="bannerImage" accept="image/*" required>
-            </div>
-            <button type="submit" class="submit-btn">Upload & Set Active Banner</button>
-        </form>
-
-        <h3>Currently Active Announcement Banner</h3>
-        <div id="activeBannerView" style="margin-top: 15px;">
-            Loading active banner...
-        </div>
-    </div>
-
     <!-- GALLERY TAB -->
     <div id="galleryTab" class="tab-content">
         <h2>Work Gallery Showcase</h2>
@@ -175,6 +176,15 @@
             <div class="form-group">
                 <label>Hamper Work Title</label>
                 <input type="text" id="workTitle" placeholder="e.g. Artisanal Coffee Box">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="workCategory">
+                    <option value="">Select Category</option>
+                    <option value="individual">Individual</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="customized">Customized</option>
+                </select>
             </div>
             <div class="form-group">
                 <label>Short Description</label>
@@ -208,7 +218,6 @@ function switchTab(tabId, btn) {
 
     if (tabId === 'ordersTab') loadOrders();
     if (tabId === 'enquiriesTab') loadEnquiries();
-    if (tabId === 'bannersTab') loadActiveBanner();
     if (tabId === 'galleryTab') loadGalleryWork();
 }
 
@@ -356,56 +365,6 @@ async function deleteEnquiry(id) {
     loadEnquiries();
 }
 
-async function loadActiveBanner() {
-    const res = await fetch(`${API_BASE}/api/banners/active`);
-    const json = await res.json();
-    const div = document.getElementById("activeBannerView");
-    if (!json.data) {
-        div.innerHTML = "<p>No active banner currently set.</p>";
-        return;
-    }
-    const b = json.data;
-    div.innerHTML = `
-        <div style="border: 1px solid #ddd; padding: 15px; border-radius: 6px; max-width: 500px;">
-            <h4>Event: ${b.event || b.title || 'Promotional Banner'}</h4>
-            <p><strong>Note:</strong> ${b.note || 'None'}</p>
-            <img src="${b.image_url}" style="max-width: 100%; height: auto; border-radius: 4px;" />
-        </div>
-    `;
-}
-
-document.getElementById("bannerForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const submitBtn = this.querySelector('button[type="submit"]');
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.innerText = "Uploading..."; }
-
-    const formData = new FormData();
-    const eventVal = document.getElementById("bannerEvent").value;
-    const noteVal = document.getElementById("bannerNote").value;
-    const fileFile = document.getElementById("bannerImage").files[0];
-
-    formData.append("event", eventVal);
-    formData.append("title", eventVal);
-    formData.append("note", noteVal);
-    formData.append("image", fileFile);
-
-    try {
-        const res = await fetch(`${API_BASE}/api/admin/banners`, { method: "POST", body: formData });
-        const json = await res.json();
-        if (res.ok && json.success) {
-            alert("Banner uploaded successfully!");
-            this.reset();
-            loadActiveBanner();
-        } else {
-            alert("Upload failed: " + (json.message || json.detail || "Server error"));
-        }
-    } catch (err) {
-        alert("Upload error: " + err.message);
-    } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.innerText = "Upload & Set Active Banner"; }
-    }
-});
-
 async function loadGalleryWork() {
     const res = await fetch(`${API_BASE}/api/gallery`);
     const json = await res.json();
@@ -415,10 +374,11 @@ async function loadGalleryWork() {
         return;
     }
     grid.innerHTML = json.data.map(w => `
-        <div style="border: 1px solid #ddd; padding: 10px; border-radius: 6px; background: #fff;">
-            <img src="${w.image_url}" style="width: 100%; height: 160px; object-fit: cover; border-radius: 4px;" />
-            <h5 style="margin: 8px 0 4px 0;">${w.title || 'Work Item'}</h5>
-            <p style="font-size: 12px; color: #666; margin-bottom: 8px;">${w.description || ''}</p>
+        <div style="border: 1px solid var(--line); padding: 15px; background: var(--bg);">
+            <img src="${w.image_url}" style="width: 100%; height: 160px; object-fit: cover; border: 1px solid var(--line);" />
+            <h5 style="margin: 12px 0 4px 0; font-family: var(--serif); font-size: 18px; font-weight: 500;">${w.title || 'Work Item'}</h5>
+            <p style="font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-deep); margin-bottom: 4px;">${w.category || 'None'}</p>
+            <p style="font-size: 13px; color: var(--ink-soft); margin-bottom: 12px;">${w.description || ''}</p>
             <button class="btn-danger" style="width: 100%;" onclick="deleteWork(${w.id})">Delete Image</button>
         </div>
     `).join("");
@@ -428,6 +388,7 @@ document.getElementById("galleryForm").addEventListener("submit", async function
     e.preventDefault();
     const formData = new FormData();
     if (document.getElementById("workTitle").value) formData.append("title", document.getElementById("workTitle").value);
+    if (document.getElementById("workCategory").value) formData.append("category", document.getElementById("workCategory").value);
     if (document.getElementById("workDesc").value) formData.append("description", document.getElementById("workDesc").value);
     formData.append("image", document.getElementById("workImage").files[0]);
 
