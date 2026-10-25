@@ -1,347 +1,2220 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-[#FAF7F2] text-[#1A1816]">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Opulence — Bespoke gift hampers, designed around them</title>
-<meta name="description" content="Opulence designs bespoke gift hampers around the person who receives them — for corporate teams, family celebrations and individuals. No catalogue, and no two alike.">
-<meta name="theme-color" content="#F6F2EA">
-<meta property="og:title" content="Opulence — Gifts, designed around them">
-<meta property="og:description" content="Bespoke gift hampers for corporate, family and individual gifting. Every theme, item and finish designed around the recipient.">
-<meta property="og:image" content="assets/hamper-full.jpg">
-<link rel="icon" type="image/png" href="assets/opulence-mark.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Montserrat:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
+  <title>OPULENCE — Bespoke Gifting Studio | Thoughtfully Curated Hampers</title>
+  <meta name="description" content="Opulence curates bespoke luxury gift hampers designed around the recipient for corporate milestones, weddings, festivals and individual occasions. No catalog, no two alike."/>
+  <meta name="theme-color" content="#FAF7F2"/>
+
+  <!-- Google Fonts: Cormorant Garamond, DM Serif Display, DM Sans, Space Grotesk & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            surface: "#FAF7F2",
+            "surface-dim": "#F7F3EB",
+            "surface-high": "#EFEBE1",
+            "border-soft": "#E9E0D1",
+            "border-dark": "#DCD2C2",
+            gold: {
+              DEFAULT: "#B39761",
+              light: "#CBB27E",
+              dark: "#9E8246",
+              subtle: "#F9F5EC",
+            },
+            charcoal: {
+              DEFAULT: "#1A1816",
+              muted: "#4A453F",
+              card: "#25231F",
+            },
+            ash: "#706A60",
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', '"DM Serif Display"', 'Georgia', 'serif'],
+            sans: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"Space Grotesk"', 'monospace'],
+          },
+          letterSpacing: {
+            wide: "0.08em",
+            wider: "0.14em",
+            widest: "0.22em",
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 280, 'GRAD' 0, 'opsz' 22;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    ::selection {
+      background-color: #B39761;
+      color: #FFFFFF;
+    }
+    .delicate-grid {
+      background-image: linear-gradient(to right, rgba(179, 151, 97, 0.08) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(179, 151, 97, 0.08) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    @media (min-width: 768px) {
+      .delicate-grid {
+        background-size: 64px 64px;
+      }
+    }
+    /* Hide scrollbars for clean horizontal swipe pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Carousel Slide Transitions */
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 600ms cubic-bezier(0.4, 0, 0.2, 1), visibility 600ms;
+      will-change: opacity;
+    }
+    .hero-slide.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 10;
+    }
+    /* Mobile-first touch targets */
+    .touch-target {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    /* Prevent iOS input zoom by keeping font >= 16px on mobile */
+    @media (max-width: 640px) {
+      input, select, textarea {
+        font-size: 16px !important;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-slide {
+        transition: none !important;
+      }
+    }
+    /* Refined Luxury Navigation Links */
+    .nav-luxury-link {
+      position: relative;
+      letter-spacing: 0.16em;
+      transition: color 0.25s ease;
+    }
+    .nav-luxury-link::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 1.5px;
+      background-color: #B39761;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-luxury-link:hover::after,
+    .nav-luxury-link:focus-visible::after {
+      width: 100%;
+    }
+    /* Continuous Auto-Scrolling Festive Reel */
+    @keyframes festiveMarquee {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+    .festive-marquee-container {
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
+    }
+    .festive-marquee-track {
+      display: flex;
+      gap: 1.25rem;
+      width: max-content;
+      animation: festiveMarquee 32s linear infinite;
+      will-change: transform;
+    }
+    .festive-marquee-track:hover,
+    .festive-marquee-track.is-paused {
+      animation-play-state: paused;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .festive-marquee-track {
+        animation: none;
+        overflow-x: auto;
+      }
+    }
+  </style>
 </head>
-<body>
-<a class="skip-link" href="#main">Skip to content</a>
+<body class="bg-[#FAF7F2] text-[#1A1816] font-sans antialiased selection:bg-gold selection:text-white overflow-x-hidden">
 
-<header class="site-header">
-  <div class="wrap site-header__inner">
-    <a class="brand" href="index.html" aria-label="Opulence home">
-      <img src="assets/opulence-mark.png" alt="" width="211" height="283">
-      <span>opulence</span>
-    </a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu"><span></span></button>
-    <nav class="site-nav" id="site-nav" aria-label="Hamper services">
-      <a href="individual.html">Individual</a>
-      <a href="non-corporate.html">Non-Corporate</a>
-      <a href="corporate.html">Corporate</a>
-    </nav>
-    <div class="site-header__cta">
-      <a class="btn btn--outline" href="#enquire" data-enquire>Request a consultation</a>
+  <!-- TOP LUXURY DISPATCH BAR -->
+  <div class="w-full bg-[#FAF7F2] border-b border-[#E9E0D1]/80 py-2 px-4 sm:px-6 lg:px-8 text-ash z-50 relative">
+    <div class="max-w-[1240px] mx-auto w-full flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2.5 text-[11px] font-mono tracking-widest uppercase truncate">
+        <span class="w-1.5 h-1.5 rounded-full bg-gold shrink-0"></span>
+        <span class="font-medium text-charcoal truncate">Bespoke Gifting Studio</span>
+        <span class="text-[#DCD2C2] hidden md:inline">·</span>
+        <span class="hidden md:inline text-ash font-light lowercase first-letter:uppercase">Lead time: 3 months for curated commissions</span>
+      </div>
+      <div class="flex items-center gap-4 text-[11px] font-mono shrink-0">
+        <span class="hidden lg:inline text-ash/80 tracking-wider">Pan-India Delivery</span>
+        <span class="text-[#DCD2C2] hidden lg:inline">·</span>
+        <a href="tel:+918106489375" class="hover:text-gold transition-colors flex items-center gap-1.5 font-medium text-charcoal touch-target py-1">
+          <span class="material-symbols-outlined text-[14px] text-gold">call</span>
+          <span>+91 81064 89375</span>
+        </a>
+      </div>
     </div>
   </div>
-</header>
 
-<main id="main">
+  <!-- MAIN NAVIGATION (Sticky & Mobile Responsive) -->
+  <header class="w-full bg-[#FAF7F2]/95 backdrop-blur-md sticky top-0 z-40 border-b border-[#E9E0D1] transition-all duration-300">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 h-18 sm:h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#hero" class="flex items-center gap-3 group focus:outline-none touch-target" aria-label="Opulence Bespoke Gift Hampers Home">
+        <img src="https://lh3.googleusercontent.com/aida/AEtjO1UrGDwqYUmENrYL1Z5G1fp-_YodzOqxsYG14bmtJkITsW6Rk5zZjUEPzqjlhdU_ouiJofm4q4OLS5sYwKvOHzF87vzdsNvCH5t1KtUVEI192n2R4XAl2fWwUU0VinvBs9DLkqvhP_UJcvcnV8CUAS0Qn4GoKuTrETpJ7yl51w0mBCucIGqbHrws0UhInzBlm3Xpam5Y-DbohKSIRjd4zfQoXkedAX9CGCm-Kk7S3u9ov7lfiSJXmkJg6Q" onerror="this.onerror=null; this.src='assets/opulence-logo.png';" alt="Opulence Bespoke Gift Hampers Logo" class="h-8 sm:h-10 w-auto object-contain transition-opacity duration-300 group-hover:opacity-85"/>
+      </a>
 
-  <!-- Hero -->
-  <section class="hero" aria-label="Introduction">
-    <div class="wrap hero__inner">
-      <div class="hero__copy">
-        <p class="eyebrow eyebrow--rule">Bespoke gift hampers</p>
-        <h1 class="display">Gifts, designed <span class="accent">around them.</span></h1>
-        <p class="lede">Tell us who you are gifting. We design every hamper — its theme, contents and packaging — around the person who receives it. No catalogue, and no two alike.</p>
-        <div class="actions">
-          <a class="btn" href="#enquire" data-enquire>Design your hamper</a>
-          <a class="link-rule" href="#work">View our work</a>
-        </div>
-        <div class="stats">
-          <div><strong>50+</strong><span>Corporate orders</span></div>
-          <div><strong>Anywhere</strong><span>We deliver</span></div>
-          <div><strong>3 months</strong><span>Planned ahead</span></div>
-        </div>
-      </div>
+      <!-- Desktop Links (Curated, Uncluttered, Premium Editorial) -->
+      <nav class="hidden lg:flex items-center gap-8 text-[12px] font-sans font-medium uppercase tracking-[0.16em] text-charcoal">
+        
+        <!-- Collections Dropdown -->
+        <div class="relative group py-2">
+          <button class="nav-luxury-link flex items-center gap-1 py-1 hover:text-gold transition-colors focus:outline-none cursor-pointer" aria-haspopup="true" aria-expanded="false">
+            <span>Collections</span>
+            <span class="material-symbols-outlined text-[15px] text-ash/80 group-hover:text-gold transition-transform duration-300 group-hover:rotate-180">expand_more</span>
+          </button>
+          
+          <!-- Invisible Hover Bridge -->
+          <div class="absolute top-full left-0 w-full h-2"></div>
 
-      <div class="brief-board">
-        <img class="brief-board__photo" src="assets/hamper-full.jpg" width="1024" height="1024" fetchpriority="high"
-             alt="An Opulence hamper: a cane-woven tray of dry fruits and treats, wrapped in ivory tulle with dried florals and the Opulence tag">
-        <div class="brief-card" aria-label="Example brief">
-          <div class="brief-card__top">
-            <span class="eyebrow eyebrow--sm">The brief</span>
-            <span class="brief-card__no">No. 048</span>
+          <!-- Luxury Flyout Menu (100% Solid Opacity - No Background Bleed) -->
+          <div class="absolute top-[calc(100%+4px)] -left-4 w-88 bg-white border border-[#E9E0D1] shadow-2xl p-3.5 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 focus-within:opacity-100 focus-within:visible focus-within:translate-y-0 transition-all duration-200 z-[100]" style="background-color: #FFFFFF !important;">
+            <a href="corporate.html" class="group/item block p-3 hover:bg-[#FAF7F2] transition-colors border-b border-[#FAF7F2]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold uppercase tracking-wider text-charcoal group-hover/item:text-gold transition-colors">Corporate Gifting</span>
+                <span class="material-symbols-outlined text-[14px] text-ash group-hover/item:text-gold group-hover/item:translate-x-0.5 transition-all">arrow_forward</span>
+              </div>
+              <span class="text-[11px] text-ash mt-0.5 block font-sans lowercase first-letter:uppercase tracking-normal font-normal">Custom bulk hampers for brands & milestones (50+ units)</span>
+            </a>
+
+            <a href="celebrations.html" class="group/item block p-3 hover:bg-[#FAF7F2] transition-colors border-b border-[#FAF7F2]">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold uppercase tracking-wider text-charcoal group-hover/item:text-gold transition-colors">Celebrations & Bulk</span>
+                <span class="material-symbols-outlined text-[14px] text-ash group-hover/item:text-gold group-hover/item:translate-x-0.5 transition-all">arrow_forward</span>
+              </div>
+              <span class="text-[11px] text-ash mt-0.5 block font-sans lowercase first-letter:uppercase tracking-normal font-normal">Weddings, festive occasions & gatherings (20–50 units)</span>
+            </a>
+
+            <a href="individual.html" class="group/item block p-3 hover:bg-[#FAF7F2] transition-colors">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-semibold uppercase tracking-wider text-charcoal group-hover/item:text-gold transition-colors">Individual Hampers</span>
+                <span class="material-symbols-outlined text-[14px] text-ash group-hover/item:text-gold group-hover/item:translate-x-0.5 transition-all">arrow_forward</span>
+              </div>
+              <span class="text-[11px] text-ash mt-0.5 block font-sans lowercase first-letter:uppercase tracking-normal font-normal">One gift, tailored for one special person</span>
+            </a>
           </div>
-          <div class="brief-card__row"><span class="brief-card__label">For</span><span class="brief-card__name">Ananya, Design Lead</span></div>
-          <div class="brief-card__row"><span class="brief-card__label">She loves</span><span class="brief-card__value">Handcrafted décor, dry fruits, festive colour</span></div>
-          <div class="brief-card__row"><span class="brief-card__label">Occasion</span><span class="brief-card__value">Festival gifting · one of 120 for the team</span></div>
         </div>
-        <div class="brief-board__line" aria-hidden="true"></div>
-        <ul class="brief-board__chips" aria-label="What went inside">
-          <li class="chip">Roasted cashews &amp; dry fruits</li>
-          <li class="chip">Hand-tied dried florals</li>
-          <li class="chip">Cane-woven keepsake tray</li>
-        </ul>
-      </div>
-    </div>
-  </section>
 
-  <!-- Announcements -->
-  <section class="section section--surface section--announce" id="announcements" aria-labelledby="announce-title">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="section-head__title">
-          <p class="eyebrow">Announcements</p>
-          <h2 class="h2" id="announce-title">New for the season</h2>
-        </div>
-        <p class="body section-head__aside">Each festival brings a new theme from our studio. Every one can be tailored to the people you're gifting.</p>
-      </div>
-
-      <article class="announce__article" aria-labelledby="sankranti-title">
-        <img class="announce__img" src="assets/hamper-florals.jpg" width="720" height="720" loading="lazy"
-             alt="Dried florals and wheat tied at the top of a hamper">
-        <div class="announce__copy">
-          <p class="eyebrow eyebrow--sm">Orders open · January 2027</p>
-          <h3 class="h3" id="sankranti-title">The Sankranti Collection</h3>
-          <p class="body">A harvest theme in marigold, cane and brass — sesame sweets, jaggery treats and handcrafted keepsakes, designed around the people you are gifting.</p>
-          <a class="btn btn--sm" href="#enquire" data-enquire data-occasion="Sankranti Collection">Enquire about this theme</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Concept -->
-  <section class="section" id="concept" aria-labelledby="concept-title">
-    <div class="wrap concept">
-      <div class="concept__copy">
-        <p class="eyebrow">Our concept</p>
-        <h2 class="h2" id="concept-title">We don't keep a catalogue. <span class="accent">We keep a brief.</span></h2>
-        <p class="body">A film lover, a traveller, a new parent, a team that just shipped. Every Opulence hamper starts with the person receiving it — their interests shape the theme, the items and the finish. That is why we never list a price: each hamper is designed within your budget.</p>
-      </div>
-      <ol class="process">
-        <li><span class="process__num" aria-hidden="true">01</span><div class="process__body"><span class="process__title">Share your brief</span><span class="process__text">The occasion, the recipients, what they love, and your budget.</span></div></li>
-        <li><span class="process__num" aria-hidden="true">02</span><div class="process__body"><span class="process__title">Receive a design and quote</span><span class="process__text">We propose a theme, contents and packaging, priced within your budget.</span></div></li>
-        <li><span class="process__num" aria-hidden="true">03</span><div class="process__body"><span class="process__title">We craft and deliver</span><span class="process__text">Every hamper finished by hand and delivered wherever you need it.</span></div></li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- Our work -->
-  <section class="section section--surface" id="work" aria-labelledby="work-title">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="section-head__title">
-          <p class="eyebrow">Our work</p>
-          <h2 class="h2" id="work-title">Hampers we have designed</h2>
-        </div>
-        <p class="body section-head__aside">Hover over a hamper — or tap it — to see the occasion it was made for.</p>
-      </div>
-
-      <div class="gallery">
-        <div class="gallery__col">
-          <button type="button" class="tile" style="--h: 560">
-            <img src="assets/hamper-full.jpg" alt="" width="1024" height="1024" loading="lazy" style="object-position: 50% 60%">
-            <span class="tile__overlay">
-              <span class="tile__cat">Corporate</span>
-              <span class="tile__title">Festive hamper</span>
-              <span class="tile__meta"><span>Occasion · Festival gifting</span><span>For · [Company name] team</span></span>
-            </span>
-          </button>
-          <button type="button" class="tile" style="--h: 416">
-            <span class="tile__ph" aria-hidden="true">[Hamper photo]</span>
-            <span class="tile__overlay">
-              <span class="tile__cat">Non-Corporate</span>
-              <span class="tile__title">Wedding return gifts</span>
-              <span class="tile__meta"><span>Occasion · Wedding</span><span>For · [Family name] guests</span></span>
-            </span>
-          </button>
-        </div>
-        <div class="gallery__col">
-          <button type="button" class="tile" style="--h: 320">
-            <img src="assets/hamper-florals.jpg" alt="" width="720" height="720" loading="lazy">
-            <span class="tile__overlay">
-              <span class="tile__cat">Corporate</span>
-              <span class="tile__title">Festive hamper · florals</span>
-              <span class="tile__meta"><span>Occasion · Festival gifting</span><span>For · [Company name] team</span></span>
-            </span>
-          </button>
-          <button type="button" class="tile" style="--h: 320">
-            <span class="tile__ph" aria-hidden="true">[Hamper photo]</span>
-            <span class="tile__overlay">
-              <span class="tile__cat">Individual</span>
-              <span class="tile__title">Baby shower keepsake</span>
-              <span class="tile__meta"><span>Occasion · Baby shower</span><span>For · [Recipient]</span></span>
-            </span>
-          </button>
-          <button type="button" class="tile" style="--h: 312">
-            <span class="tile__ph" aria-hidden="true">[Hamper photo]</span>
-            <span class="tile__overlay">
-              <span class="tile__cat">Corporate</span>
-              <span class="tile__title">Client appreciation</span>
-              <span class="tile__meta"><span>Occasion · Year-end thank you</span><span>For · [Company name] clients</span></span>
-            </span>
-          </button>
-        </div>
-        <div class="gallery__col">
-          <button type="button" class="tile" style="--h: 440">
-            <img src="assets/hamper-tray.jpg" alt="" width="560" height="290" loading="lazy">
-            <span class="tile__overlay">
-              <span class="tile__cat">Non-Corporate</span>
-              <span class="tile__title">Family festival hamper</span>
-              <span class="tile__meta"><span>Occasion · Festival gathering</span><span>For · [Family name]</span></span>
-            </span>
-          </button>
-          <button type="button" class="tile" style="--h: 536">
-            <span class="tile__ph" aria-hidden="true">[Hamper photo]</span>
-            <span class="tile__overlay">
-              <span class="tile__cat">Individual</span>
-              <span class="tile__title">Anniversary hamper</span>
-              <span class="tile__meta"><span>Occasion · Wedding anniversary</span><span>For · [Recipient]</span></span>
-            </span>
-          </button>
-        </div>
-        <div class="gallery__col">
-          <button type="button" class="tile" style="--h: 380">
-            <img src="assets/hamper-tag.jpg" alt="" width="720" height="720" loading="lazy">
-            <span class="tile__overlay">
-              <span class="tile__cat">Corporate</span>
-              <span class="tile__title">Signature tag</span>
-              <span class="tile__meta"><span>Occasion · Festival gifting</span><span>For · [Company name] team</span></span>
-            </span>
-          </button>
-          <button type="button" class="tile" style="--h: 596">
-            <span class="tile__ph" aria-hidden="true">[Hamper photo]</span>
-            <span class="tile__overlay">
-              <span class="tile__cat">Corporate</span>
-              <span class="tile__title">Company anniversary</span>
-              <span class="tile__meta"><span>Occasion · Silver jubilee</span><span>For · [Company name] employees</span></span>
-            </span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Who we design for -->
-  <section class="section" aria-labelledby="ways-title">
-    <div class="wrap">
-      <div class="section-head">
-        <div class="section-head__title">
-          <p class="eyebrow">Who we design for</p>
-          <h2 class="h2" id="ways-title">Three ways to gift with Opulence</h2>
-        </div>
-      </div>
-      <div class="audiences">
-        <a class="audience audience--dark" href="corporate.html">
-          <span class="audience__top"><span>Corporate</span><span>50+ hampers</span></span>
-          <span class="audience__body">
-            <span class="audience__title">Gifting at scale, with a personal touch.</span>
-            <span class="audience__text">Festivals, anniversaries, milestones and client appreciation — branded to your company.</span>
-            <span class="audience__more">Explore corporate →</span>
-          </span>
+        <!-- The Atelier -->
+        <a href="#about" class="nav-luxury-link py-2 hover:text-gold transition-colors">
+          The Atelier
         </a>
-        <a class="audience" href="non-corporate.html">
-          <span class="audience__top"><span>Non-Corporate</span><span>20–50 hampers</span></span>
-          <span class="audience__body">
-            <span class="audience__title">For when everyone comes together.</span>
-            <span class="audience__text">Weddings, family gatherings, housewarmings and festival celebrations.</span>
-            <span class="audience__more">Explore non-corporate →</span>
-          </span>
+
+        <!-- The Craft / Process -->
+        <a href="#process" class="nav-luxury-link py-2 hover:text-gold transition-colors">
+          The Craft
         </a>
-        <a class="audience" href="individual.html">
-          <span class="audience__top"><span>Individual</span><span>Single hampers</span></span>
-          <span class="audience__body">
-            <span class="audience__title">One gift, made for one person.</span>
-            <span class="audience__text">Birthdays, baby showers and wedding anniversaries.</span>
-            <span class="audience__more">Explore individual →</span>
-          </span>
+
+        <!-- Our Work -->
+        <a href="#work" class="nav-luxury-link py-2 hover:text-gold transition-colors">
+          Our Work
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="cta-band cta-band--tall" aria-label="Request a consultation">
-    <div class="wrap cta-band__inner">
-      <h2 class="h2">Tell us who it's for. <span class="accent">We'll design the rest.</span></h2>
-      <a class="btn btn--lg" href="#enquire" data-enquire>Request a consultation</a>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer site-footer--home">
-  <div class="wrap">
-    <div class="site-footer__grid">
-      <div class="site-footer__brand">
-        <img src="assets/opulence-logo.png" alt="Opulence" width="544" height="392" loading="lazy">
-        <span class="site-footer__tag">Gifts, designed around them.</span>
-      </div>
-      <nav class="site-footer__col" aria-labelledby="ft-hampers">
-        <h2 id="ft-hampers">Hampers</h2>
-        <a href="corporate.html">Corporate</a>
-        <a href="non-corporate.html">Non-Corporate</a>
-        <a href="individual.html">Individual</a>
       </nav>
-      <div class="site-footer__col">
-        <h2>Contact</h2>
-        <a href="tel:+918106489375">+91 81064 89375</a>
-        <a href="mailto:meenankrishnavarma13@gmail.com">meenankrishnavarma13@gmail.com</a>
-      </div>
-      <div class="site-footer__col">
-        <h2>Good to know</h2>
-        <span>Delivered anywhere</span>
-        <span>Corporate orders from 50 hampers</span>
-        <span>Order at least 3 months ahead</span>
+
+      <!-- Right Action & Mobile Toggle -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Direct Quick Call Icon Button -->
+        <a href="tel:+918106489375" class="hidden sm:inline-flex items-center justify-center w-9 h-9 border border-[#E9E0D1] text-charcoal hover:text-gold hover:border-gold transition-colors" title="Direct Concierge Line">
+          <span class="material-symbols-outlined text-[17px]">call</span>
+        </a>
+
+        <!-- High-Fashion Bespoke CTA Button -->
+        <button type="button" onclick="openEnquiryModal()" class="group relative inline-flex items-center gap-2 px-5 py-2.5 overflow-hidden text-[11px] font-mono uppercase tracking-[0.16em] font-semibold border border-gold text-charcoal hover:text-white transition-colors duration-300 shadow-xs cursor-pointer">
+          <span class="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out -z-0"></span>
+          <span class="relative z-10">Personalise Hamper</span>
+          <span class="material-symbols-outlined text-[14px] relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">arrow_outward</span>
+        </button>
+
+        <!-- Mobile Menu Trigger -->
+        <button id="mobileMenuBtn" class="lg:hidden touch-target flex items-center justify-center p-2 text-charcoal hover:text-gold transition-colors focus:outline-none" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span class="material-symbols-outlined text-2xl" id="menuIcon">menu</span>
+        </button>
       </div>
     </div>
-    <div class="site-footer__base"><span>© 2026 Opulence</span><span>[Instagram] · [Address]</span></div>
-  </div>
-</footer>
 
-<!-- Enquiry modal (shared across pages) -->
-<dialog class="enquiry" id="enquire" aria-labelledby="enq-title">
-  <div class="enquiry__inner">
-    <div class="enquiry__head">
-      <div>
-        <span class="eyebrow eyebrow--sm">Request a consultation</span>
-        <h2 class="enquiry__title" id="enq-title">Tell us about your occasion</h2>
+    <!-- Mobile Drawer Navigation Overlay -->
+    <div id="mobileMenuBackdrop" class="fixed inset-0 bg-charcoal/50 backdrop-blur-xs z-40 hidden lg:hidden transition-opacity"></div>
+    <div id="mobileMenuDrawer" class="hidden lg:hidden fixed top-16 left-0 right-0 bg-white border-b border-[#E9E0D1] px-6 py-6 shadow-2xl z-50 max-h-[calc(100vh-4rem)] overflow-y-auto transition-all duration-300">
+      
+      <!-- Group 1: Curations -->
+      <div class="space-y-1 pb-4 border-b border-[#E9E0D1]/60">
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-dark font-medium block mb-2">Curations & Hampers</span>
+        <a href="corporate.html" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-medium text-charcoal">
+          <span>Corporate Gifting (50+ Units)</span>
+          <span class="material-symbols-outlined text-xs text-ash">chevron_right</span>
+        </a>
+        <a href="celebrations.html" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-medium text-charcoal">
+          <span>Celebrations & Bulk (20–50 Units)</span>
+          <span class="material-symbols-outlined text-xs text-ash">chevron_right</span>
+        </a>
+        <a href="individual.html" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-medium text-charcoal">
+          <span>Individual Hampers (Single Gifts)</span>
+          <span class="material-symbols-outlined text-xs text-ash">chevron_right</span>
+        </a>
       </div>
-      <button type="button" class="enquiry__close" data-close aria-label="Close">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1E1A14" stroke-width="1.5" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14"/></svg>
+
+      <!-- Group 2: The Studio -->
+      <div class="space-y-1 py-4 border-b border-[#E9E0D1]/60">
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-dark font-medium block mb-2">The Studio</span>
+        <a href="#about" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-medium text-charcoal">
+          <span>The Atelier & Philosophy</span>
+          <span class="material-symbols-outlined text-xs text-ash">chevron_right</span>
+        </a>
+        <a href="#process" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-medium text-charcoal">
+          <span>The Craft & Lead Times</span>
+          <span class="material-symbols-outlined text-xs text-ash">chevron_right</span>
+        </a>
+        <a href="#work" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-semibold text-gold-dark bg-gold/5 px-2">
+          <span>Our Work (Archived Commissions)</span>
+          <span class="text-[9px] font-mono px-2 py-0.5 bg-gold/15 text-gold-dark">Archive</span>
+        </a>
+      </div>
+
+      <!-- Group 3: FAQ -->
+      <div class="space-y-1 py-4">
+        <span class="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-dark font-medium block mb-2">Help & Questions</span>
+        <a href="#faq" class="mobile-nav-link py-2 hover:text-gold flex items-center justify-between text-sm font-medium text-charcoal">
+          <span>Frequently Asked Questions</span>
+          <span class="material-symbols-outlined text-xs text-ash">chevron_right</span>
+        </a>
+      </div>
+
+      <!-- Mobile CTA & Direct Hotline -->
+      <div class="mt-4 pt-4 border-t border-[#E9E0D1] flex flex-col gap-3">
+        <button type="button" onclick="closeMobileMenu(); openEnquiryModal();" class="mobile-nav-link w-full py-3.5 bg-gold text-white text-center text-xs font-mono uppercase tracking-wider font-semibold shadow-sm hover:bg-gold-dark transition-colors cursor-pointer">
+          Personalise Your Hamper
+        </button>
+        <div class="flex items-center justify-between text-xs font-mono text-ash pt-2">
+          <span class="text-charcoal font-medium">Concierge Hotline:</span>
+          <a href="tel:+918106489375" class="text-charcoal font-medium hover:text-gold underline decoration-gold">+91 81064 89375</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+
+    <!-- HERO SECTION: PRIORITIZING OUR WORK WITH TOUCH-SWIPE CAROUSEL -->
+    <section id="hero" class="pt-6 pb-12 sm:pt-8 sm:pb-16 md:py-16 border-b border-[#E9E0D1]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <!-- Hero Text (col-span 6) -->
+        <div class="lg:col-span-6 space-y-4 sm:space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#E9E0D1] text-[11px] font-mono tracking-wider uppercase text-gold-dark font-medium shadow-xs">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+            <span>BESPOKE GIFTING STUDIO · CURATED COMMISSIONS</span>
+          </div>
+
+          <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl text-charcoal font-normal leading-[1.1] sm:leading-[1.08] tracking-tight">
+            Thoughtfully Curated.<br/>
+            <span class="italic font-normal text-gold-dark">Entirely Yours.</span>
+          </h1>
+
+          <p class="text-charcoal-muted text-sm sm:text-lg leading-relaxed max-w-xl font-light">
+            Explore our archive of bespoke commissions. Every hamper is designed from scratch around your recipient, occasion, and budget—never from a static catalogue.
+          </p>
+
+          <!-- Direct Callout Banner to Archive -->
+          <a href="#work" class="group flex items-center gap-2 p-3 bg-white border-l-2 border-l-gold border-y border-r border-[#E9E0D1] text-xs font-mono text-charcoal hover:border-gold transition-colors max-w-xl shadow-xs">
+            <span class="material-symbols-outlined text-gold text-base group-hover:translate-x-0.5 transition-transform shrink-0">collections_bookmark</span>
+            <span class="text-ash font-medium hidden xs:inline">Archive:</span>
+            <span class="font-semibold text-charcoal truncate">Explore 40+ Archived Commissions in Our Work</span>
+            <span class="text-gold font-bold ml-auto shrink-0">→</span>
+          </a>
+
+          <!-- CTAs: Prominent Explore Our Work + Personalise -->
+          <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
+            <a href="#work" class="px-8 py-3.5 sm:py-4 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 text-center shadow-md flex items-center justify-center gap-2 group ring-2 ring-gold/20 touch-target">
+              <span>Explore Our Work</span>
+              <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </a>
+            <button type="button" onclick="openEnquiryModal()" class="px-7 py-3.5 sm:py-4 bg-white border border-[#DCD2C2] text-charcoal text-xs font-mono uppercase tracking-wider hover:border-charcoal hover:bg-[#FAF7F2] transition-colors text-center font-medium touch-target flex items-center justify-center cursor-pointer">
+              Commission a Hamper
+            </button>
+            <button type="button" onclick="openEnquiryModal()" class="px-5 py-3 text-xs font-mono text-ash hover:text-charcoal uppercase tracking-wider transition-colors text-center touch-target flex items-center justify-center">
+              Discuss a Brief
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 pt-1 text-[11px] sm:text-xs font-mono text-ash tracking-wide">
+            <span class="material-symbols-outlined text-gold text-base shrink-0">verified</span>
+            <span class="truncate">Made to order · Archival bespoke craft · Pan-India delivery</span>
+          </div>
+        </div>
+
+        <!-- Hero Carousel Presentation (Swipe-Enabled on Mobile) -->
+        <div class="lg:col-span-6">
+          <div id="heroCarousel" class="relative bg-white p-2.5 sm:p-4 border border-[#E9E0D1] shadow-xl group/carousel select-none" aria-roledescription="carousel" aria-label="Showcase Carousel of Previous Atelier Work">
+            <!-- Carousel Viewport with Touch Listener -->
+            <div id="carouselViewport" class="relative overflow-hidden aspect-[4/3] sm:aspect-[16/11] bg-[#1A1816] cursor-grab active:cursor-grabbing" tabindex="0">
+              <!-- Slide 1: Corporate Milestone Suite -->
+              <div class="hero-slide active" data-index="0" data-title="Corporate Milestone &amp; Board Suite" data-category="Previous Commission · Corporate Suite" data-desc="Matte debossed charcoal box, brass accessories, letterpress stationery" data-link="#work" aria-roledescription="slide" aria-label="1 of 6">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Corporate Milestone & Board Suite bespoke hamper by Opulence" class="w-full h-full object-cover object-center" draggable="false"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+              </div>
+
+              <!-- Slide 2: Festive & Wedding Heirloom Suite -->
+              <div class="hero-slide" data-index="1" data-title="Festive &amp; Wedding Heirloom Suite" data-category="Previous Commission · Festive &amp; Wedding" data-desc="Handwoven cane cask, raw silk ribbon, artisanal brass diya &amp; raw forest honey" data-link="#work" aria-roledescription="slide" aria-label="2 of 6">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHYPTU3fZ6npnEGaesi5T3VRmLSyCnM2R7uTEAtFftOczdBwNRFCNZJODXJqVDmIsVEY9YhmBdV2DP8pgL_s7W4ex9rPZaH6qM3pqfVh79DjOt9e_AIn6rpxUNL_rW3yfz_dx6WOwpPWiOTPg1yVA-MT1ud7zu0qqpUrRjniK4VEYjP94JTzoet1nY8moXyChicgy0sVXo-wPJ04Liiu7UT9DBLi0WwTyZYDopGzVZreldzNr9c9YZkA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Festive & Wedding Heirloom Suite hamper arrangement" class="w-full h-full object-cover object-center" draggable="false"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+              </div>
+
+              <!-- Slide 3: Intimate Leather & Literature Keepsake -->
+              <div class="hero-slide" data-index="2" data-title="Intimate Leather &amp; Literature Keepsake" data-category="Previous Commission · Individual Keepsake" data-desc="Handmade leather journal, vintage brass bookmark, rare tea" data-link="#work" aria-roledescription="slide" aria-label="3 of 6">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="Intimate Leather & Literature Keepsake personal gift hamper" class="w-full h-full object-cover object-center" draggable="false"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+              </div>
+
+              <!-- Slide 4: Celebration & Landmark Gathering Cask -->
+              <div class="hero-slide" data-index="3" data-title="Celebration &amp; Landmark Gathering Cask" data-category="Previous Commission · Celebrations" data-desc="Linen-wrapped box, beeswax candles, gourmet delicacies" data-link="#work" aria-roledescription="slide" aria-label="4 of 6">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Celebration & Landmark Gathering Cask gift hamper suite" class="w-full h-full object-cover object-center" draggable="false"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+              </div>
+
+              <!-- Slide 5: Executive Boardroom Provision -->
+              <div class="hero-slide" data-index="4" data-title="Executive Boardroom Provision" data-category="Previous Commission · Executive Boardroom" data-desc="Bespoke foil-debossed chest, single-origin cacao, custom letterpress" data-link="#work" aria-roledescription="slide" aria-label="5 of 6">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnjKU1bXCZulCgHP05r1gOANnoDQmYVTqIKo9i0nYDZiNELfLHV3NQ0oupr9k0f7COpLup0ZOL7ZTnPdxvM56rWKPifY-Ww1w1Qp4eKvKF7gT7ycD2LuCRvUQxvucPwhrsV2OY7RCNQ2_m3Gf_X0T-5-3l1kFsq1bYOsT7mNIsB_23BDhOYY9qWLiAIGg659mQrjKiNIEu_l9P--trxnHqxyEs68R4yn2QhK5qDTlq4lWuaSFXZE4Dqw" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Executive Boardroom Provision dark luxury gift chest" class="w-full h-full object-cover object-center" draggable="false"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+              </div>
+
+              <!-- Slide 6: Warm Personal Birthday Tribute -->
+              <div class="hero-slide" data-index="5" data-title="Warm Personal Birthday Tribute" data-category="Previous Commission · Personal Celebration" data-desc="Hand-poured wax seal card, botanicals, ceramic candle" data-link="#work" aria-roledescription="slide" aria-label="6 of 6">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1Xh-n5EnQZbDwRSnIRW6p5rR4oM7BCfBo_2YnixNMbPnhQld2VyaFUWNJBRWQaD41-OCtwkO9Eez1ldTKvWXf2nTCbyr5My9fvqPw9RB-NYIMzETtwiRxxriTsXG1_gav_ZxLbNxeOGdkRGNTRYLTyoubpDWzrxnJjpPzxOYJgusCm4xsc9B4r4Hf5LLgLW-dvm43KMxcfsZFdf8xntCDYAn25zy2pKgHzqLjH7lqheJiAE3MCfXl-npA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Warm Personal Birthday Tribute emotional personal hamper" class="w-full h-full object-cover object-center" draggable="false"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+              </div>
+
+              <!-- Mobile-Optimized Floating Commission Overlay -->
+              <div class="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 z-20 pointer-events-none">
+                <div class="bg-black/80 backdrop-blur-md border border-white/15 p-2.5 sm:p-4 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 shadow-2xl pointer-events-auto">
+                  <div class="space-y-0.5 max-w-sm">
+                    <div class="flex items-center gap-1.5 sm:gap-2">
+                      <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>
+                      <span id="slideBadgeCategory" class="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-gold-light truncate">Previous Commission · Corporate Suite</span>
+                    </div>
+                    <h3 id="slideBadgeTitle" class="font-serif text-base sm:text-xl text-white font-normal leading-tight truncate">Corporate Milestone &amp; Board Suite</h3>
+                    <p id="slideBadgeDesc" class="text-[10px] sm:text-[11px] text-[#DDD6CA] font-sans line-clamp-1 hidden xs:block">Matte debossed charcoal box, brass accessories, letterpress stationery</p>
+                  </div>
+                  <a href="#work" id="slideBadgeLink" class="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-gold/90 hover:bg-gold text-white text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold whitespace-nowrap transition-colors touch-target">
+                    <span>View in Our Work</span>
+                    <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Top Right Live Counter Badge -->
+              <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-20 bg-black/75 backdrop-blur-xs px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-mono text-white border border-white/20 flex items-center gap-1">
+                <span id="currentSlideNum" class="text-gold">01</span>
+                <span class="text-white/40">/</span>
+                <span class="text-white/70">06</span>
+              </div>
+
+              <!-- Play/Pause Indicator -->
+              <button id="carouselPlayPauseBtn" type="button" class="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-20 bg-black/60 hover:bg-black/90 text-white/80 hover:text-white p-1.5 sm:p-2 border border-white/15 transition-colors focus:outline-none touch-target flex items-center justify-center" aria-label="Pause automated slide rotation">
+                <span class="material-symbols-outlined text-sm sm:text-base block" id="carouselPlayPauseIcon">pause</span>
+              </button>
+
+              <!-- Touch-Friendly Navigation Arrows -->
+              <button id="carouselPrevBtn" type="button" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/70 hover:bg-gold text-white flex items-center justify-center border border-white/20 transition-all opacity-85 sm:opacity-0 sm:group-hover/carousel:opacity-100 focus:opacity-100 touch-target" aria-label="Previous archived work slide">
+                <span class="material-symbols-outlined text-lg">arrow_back</span>
+              </button>
+              <button id="carouselNextBtn" type="button" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/70 hover:bg-gold text-white flex items-center justify-center border border-white/20 transition-all opacity-85 sm:opacity-0 sm:group-hover/carousel:opacity-100 focus:opacity-100 touch-target" aria-label="Next archived work slide">
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+              </button>
+            </div>
+
+            <!-- Progress & Controls Row -->
+            <div class="mt-2.5 sm:mt-3 py-2 px-3 bg-[#F7F3EB] border border-[#E9E0D1] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
+              <div class="flex items-center gap-2">
+                <span class="text-ash text-[10px] sm:text-[11px]">Archived Work:</span>
+                <div class="flex items-center gap-1.5" id="carouselDots">
+                  <button type="button" class="carousel-dot w-6 h-2 bg-gold transition-all" data-index="0" aria-label="Jump to slide 1"></button>
+                  <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="1" aria-label="Jump to slide 2"></button>
+                  <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="2" aria-label="Jump to slide 3"></button>
+                  <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="3" aria-label="Jump to slide 4"></button>
+                  <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="4" aria-label="Jump to slide 5"></button>
+                  <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="5" aria-label="Jump to slide 6"></button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between w-full sm:w-auto gap-3">
+                <span class="text-[10px] sm:text-[11px] text-ash">Swipe or 4s auto</span>
+                <a href="#work" class="text-gold-dark font-serif italic text-xs sm:text-sm hover:underline">Explore Full Archive →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FESTIVE ANNOUNCEMENT (DIWALI & CHRISTMAS COMMISSIONS) -->
+    <section id="announcement" class="py-10 sm:py-16 md:py-20 border-b border-[#E9E0D1] bg-[#FAF7F2] relative overflow-hidden">
+      <!-- Anchor alias for seasonal links -->
+      <span id="seasonal" class="absolute -top-24"></span>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- Left: Announcement Copy & CTAs (col-span 5) -->
+        <div class="lg:col-span-5 space-y-4 sm:space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#E9E0D1] text-[11px] font-mono tracking-wider uppercase text-gold-dark font-medium shadow-xs">
+            <span class="w-2 h-2 rounded-full bg-gold inline-block animate-pulse shrink-0"></span>
+            <span id="announcementLiveBadge">UPCOMING FESTIVE COMMISSIONS</span>
+          </div>
+
+          <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-[1.1] tracking-tight">
+            Festive Curations Ahead.<br/>
+            <span class="italic font-normal text-gold-dark">Diwali, Christmas &amp; New Year.</span>
+          </h2>
+
+          <p class="text-charcoal-muted text-sm sm:text-base leading-relaxed font-light">
+            We are now designing and accepting bespoke commissions for the upcoming celebratory season. From radiant <strong class="text-charcoal font-medium">Diwali heirloom suites</strong> with hand-poured brass lamps and artisanal sweets, to warm <strong class="text-charcoal font-medium">Christmas &amp; winter cocoa hampers</strong> and <strong class="text-charcoal font-medium">New Year 2027</strong> milestone curations.
+          </p>
+
+          <!-- Active Dynamic Backend Banner Container (Loaded from API) -->
+          <div id="activeBannerCallout" class="hidden"></div>
+          <div id="dynamicBannerContainer" class="hidden"></div>
+
+          <!-- Lead Time & Booking Notice Box -->
+          <div class="p-3.5 bg-white border-l-2 border-l-gold border-y border-r border-[#E9E0D1] space-y-1 shadow-xs">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="font-semibold text-charcoal flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-gold text-base">schedule</span>
+                <span>Atelier Lead Time: 3 Months</span>
+              </span>
+              <span class="text-gold-dark text-[11px] uppercase tracking-wider font-semibold">Limited Slots</span>
+            </div>
+            <p class="text-[11px] font-sans text-ash leading-relaxed">
+              To ensure handcrafted packaging, custom gold foiling, and freshly crafted artisanal confectionery, we recommend reserving your slots in advance.
+            </p>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
+            <button type="button" onclick="preselectOccasion('Diwali &amp; Christmas Festive Gifting')" class="px-7 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 text-center shadow-md flex items-center justify-center gap-2 group touch-target">
+              <span>Reserve Festive Commission</span>
+              <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+            </button>
+            <a href="celebrations.html" class="px-6 py-3.5 bg-white border border-[#DCD2C2] text-charcoal text-xs font-mono uppercase tracking-wider hover:border-charcoal hover:bg-[#FAF7F2] transition-colors text-center font-medium touch-target flex items-center justify-center">
+              View Celebration Suites
+            </a>
+          </div>
+
+          <div class="flex items-center gap-3 pt-1 text-[11px] font-mono text-ash">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-gold text-sm">verified</span>
+              <span>Small-batch crafting</span>
+            </span>
+            <span>·</span>
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-gold text-sm">local_shipping</span>
+              <span>Pan-India delivery</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Right: Creative Auto-Scrolling Picture Reel (col-span 7) -->
+        <div class="lg:col-span-7">
+          <div class="relative bg-white p-3 sm:p-5 border border-[#E9E0D1] shadow-xl overflow-hidden group/marquee">
+            
+            <!-- Header bar for the reel -->
+            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#FAF7F2] text-xs font-mono">
+              <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                <span class="text-charcoal font-semibold text-[11px] sm:text-xs tracking-wider uppercase">Festive Edition Gallery</span>
+                <span class="text-ash text-[10px] hidden sm:inline">(Auto-scrolling showcase)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] text-ash hidden md:inline">Hover to pause</span>
+                <button id="festiveMarqueeToggle" type="button" class="p-1 sm:p-1.5 border border-[#E9E0D1] hover:border-gold text-charcoal hover:text-gold transition-colors touch-target flex items-center justify-center" aria-label="Pause automated scroll">
+                  <span class="material-symbols-outlined text-sm" id="festiveMarqueeIcon">pause</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Auto-scrolling Masked Track -->
+            <div class="festive-marquee-container py-1">
+              <div id="festiveMarqueeTrack" class="festive-marquee-track">
+                
+                <!-- Card 1: Diwali Luminary -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHYPTU3fZ6npnEGaesi5T3VRmLSyCnM2R7uTEAtFftOczdBwNRFCNZJODXJqVDmIsVEY9YhmBdV2DP8pgL_s7W4ex9rPZaH6qM3pqfVh79DjOt9e_AIn6rpxUNL_rW3yfz_dx6WOwpPWiOTPg1yVA-MT1ud7zu0qqpUrRjniK4VEYjP94JTzoet1nY8moXyChicgy0sVXo-wPJ04Liiu7UT9DBLi0WwTyZYDopGzVZreldzNr9c9YZkA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Diwali Heirloom Hamper" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        Diwali 2026 Edition
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Diwali Royal Luminary</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Pure brass deepam, roasted mamra almonds, saffron honey &amp; gold-foiled greetings.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Artisanal Sweets</span>
+                    <button type="button" onclick="preselectOccasion('Diwali Royal Luminary')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Card 2: Christmas Winter Velvet -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Christmas &amp; Winter Hamper" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        Christmas Holidays
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Christmas Spiced Velvet</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Single-origin dark cacao, spiced winter tea, pine cones &amp; hand-poured clove candle.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Warm Botanicals</span>
+                    <button type="button" onclick="preselectOccasion('Christmas Spiced Velvet')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Card 3: New Year Midnight Sovereign -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="New Year 2027 Hamper" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        New Year 2027
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">New Year Midnight Sovereign</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Single-origin Araku Valley roast, embossed leather journal &amp; Belgian pralines.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Executive Box</span>
+                    <button type="button" onclick="preselectOccasion('New Year Midnight Sovereign')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Card 4: Sankranti & Harvest Cane Tray -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Sankranti Cane Tray" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        Sankranti Harvest
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">The Harvest Cane Tray</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Hand-woven cane tray, sesame jaggery crunch, medjool dates &amp; brass puja bell.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Family Tradition</span>
+                    <button type="button" onclick="preselectOccasion('Sankranti Harvest')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- [CLONES FOR SEAMLESS INFINITE LOOP] -->
+                <!-- Clone 1: Diwali Luminary -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHYPTU3fZ6npnEGaesi5T3VRmLSyCnM2R7uTEAtFftOczdBwNRFCNZJODXJqVDmIsVEY9YhmBdV2DP8pgL_s7W4ex9rPZaH6qM3pqfVh79DjOt9e_AIn6rpxUNL_rW3yfz_dx6WOwpPWiOTPg1yVA-MT1ud7zu0qqpUrRjniK4VEYjP94JTzoet1nY8moXyChicgy0sVXo-wPJ04Liiu7UT9DBLi0WwTyZYDopGzVZreldzNr9c9YZkA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        Diwali 2026 Edition
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Diwali Royal Luminary</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Pure brass deepam, roasted mamra almonds, saffron honey &amp; gold-foiled greetings.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Artisanal Sweets</span>
+                    <button type="button" onclick="preselectOccasion('Diwali Royal Luminary')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Clone 2: Christmas Winter Velvet -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        Christmas Holidays
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Christmas Spiced Velvet</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Single-origin dark cacao, spiced winter tea, pine cones &amp; hand-poured clove candle.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Warm Botanicals</span>
+                    <button type="button" onclick="preselectOccasion('Christmas Spiced Velvet')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Clone 3: New Year Midnight Sovereign -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        New Year 2027
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">New Year Midnight Sovereign</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Single-origin Araku Valley roast, embossed leather journal &amp; Belgian pralines.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Executive Box</span>
+                    <button type="button" onclick="preselectOccasion('New Year Midnight Sovereign')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Clone 4: Sankranti & Harvest Cane Tray -->
+                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
+                  <div class="space-y-2.5">
+                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
+                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
+                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
+                        Sankranti Harvest
+                      </div>
+                    </div>
+                    <div>
+                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">The Harvest Cane Tray</h4>
+                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
+                        Hand-woven cane tray, sesame jaggery crunch, medjool dates &amp; brass puja bell.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
+                    <span class="text-[10px] text-ash">Family Tradition</span>
+                    <button type="button" onclick="preselectOccasion('Sankranti Harvest')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
+                      <span>Reserve</span>
+                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Bottom reel status -->
+            <div class="mt-3 pt-2 px-1 border-t border-[#FAF7F2] flex items-center justify-between text-[11px] font-mono text-ash">
+              <span class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-gold text-xs">auto_awesome</span>
+                <span>Automatic continuous showcase · Touch to pause</span>
+              </span>
+              <a href="celebrations.html" class="text-gold-dark hover:text-charcoal hover:underline">Explore All Collections →</a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: ABOUT US (#about) -->
+    <section id="about" class="py-12 sm:py-16 md:py-24 border-b border-[#E9E0D1]">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+        <!-- Left Image -->
+        <div class="lg:col-span-5 order-2 lg:order-1">
+          <div class="relative p-2.5 sm:p-3 bg-white border border-[#E9E0D1] shadow-sm">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="Tactile gift curation by Opulence" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
+            </div>
+            <div class="p-2.5 sm:p-3 bg-[#F7F3EB] border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+              <span>Tactile selection · Artisanal details</span>
+              <span class="text-gold font-medium">Bespoke Gifting</span>
+            </div>
+          </div>
+        </div>
+        <!-- Right Narrative -->
+        <div class="lg:col-span-7 order-1 lg:order-2 space-y-4 sm:space-y-6">
+          <div class="text-[11px] font-mono uppercase tracking-wider text-gold-dark font-medium">
+            ABOUT OPULENCE
+          </div>
+          <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-tight">
+            A More Personal Way to Gift
+          </h2>
+          <p class="text-charcoal-muted text-sm sm:text-lg leading-relaxed font-light">
+            At Opulence, gifting begins with understanding the person, occasion, and intention behind every gift. We bring together carefully selected products, thoughtful presentation, personalised details, and considered packaging to create hampers that feel meaningful to the people receiving them.
+          </p>
+          <p class="text-charcoal-muted text-xs sm:text-base leading-relaxed font-light">
+            From corporate gifting to personal celebrations, every hamper is planned around your preferences and budget. We reject cookie-cutter catalogs in favour of authentic collaboration—ensuring each artifact carries warmth, elegance, and purpose.
+          </p>
+          <div class="grid grid-cols-3 gap-3 sm:gap-6 pt-4 border-t border-[#E9E0D1] font-mono text-xs">
+            <div>
+              <span class="block text-lg sm:text-xl font-serif text-charcoal font-medium">Considered</span>
+              <span class="text-ash text-[10px] sm:text-[11px]">Product Selection</span>
+            </div>
+            <div>
+              <span class="block text-lg sm:text-xl font-serif text-charcoal font-medium">Tailored</span>
+              <span class="text-ash text-[10px] sm:text-[11px]">Packaging & Ribbons</span>
+            </div>
+            <div>
+              <span class="block text-lg sm:text-xl font-serif text-charcoal font-medium">Dedicated</span>
+              <span class="text-ash text-[10px] sm:text-[11px]">Coordination</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THREE GIFTING CATEGORIES (#categories) -->
+    <section id="categories" class="py-12 sm:py-16 md:py-24 border-b border-[#E9E0D1]">
+      <div class="max-w-2xl mx-auto text-center space-y-2 sm:space-y-3 mb-10 sm:mb-14">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-gold-dark font-medium">GIFTING SUITES</div>
+        <h2 class="font-serif text-2xl sm:text-4xl md:text-5xl text-charcoal font-normal">
+          Curated for Every Milestone
+        </h2>
+        <p class="text-charcoal-muted text-xs sm:text-base font-light">
+          Whether honoring enterprise relationships or expressing intimate gratitude, explore our three core gifting directions.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
+        <!-- Category 1: Corporate Gifting (Dominant 6-cols) -->
+        <div class="lg:col-span-12 xl:col-span-6 bg-white border-2 border-gold/40 p-5 sm:p-8 flex flex-col justify-between shadow-md relative group hover:border-gold transition-all duration-300">
+          <div class="space-y-4 sm:space-y-5">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="px-2.5 py-1 bg-gold/10 text-gold-dark font-medium uppercase tracking-wider text-[10px] sm:text-xs">CATEGORY 01 · PRIORITY</span>
+              <span class="text-ash text-[11px]">Institutional & Executive</span>
+            </div>
+            <div class="overflow-hidden aspect-[16/9] border border-[#E9E0D1]">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Opulence Corporate Gift Hamper" class="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"/>
+            </div>
+            <div>
+              <h3 class="font-serif text-xl sm:text-3xl text-charcoal mt-2 mb-2 font-normal">Corporate Gifting</h3>
+              <p class="text-charcoal-muted text-xs sm:text-base leading-relaxed font-light">
+                Thoughtfully curated hampers for clients, employees, partners, events, and business milestones. Personalise packaging, ribbons, and message cards with your brand identity.
+              </p>
+            </div>
+          </div>
+          <div class="pt-5 mt-5 border-t border-[#E9E0D1] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span class="text-xs font-mono text-ash">Complete branding & bulk logistics</span>
+            <a href="corporate.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-charcoal text-white text-xs font-mono uppercase tracking-wider hover:bg-gold transition-colors font-medium touch-target">
+              <span>Explore Corporate Gifting</span>
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Category 2: Celebrations & Bulk Gifting -->
+        <div class="lg:col-span-6 xl:col-span-3 bg-white border border-[#E9E0D1] p-5 sm:p-6 flex flex-col justify-between shadow-sm group hover:border-gold transition-colors">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-gold-dark font-medium uppercase tracking-wider text-[10px] sm:text-xs">CATEGORY 02</span>
+              <span class="text-ash text-[11px]">Gatherings</span>
+            </div>
+            <div class="overflow-hidden aspect-[4/3] border border-[#E9E0D1]">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Celebration and wedding hampers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <h3 class="font-serif text-xl sm:text-2xl text-charcoal font-normal">Celebrations & Bulk Gifting</h3>
+            <p class="text-charcoal-muted text-xs sm:text-sm leading-relaxed font-light">
+              Personalised hampers for family celebrations, festivals, weddings, and special occasions—designed around your theme, recipients, and budget.
+            </p>
+          </div>
+          <div class="pt-5 mt-4 border-t border-[#E9E0D1]">
+            <a href="celebrations.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal transition-colors touch-target">
+              <span>Explore Celebrations</span>
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Category 3: Individual Hampers -->
+        <div class="lg:col-span-6 xl:col-span-3 bg-white border border-[#E9E0D1] p-5 sm:p-6 flex flex-col justify-between shadow-sm group hover:border-gold transition-colors">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-gold-dark font-medium uppercase tracking-wider text-[10px] sm:text-xs">CATEGORY 03</span>
+              <span class="text-ash text-[11px]">Intimate</span>
+            </div>
+            <div class="overflow-hidden aspect-[4/3] border border-[#E9E0D1]">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1Xh-n5EnQZbDwRSnIRW6p5rR4oM7BCfBo_2YnixNMbPnhQld2VyaFUWNJBRWQaD41-OCtwkO9Eez1ldTKvWXf2nTCbyr5My9fvqPw9RB-NYIMzETtwiRxxriTsXG1_gav_ZxLbNxeOGdkRGNTRYLTyoubpDWzrxnJjpPzxOYJgusCm4xsc9B4r4Hf5LLgLW-dvm43KMxcfsZFdf8xntCDYAn25zy2pKgHzqLjH7lqheJiAE3MCfXl-npA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Individual personalized hamper" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+            </div>
+            <h3 class="font-serif text-xl sm:text-2xl text-charcoal font-normal">Individual Hampers</h3>
+            <p class="text-charcoal-muted text-xs sm:text-sm leading-relaxed font-light">
+              A personal gift, thoughtfully put together. Choose a theme, select meaningful items, and create a hamper for someone special.
+            </p>
+          </div>
+          <div class="pt-5 mt-4 border-t border-[#E9E0D1]">
+            <a href="individual.html" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal transition-colors touch-target">
+              <span>Explore Individual Hampers</span>
+              <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: DEDICATED CORPORATE GIFTING (#corporate) -->
+    <section id="corporate" class="py-12 sm:py-16 md:py-24 border-b border-[#E9E0D1] bg-[#FAF7F2]">
+      <div class="bg-white border border-[#E9E0D1] p-5 sm:p-10 lg:p-14 shadow-md">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+          <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+            <div class="inline-block px-3 py-1 bg-[#F7F3EB] border border-[#E9E0D1] text-[11px] font-mono tracking-wider uppercase text-gold-dark font-medium">
+              CONSIDERED BUSINESS PARTNERSHIPS
+            </div>
+            <h2 class="font-serif text-2xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-tight">
+              Corporate Gifting, Thoughtfully Done
+            </h2>
+            <p class="text-charcoal-muted text-sm sm:text-base leading-relaxed font-light">
+              Create a consistent gifting experience for clients, employees, partners, and business events. We tailor hamper selections, packaging, ribbons, and message cards to your brand identity.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-[#E9E0D1] text-xs font-mono text-charcoal">
+              <div class="flex items-start gap-2.5 p-2.5 bg-[#FAF7F2] border border-[#E9E0D1]">
+                <span class="material-symbols-outlined text-gold text-lg shrink-0">check_circle</span>
+                <span>Personalised gifting concepts</span>
+              </div>
+              <div class="flex items-start gap-2.5 p-2.5 bg-[#FAF7F2] border border-[#E9E0D1]">
+                <span class="material-symbols-outlined text-gold text-lg shrink-0">check_circle</span>
+                <span>Branding on packaging & cards</span>
+              </div>
+              <div class="flex items-start gap-2.5 p-2.5 bg-[#FAF7F2] border border-[#E9E0D1]">
+                <span class="material-symbols-outlined text-gold text-lg shrink-0">check_circle</span>
+                <span>Selection tailored to budget</span>
+              </div>
+              <div class="flex items-start gap-2.5 p-2.5 bg-[#FAF7F2] border border-[#E9E0D1]">
+                <span class="material-symbols-outlined text-gold text-lg shrink-0">check_circle</span>
+                <span>Reliable bulk-order coordination</span>
+              </div>
+              <div class="flex items-start gap-2.5 p-2.5 bg-[#FAF7F2] border border-[#E9E0D1]">
+                <span class="material-symbols-outlined text-gold text-lg shrink-0">check_circle</span>
+                <span>Single or multi-destination dispatch</span>
+              </div>
+              <div class="flex items-start gap-2.5 p-2.5 bg-[#FAF7F2] border border-[#E9E0D1]">
+                <span class="material-symbols-outlined text-gold text-lg shrink-0">check_circle</span>
+                <span>Dedicated single point of contact</span>
+              </div>
+            </div>
+            <div class="pt-3 flex flex-col sm:flex-row sm:items-center gap-3">
+              <button type="button" onclick="preselectCorporateEnquiry()" class="px-8 py-3.5 sm:py-4 bg-gold text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold-dark transition-all duration-300 shadow-sm flex items-center justify-center gap-2 touch-target">
+                <span>Discuss a Corporate Order</span>
+                <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+              </button>
+              <span class="text-xs font-mono text-ash text-center sm:text-left">
+                Direct hotline: <a href="tel:+918106489375" class="text-charcoal font-medium hover:text-gold">+91 81064 89375</a>
+              </span>
+            </div>
+          </div>
+          <div class="lg:col-span-5">
+            <div class="relative p-2.5 sm:p-3 bg-[#FAF7F2] border border-[#E9E0D1]">
+              <div class="overflow-hidden aspect-square sm:aspect-[4/5]">
+                <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnjKU1bXCZulCgHP05r1gOANnoDQmYVTqIKo9i0nYDZiNELfLHV3NQ0oupr9k0f7COpLup0ZOL7ZTnPdxvM56rWKPifY-Ww1w1Qp4eKvKF7gT7ycD2LuCRvUQxvucPwhrsV2OY7RCNQ2_m3Gf_X0T-5-3l1kFsq1bYOsT7mNIsB_23BDhOYY9qWLiAIGg659mQrjKiNIEu_l9P--trxnHqxyEs68R4yn2QhK5qDTlq4lWuaSFXZE4Dqw" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Corporate branded gift suite by Opulence" class="w-full h-full object-cover"/>
+              </div>
+              <div class="mt-2.5 sm:mt-3 p-2.5 sm:p-3 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal flex justify-between items-center">
+                <span>Tailored for boardrooms & milestones</span>
+                <span class="text-gold font-medium">Bespoke Foil & Linen</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: HOW IT WORKS (#process) -->
+    <section id="process" class="py-12 sm:py-16 md:py-24 border-b border-[#E9E0D1]">
+      <div class="max-w-2xl mx-auto text-center space-y-2 sm:space-y-3 mb-10 sm:mb-14">
+        <div class="text-[11px] font-mono uppercase tracking-wider text-gold-dark font-medium">THE ATELIER PROCESS</div>
+        <h2 class="font-serif text-2xl sm:text-4xl md:text-5xl text-charcoal font-normal">
+          From Your Idea to a Thoughtful Gift
+        </h2>
+        <p class="text-charcoal-muted text-xs sm:text-base font-light">
+          A seamless collaborative journey ensuring every hamper arrives impeccably composed.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="bg-white border border-[#E9E0D1] p-5 sm:p-6 space-y-3 hover:border-gold transition-colors">
+          <div class="text-xs font-mono text-gold-dark font-semibold">01</div>
+          <h3 class="font-serif text-lg sm:text-xl text-charcoal">Explore & Plan</h3>
+          <p class="text-charcoal-muted text-xs leading-relaxed font-light">
+            Review gifting categories and consider occasion, recipients, items, packaging, and target budget.
+          </p>
+        </div>
+        <div class="bg-white border border-[#E9E0D1] p-5 sm:p-6 space-y-3 hover:border-gold transition-colors">
+          <div class="text-xs font-mono text-gold-dark font-semibold">02</div>
+          <h3 class="font-serif text-lg sm:text-xl text-charcoal">Share Your Brief</h3>
+          <p class="text-charcoal-muted text-xs leading-relaxed font-light">
+            Tell us about requirements, quantities, addresses, delivery dates, and custom branding needs.
+          </p>
+        </div>
+        <div class="bg-white border border-[#E9E0D1] p-5 sm:p-6 space-y-3 hover:border-gold transition-colors">
+          <div class="text-xs font-mono text-gold-dark font-semibold">03</div>
+          <h3 class="font-serif text-lg sm:text-xl text-charcoal">Receive Proposal</h3>
+          <p class="text-charcoal-muted text-xs leading-relaxed font-light">
+            Our atelier reviews requirements and builds a bespoke combination with a transparent quotation.
+          </p>
+        </div>
+        <div class="bg-white border border-[#E9E0D1] p-5 sm:p-6 space-y-3 hover:border-gold transition-colors">
+          <div class="text-xs font-mono text-gold-dark font-semibold">04</div>
+          <h3 class="font-serif text-lg sm:text-xl text-charcoal">Approve & Deliver</h3>
+          <p class="text-charcoal-muted text-xs leading-relaxed font-light">
+            Once approved, we coordinate fabrication, ribboning, handwritten stationery, and flawless delivery.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 p-3 sm:p-4 bg-[#F7F3EB] border border-[#E9E0D1] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-charcoal-muted">
+        <div class="flex items-start sm:items-center gap-2">
+          <span class="material-symbols-outlined text-gold shrink-0">schedule</span>
+          <span>We recommend enquiring at least 3 months ahead for custom fabrication & personal coordination.</span>
+        </div>
+        <button type="button" onclick="openEnquiryModal()" class="text-gold-dark font-semibold hover:text-charcoal whitespace-nowrap self-end sm:self-auto cursor-pointer">Send Brief Now →</button>
+      </div>
+    </section>
+
+    <!-- SECTION: OUR WORK / PORTFOLIO (#work) -->
+    <section id="work" class="py-12 sm:py-16 md:py-24 border-b border-[#E9E0D1]">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-6 sm:mb-8 gap-4 sm:gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-[#E9E0D1] text-[10px] font-mono uppercase tracking-wider text-gold-dark font-semibold mb-2">
+            <span>ATELIER ARCHIVE · 40+ COMMISSIONS CURATED</span>
+          </div>
+          <h2 class="font-serif text-2xl sm:text-4xl md:text-5xl text-charcoal font-normal">
+            A Look at Our Work
+          </h2>
+        </div>
+        <p class="text-charcoal-muted text-xs sm:text-sm font-light max-w-md">
+          Explore previous bespoke commissions, thoughtful combinations, and tactile presentation details created for institutions and intimate milestones.
+        </p>
+      </div>
+
+      <!-- Mobile-Optimized Horizontal Scroll Filter Bar -->
+      <div id="portfolioFilterBar" class="flex items-center gap-2 mb-6 sm:mb-8 border-b border-[#E9E0D1] pb-3 text-xs font-mono overflow-x-auto no-scrollbar whitespace-nowrap -mx-4 px-4 sm:mx-0 sm:px-0">
+        <button type="button" class="portfolio-filter-btn shrink-0 px-3.5 py-2 border border-gold bg-[#FAF7F2] text-charcoal font-medium touch-target" data-filter="all">All Commissions</button>
+        <button type="button" class="portfolio-filter-btn shrink-0 px-3.5 py-2 border border-[#E9E0D1] bg-white text-ash hover:border-gold transition-colors touch-target" data-filter="corporate">Corporate & Executive</button>
+        <button type="button" class="portfolio-filter-btn shrink-0 px-3.5 py-2 border border-[#E9E0D1] bg-white text-ash hover:border-gold transition-colors touch-target" data-filter="celebrations">Celebrations & Weddings</button>
+        <button type="button" class="portfolio-filter-btn shrink-0 px-3.5 py-2 border border-[#E9E0D1] bg-white text-ash hover:border-gold transition-colors touch-target" data-filter="individual">Individual Keepsakes</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <!-- Commission 1: Corporate Milestone Suite -->
+        <div class="portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between" data-category="corporate">
+          <div>
+            <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Corporate Milestone & Board Suite by Opulence" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Corporate Milestone</span>
+            </div>
+            <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">Executive Milestone Suite</h3>
+            <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">
+              Single-origin roast beans, beaten brass measuring scoop, 74% Venezuelan cacao, and custom letterpress corporate message card in charcoal rigid linen box.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+            <span>Client partner milestone</span>
+            <button type="button" onclick="openHamperModal('Executive Milestone Suite', 'Single-origin roast beans, beaten brass measuring spoon, 74% Venezuelan chocolate bar, debossed rigid charcoal box with satin ribbon.', 'Corporate Gifting')" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+          </div>
+        </div>
+
+        <!-- Commission 2: Festive & Wedding Heirloom Suite -->
+        <div class="portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between" data-category="celebrations">
+          <div>
+            <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHYPTU3fZ6npnEGaesi5T3VRmLSyCnM2R7uTEAtFftOczdBwNRFCNZJODXJqVDmIsVEY9YhmBdV2DP8pgL_s7W4ex9rPZaH6qM3pqfVh79DjOt9e_AIn6rpxUNL_rW3yfz_dx6WOwpPWiOTPg1yVA-MT1ud7zu0qqpUrRjniK4VEYjP94JTzoet1nY8moXyChicgy0sVXo-wPJ04Liiu7UT9DBLi0WwTyZYDopGzVZreldzNr9c9YZkA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Festive & Wedding Heirloom Suite" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Festive & Wedding</span>
+            </div>
+            <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">Festive & Wedding Heirloom Suite</h3>
+            <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">
+              Handwoven natural cane box, raw silk and soft gold ribbon, heritage brass diya, raw forest honey jar, artisanal dry fruit confections, and fresh jasmine botanicals.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+            <span>Seasonal union & family</span>
+            <button type="button" onclick="openHamperModal('Festive & Wedding Heirloom Suite', 'Handwoven cane box, pure silk ribbons, brass heirloom oil lamp, forest honey, gourmet cashews & dates.', 'Celebrations & Weddings')" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+          </div>
+        </div>
+
+        <!-- Commission 3: Intimate Leather & Literature Keepsake -->
+        <div class="portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between" data-category="individual">
+          <div>
+            <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="Intimate Leather & Literature Keepsake Hamper" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Individual Keepsake</span>
+            </div>
+            <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">Leather & Literature Keepsake</h3>
+            <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">
+              Hand-bound leather travel journal, engraved solid brass bookmark, first-flush Darjeeling tea tin, and artisan dark chocolate bonbons on natural wood valet tray.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+            <span>Milestone anniversary</span>
+            <button type="button" onclick="openHamperModal('Leather & Literature Keepsake', 'Vegetable-tanned monogrammed journal, engraved solid brass bookmark, supreme Darjeeling tea canister, dusted chocolate bonbons.', 'Individual Keepsake')" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+          </div>
+        </div>
+
+        <!-- Commission 4: Linen & Wildflower Celebration -->
+        <div class="portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between" data-category="celebrations">
+          <div>
+            <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Celebration & Gathering Cask Hamper" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Celebrations</span>
+            </div>
+            <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">Linen & Wildflower Celebration</h3>
+            <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">
+              Raw forest honey flagon, handmade vanilla shortbread jar, hand-poured beeswax pillar votive, and wax-sealed botanical calligraphy card in woven linen hampers.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+            <span>Wedding welcome suites</span>
+            <button type="button" onclick="openHamperModal('Linen & Wildflower Celebration', 'Wild organic honey jar, artisan cookies, botanical hand-poured beeswax votive, handwritten congratulations card in woven linen hamper.', 'Celebrations & Bulk')" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+          </div>
+        </div>
+
+        <!-- Commission 5: Executive Boardroom Provision -->
+        <div class="portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between" data-category="corporate">
+          <div>
+            <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnjKU1bXCZulCgHP05r1gOANnoDQmYVTqIKo9i0nYDZiNELfLHV3NQ0oupr9k0f7COpLup0ZOL7ZTnPdxvM56rWKPifY-Ww1w1Qp4eKvKF7gT7ycD2LuCRvUQxvucPwhrsV2OY7RCNQ2_m3Gf_X0T-5-3l1kFsq1bYOsT7mNIsB_23BDhOYY9qWLiAIGg659mQrjKiNIEu_l9P--trxnHqxyEs68R4yn2QhK5qDTlq4lWuaSFXZE4Dqw" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Executive Boardroom Provision dark luxury gift chest" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Corporate Board</span>
+            </div>
+            <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">Executive Boardroom Provision</h3>
+            <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">
+              Bespoke foil-debossed charcoal box, single-origin Guatemala roast pouch, artisanal truffles, fig preserve, sandalwood votive, and engraved brass paper blade.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+            <span>Directors & partners</span>
+            <button type="button" onclick="openHamperModal('Executive Boardroom Provision', 'Dark charcoal foil-stamped chest, single-origin Guatemala coffee, artisanal chocolate truffles, sandalwood candle, brass letter opener.', 'Corporate & Executive')" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+          </div>
+        </div>
+
+        <!-- Commission 6: Warm Personal Birthday Tribute -->
+        <div class="portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between" data-category="individual">
+          <div>
+            <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+              <img src="https://lh3.googleusercontent.com/aida/AEtjO1Xh-n5EnQZbDwRSnIRW6p5rR4oM7BCfBo_2YnixNMbPnhQld2VyaFUWNJBRWQaD41-OCtwkO9Eez1ldTKvWXf2nTCbyr5My9fvqPw9RB-NYIMzETtwiRxxriTsXG1_gav_ZxLbNxeOGdkRGNTRYLTyoubpDWzrxnJjpPzxOYJgusCm4xsc9B4r4Hf5LLgLW-dvm43KMxcfsZFdf8xntCDYAn25zy2pKgHzqLjH7lqheJiAE3MCfXl-npA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Warm Personal Birthday Tribute intimate hamper" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Personal Tribute</span>
+            </div>
+            <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">Warm Personal Birthday Tribute</h3>
+            <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">
+              Handmade linen fabric-wrapped box with torn-edge wax-sealed deckle stationery, sandalwood ceramic candle, single-origin bean-to-bar cacao, and vintage brass key.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+            <span>Milestone keepsake</span>
+            <button type="button" onclick="openHamperModal('Warm Personal Birthday Tribute', 'Linen-wrapped box, personalized calligraphic card with wax seal, ceramic candle, artisan chocolate bar, brass key bookmark.', 'Individual Keepsake')" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: FREQUENTLY ASKED QUESTIONS (#faq) -->
+    <section id="faq" class="py-12 sm:py-16 md:py-24 border-b border-[#E9E0D1]">
+      <div class="max-w-3xl mx-auto space-y-8 sm:space-y-10">
+        <div class="text-center space-y-2 sm:space-y-3">
+          <div class="text-[11px] font-mono uppercase tracking-wider text-gold-dark font-medium">QUESTIONS & CLARIFICATIONS</div>
+          <h2 class="font-serif text-2xl sm:text-4xl md:text-5xl text-charcoal font-normal">
+            Frequently Asked Questions
+          </h2>
+          <p class="text-charcoal-muted text-xs sm:text-base font-light">
+            Everything you need to know about commissioning bespoke hampers with Opulence.
+          </p>
+        </div>
+
+        <div id="faqAccordion" class="space-y-3">
+          <div class="bg-white border border-[#E9E0D1] faq-item">
+            <button type="button" class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-sm sm:text-base font-serif text-charcoal hover:text-gold transition-colors focus:outline-none touch-target">
+              <span>What makes an Opulence hamper bespoke?</span>
+              <span class="faq-icon font-mono text-lg text-gold font-light shrink-0 ml-2">+</span>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed border-t border-[#FAF7F2]">
+              Unlike off-the-shelf gift baskets, every Opulence hamper is created around the recipient, occasion, theme, and your budget. We curate individual products, design customized packaging and ribbons, and handwrite or print bespoke message cards tailored specifically for your order.
+            </div>
+          </div>
+
+          <div class="bg-white border border-[#E9E0D1] faq-item">
+            <button type="button" class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-sm sm:text-base font-serif text-charcoal hover:text-gold transition-colors focus:outline-none touch-target">
+              <span>Can I customise the products and packaging?</span>
+              <span class="faq-icon font-mono text-lg text-gold font-light shrink-0 ml-2">+</span>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed border-t border-[#FAF7F2]">
+              Yes. You can select specific items from our recommended categories (coffee, teas, fine confections, lifestyle artifacts, brassware) or request unique items. You can also pick from rigid gift boxes, woven cane baskets, handcrafted wooden trunks, or sustainable kraft packaging.
+            </div>
+          </div>
+
+          <div class="bg-white border border-[#E9E0D1] faq-item">
+            <button type="button" class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-sm sm:text-base font-serif text-charcoal hover:text-gold transition-colors focus:outline-none touch-target">
+              <span>Can you add our company branding?</span>
+              <span class="faq-icon font-mono text-lg text-gold font-light shrink-0 ml-2">+</span>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed border-t border-[#FAF7F2]">
+              Certainly. For corporate gifting, we incorporate your brand identity tastefully. This includes debossed or foil-stamped logos on rigid boxes, custom-printed woven ribbons, metallic badges, and corporate letterpress or calligraphy cards.
+            </div>
+          </div>
+
+          <div class="bg-white border border-[#E9E0D1] faq-item">
+            <button type="button" class="faq-toggle w-full p-4 sm:p-5 text-left flex items-center justify-between text-sm sm:text-base font-serif text-charcoal hover:text-gold transition-colors focus:outline-none touch-target">
+              <span>How early should I enquire?</span>
+              <span class="faq-icon font-mono text-lg text-gold font-light shrink-0 ml-2">+</span>
+            </button>
+            <div class="faq-content hidden px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-charcoal-muted font-light leading-relaxed border-t border-[#FAF7F2]">
+              We recommend placing enquiries at least three months prior to your target delivery date. This ensures ample lead time for bespoke artisanal manufacturing, sample approvals, custom box fabrication, and flawless delivery coordination.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING CALL TO ACTION -->
+    <section class="py-12 sm:py-16 md:py-20 text-center">
+      <div class="bg-[#25231F] text-[#FAF7F2] p-6 sm:p-14 border border-[#3E3A33] shadow-xl space-y-4 sm:space-y-6">
+        <span class="text-[10px] sm:text-xs font-mono uppercase tracking-wider text-gold-light">BEGIN YOUR GIFTING CONVERSATION</span>
+        <h2 class="font-serif text-2xl sm:text-5xl font-normal max-w-2xl mx-auto leading-tight">
+          Let’s Create Something Thoughtful
+        </h2>
+        <p class="text-[#DCD2C2] text-xs sm:text-base max-w-xl mx-auto font-light leading-relaxed">
+          Whether you’re planning corporate gifting or a personal celebration, explore our previous work and tell us what you have in mind.
+        </p>
+        <div class="pt-2 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4">
+          <a href="#work" class="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-gold text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold-light hover:text-charcoal transition-all duration-300 shadow-md touch-target flex items-center justify-center">
+            Explore All 40+ Archived Hampers
+          </a>
+          <button type="button" onclick="openEnquiryModal()" class="w-full sm:w-auto px-8 py-3.5 sm:py-4 bg-transparent border border-gold text-gold-light hover:bg-gold hover:text-white text-xs font-mono uppercase tracking-wider font-semibold transition-all duration-300 touch-target flex items-center justify-center cursor-pointer">
+            Personalise Your Hamper
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer id="footer" class="bg-[#1A1816] text-[#FAF7F2] border-t border-[#33302B] py-10 sm:py-14">
+    <div class="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10">
+        <div class="md:col-span-5 space-y-3 sm:space-y-4">
+          <div class="h-9 flex items-center">
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1UrGDwqYUmENrYL1Z5G1fp-_YodzOqxsYG14bmtJkITsW6Rk5zZjUEPzqjlhdU_ouiJofm4q4OLS5sYwKvOHzF87vzdsNvCH5t1KtUVEI192n2R4XAl2fWwUU0VinvBs9DLkqvhP_UJcvcnV8CUAS0Qn4GoKuTrETpJ7yl51w0mBCucIGqbHrws0UhInzBlm3Xpam5Y-DbohKSIRjd4zfQoXkedAX9CGCm-Kk7S3u9ov7lfiSJXmkJg6Q" onerror="this.onerror=null; this.src='assets/opulence-logo.png';" alt="Opulence Bespoke Gift Hampers" class="h-8 sm:h-9 w-auto brightness-200 invert contrast-200"/>
+          </div>
+          <p class="font-serif text-lg sm:text-xl text-gold-light italic">
+            Gifts, designed around them.
+          </p>
+          <p class="text-xs text-[#A69E93] leading-relaxed max-w-sm font-sans font-light">
+            Opulence is a bespoke gifting studio curating personalised hampers for enterprise milestones, celebrations, and cherished personal relationships.
+          </p>
+        </div>
+        <div class="md:col-span-3 space-y-2 sm:space-y-3">
+          <span class="text-xs font-mono uppercase tracking-wider text-gold-light block font-medium">STUDIO DIRECTORY</span>
+          <ul class="text-xs text-[#DDD6CA] space-y-1.5 sm:space-y-2 font-sans font-light">
+            <li><a href="#hero" class="hover:text-gold transition-colors py-1 inline-block">Home</a></li>
+            <li><a href="#work" class="hover:text-gold transition-colors py-1 inline-block">Our Work (Archive)</a></li>
+            <li><a href="#about" class="hover:text-gold transition-colors py-1 inline-block">About Us</a></li>
+            <li><a href="#corporate" class="hover:text-gold transition-colors py-1 inline-block">Corporate Gifting</a></li>
+            <li><a href="#categories" class="hover:text-gold transition-colors py-1 inline-block">Celebrations & Bulk</a></li>
+            <li><button type="button" onclick="openEnquiryModal()" class="hover:text-gold transition-colors py-1 inline-block cursor-pointer">Bespoke Commission</button></li>
+            <li><a href="#process" class="hover:text-gold transition-colors py-1 inline-block">How It Works</a></li>
+          </ul>
+        </div>
+        <div class="md:col-span-4 space-y-2 sm:space-y-3">
+          <span class="text-xs font-mono uppercase tracking-wider text-gold-light block font-medium">ATELIER CONTACT</span>
+          <div class="text-xs text-[#DDD6CA] space-y-2 font-mono">
+            <p class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-[15px] text-gold shrink-0">call</span>
+              <a href="tel:+918106489375" class="hover:text-gold text-white font-medium">+91 81064 89375</a>
+            </p>
+            <p class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-[15px] text-gold shrink-0">mail</span>
+              <a href="mailto:meenankrishnavarma13@gmail.com" class="hover:text-gold text-white break-all">meenankrishnavarma13@gmail.com</a>
+            </p>
+            <p class="text-[11px] text-[#A69E93] pt-1 font-sans leading-relaxed">
+              Serving pan-India corporate orders and celebrations. Advance planning of 3 months recommended.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pt-6 sm:pt-8 border-t border-[#2E2A24] flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-[11px] font-mono text-[#8C8478] gap-3">
+        <div>© 2026 OPULENCE BESPOKE GIFT HAMPERS. ALL RIGHTS RESERVED.</div>
+        <div class="flex items-center gap-4 sm:gap-6">
+          <a href="#faq" class="hover:text-white transition-colors">Privacy & Non-Disclosure</a>
+          <a href="#faq" class="hover:text-white transition-colors">Terms of Commission</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- DETAIL MODAL FOR OUR WORK -->
+  <div id="hamperDetailModal" class="fixed inset-0 bg-charcoal/70 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white max-w-lg w-full p-5 sm:p-8 border border-[#E9E0D1] shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+      <button type="button" onclick="closeHamperModal()" class="absolute top-4 right-4 text-ash hover:text-charcoal touch-target flex items-center justify-center">
+        <span class="material-symbols-outlined text-2xl">close</span>
       </button>
-    </div>
-
-    <form class="enquiry__form">
-      <label class="field field--full"><span>Gifting Type</span>
-        <select name="enquiry_type" id="enquiryTypeSelect" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit;">
-          <option value="individual">Individual Gifting</option>
-          <option value="corporate">Corporate Gifting</option>
-          <option value="customized">Customized Hampers / Themes</option>
-        </select>
-      </label>
-      <label class="field"><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
-      <label class="field" id="fieldCompany" style="display: none;"><span>Organisation Name <span class="opt">(Required for Corporate)</span></span><input type="text" name="organisation" autocomplete="organization"></label>
-      <label class="field" id="fieldDesignation"><span>Designation <span class="opt">(optional)</span></span><input type="text" name="designation" autocomplete="organization-title"></label>
-      <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
-      <label class="field"><span>Phone</span><input type="tel" name="phone" autocomplete="tel" required></label>
-      <label class="field" id="fieldOccasion"><span id="labelOccasion">Occasion</span><input type="text" name="occasion" placeholder="e.g. Birthday, Diwali, Anniversary" required></label>
-      <label class="field" id="fieldTheme" style="display: none;"><span>Custom Theme / Idea</span><input type="text" name="theme" placeholder="e.g. Eco-Friendly / Luxury Gold"></label>
-      <label class="field"><span id="labelQuantity">Quantity</span><input type="number" name="quantity" id="inputQuantity" min="1" value="1" inputmode="numeric" required><small id="helpQuantity" style="display: none; font-size: 11px; color: #666; margin-top: 3px;">Minimum 20 units for Corporate & Customized gifting</small></label>
-      <label class="field"><span id="labelBudget">Budget (₹)</span><input type="text" name="budget" placeholder="₹" inputmode="decimal" required></label>
-      <label class="field"><span>Date needed</span><input type="date" name="date" required></label>
-      <label class="field"><span>Delivery location(s)</span><input type="text" name="delivery" required></label>
-      <label class="field field--full"><span>Ideas / Customization Details / What do they love?</span><input type="text" name="loves" placeholder="Interests, favourite films, hobbies, a theme you have in mind" required></label>
-      <label class="field field--full"><span>Reference Image URL (Optional)</span><input type="url" name="file_url" placeholder="https://example.com/reference-image.jpg"></label>
-      <label class="field field--full"><span>Note <span class="opt">(optional)</span></span><textarea name="note" rows="3" placeholder="Items you'd like inside, questions, anything else"></textarea></label>
-      <p class="enquiry__error" role="alert" hidden>Sorry — your brief didn't send. Please try again, or reach us on <a href="tel:+918106489375">+91 81064 89375</a> or <a href="mailto:meenankrishnavarma13@gmail.com">meenankrishnavarma13@gmail.com</a>.</p>
-      <div class="enquiry__foot">
-        <span class="enquiry__note">Your details go straight to our team.</span>
-        <button type="submit" class="btn">Submit</button>
+      <span id="modalCategory" class="text-[10px] font-mono uppercase tracking-wider text-gold-dark font-medium block">Category</span>
+      <h3 id="modalTitle" class="font-serif text-2xl text-charcoal font-normal">Hamper Name</h3>
+      <p id="modalDescription" class="text-charcoal-muted text-xs sm:text-sm font-light leading-relaxed">Composition details...</p>
+      <div class="pt-4 border-t border-[#E9E0D1] flex flex-wrap justify-end gap-3">
+        <button type="button" onclick="closeHamperModal()" class="px-4 py-2 border border-[#E9E0D1] text-xs font-mono uppercase hover:border-charcoal touch-target">Close</button>
+        <button type="button" onclick="closeHamperModal(); openEnquiryModal();" class="px-5 py-2 bg-gold text-white text-xs font-mono uppercase font-medium hover:bg-gold-dark touch-target flex items-center cursor-pointer">Curate Similar</button>
       </div>
-    </form>
-
-    <div class="enquiry__success" role="status" hidden>
-      <img src="assets/opulence-mark.png" alt="" width="211" height="283">
-      <div class="enquiry__success-title">Thank you.</div>
-      <p data-success-text>Your brief has reached our team. We will contact you shortly with ideas and a quote.</p>
-      <button type="button" class="btn btn--sm" data-close>Close</button>
     </div>
   </div>
-</dialog>
 
-<script src="js/main.js" defer></script>
+  <!-- DEDICATED INQUIRY & COMMISSION MODAL (BACKEND ENQUIRIES TABLE MATCHED) -->
+  <div id="enquiryModal" class="fixed inset-0 bg-charcoal/80 backdrop-blur-md z-[200] hidden items-center justify-center p-3 sm:p-6 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="enquiryModalTitle">
+    <div class="relative w-full max-w-3xl bg-white border border-[#E9E0D1] shadow-2xl p-6 sm:p-10 my-auto max-h-[92vh] overflow-y-auto delicate-grid">
+      
+      <!-- Close Button -->
+      <button type="button" onclick="closeEnquiryModal()" class="absolute top-4 right-4 sm:top-6 sm:right-6 text-ash hover:text-charcoal p-2 border border-[#E9E0D1] hover:border-gold transition-colors touch-target flex items-center justify-center bg-white/95 shadow-xs" aria-label="Close brief modal">
+        <span class="material-symbols-outlined text-xl">close</span>
+      </button>
+
+      <!-- Active Form Container -->
+      <div id="modalFormContainer">
+        <!-- Header -->
+        <div class="space-y-2 mb-6 sm:mb-8 pr-10">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-[#FAF7F2] border border-[#E9E0D1] text-[10px] font-mono tracking-widest uppercase text-gold-dark font-medium">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
+            <span>ATELIER COMMISSION BRIEF</span>
+          </div>
+          <h3 id="enquiryModalTitle" class="font-serif text-2xl sm:text-3xl md:text-4xl text-charcoal font-normal">
+            Commission a Bespoke Hamper
+          </h3>
+          <p class="text-charcoal-muted text-xs sm:text-sm font-light leading-relaxed">
+            Every Opulence hamper is thoughtfully curated around your intention, recipients, and budget. Complete the brief below and our concierge will connect with you within 24 hours.
+          </p>
+          <div class="inline-flex items-center gap-2 pt-1 text-[11px] font-mono text-ash">
+            <span class="material-symbols-outlined text-gold text-sm shrink-0">schedule</span>
+            <span>Recommended lead time: 3 months for custom fabrication & personal coordination</span>
+          </div>
+        </div>
+
+        <!-- Error Message Banner -->
+        <div id="modalErrorMessage" class="hidden mb-6 p-4 bg-red-50 border border-red-200 text-red-800 text-xs font-mono leading-relaxed"></div>
+
+        <!-- The Inquiry Form -->
+        <form id="modalEnquiryForm" onsubmit="submitModalEnquiry(event)" class="space-y-6">
+          
+          <!-- Field 1: enquiry_type (Enum: corporate | customized | individual) -->
+          <div>
+            <label class="block text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-2">
+              1. Commission Direction <span class="text-gold">*</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3" id="enquiryTypeToggleGroup">
+              <button type="button" onclick="setModalEnquiryType('corporate')" data-type="corporate" class="enquiry-type-btn p-3 border-2 border-gold bg-[#FAF7F2] text-left transition-all touch-target">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-mono font-semibold uppercase text-charcoal">Corporate</span>
+                  <span class="w-2 h-2 rounded-full bg-gold"></span>
+                </div>
+                <div class="text-[11px] text-ash font-light leading-snug">Brands & client relations (50+ units)</div>
+              </button>
+
+              <button type="button" onclick="setModalEnquiryType('customized')" data-type="customized" class="enquiry-type-btn p-3 border border-[#E9E0D1] bg-white text-left hover:border-gold transition-all touch-target">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-mono font-semibold uppercase text-charcoal">Celebrations</span>
+                  <span class="w-2 h-2 rounded-full bg-transparent border border-ash/40"></span>
+                </div>
+                <div class="text-[11px] text-ash font-light leading-snug">Festivals, weddings & events (20–50 units)</div>
+              </button>
+
+              <button type="button" onclick="setModalEnquiryType('individual')" data-type="individual" class="enquiry-type-btn p-3 border border-[#E9E0D1] bg-white text-left hover:border-gold transition-all touch-target">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-mono font-semibold uppercase text-charcoal">Individual</span>
+                  <span class="w-2 h-2 rounded-full bg-transparent border border-ash/40"></span>
+                </div>
+                <div class="text-[11px] text-ash font-light leading-snug">Single bespoke gift (1-of-1 keepsake)</div>
+              </button>
+            </div>
+            <input type="hidden" id="modalEnquiryType" name="enquiry_type" value="corporate" required/>
+          </div>
+
+          <!-- Section 2: Contact Details (name, phone, email, company_name) -->
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-3">
+              2. Atelier Contact Details
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="modalFullName" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Your Full Name <span class="text-gold">*</span>
+                </label>
+                <input type="text" id="modalFullName" name="name" required minlength="1" maxlength="100" placeholder="e.g. Radhika Singhal" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div>
+                <label for="modalPhone" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Phone / WhatsApp <span class="text-gold">*</span>
+                </label>
+                <input type="tel" id="modalPhone" name="phone" required minlength="7" maxlength="20" placeholder="+91 98765 43210" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div>
+                <label for="modalEmail" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Email Address
+                </label>
+                <input type="email" id="modalEmail" name="email" maxlength="100" placeholder="radhika@example.com" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div id="modalCompanyFieldWrapper">
+                <label for="modalCompanyName" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  <span id="modalCompanyLabel">Company / Organisation Name</span>
+                  <span id="modalCompanyRequiredMark" class="text-gold">*</span>
+                </label>
+                <input type="text" id="modalCompanyName" name="company_name" maxlength="150" placeholder="e.g. Pinnacle Global Holdings" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Hamper Scope (occasion, quantity, budget, required_date) -->
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-3">
+              3. Commission Scope & Timeline
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="sm:col-span-2">
+                <label for="modalOccasion" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Occasion or Milestone
+                </label>
+                <input type="text" id="modalOccasion" name="occasion" maxlength="100" placeholder="e.g. Diwali Executive Hamper, Annual Summit, Wedding" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div>
+                <label for="modalQuantity" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Quantity (Units)
+                </label>
+                <input type="number" id="modalQuantity" name="quantity" min="1" placeholder="50" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+                <span class="text-[10px] font-mono text-ash mt-1 block" id="modalQtyHelper">Corporate: 50+ recommended</span>
+              </div>
+
+              <div>
+                <label for="modalBudget" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Budget per Hamper (₹)
+                </label>
+                <input type="number" id="modalBudget" name="budget" min="0" step="500" placeholder="e.g. 5000" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="modalRequiredDate" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Target Delivery Date
+                </label>
+                <input type="date" id="modalRequiredDate" name="required_date" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+                <span class="text-[10px] font-mono text-ash mt-1 block">3 months lead time recommended</span>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label for="modalTheme" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Aesthetic Theme / Direction
+                </label>
+                <input type="text" id="modalTheme" name="theme" maxlength="100" placeholder="e.g. Royal Heritage Brass, Artisanal Coffee & Cacao" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: Customization Details & Reference URL (customization_details, file_url) -->
+          <div>
+            <div class="text-xs font-mono uppercase tracking-wider text-charcoal font-semibold mb-3">
+              4. Curation Notes & References
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label for="modalDetails" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Customization Details & Recipient Profile
+                </label>
+                <textarea id="modalDetails" name="customization_details" rows="3" placeholder="Tell us about recipient preferences, brand foiling/ribboning, dietary restrictions, single or multiple dispatch locations..." class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors resize-none"></textarea>
+              </div>
+
+              <div>
+                <label for="modalFileUrl" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  Reference / Moodboard URL (Optional)
+                </label>
+                <input type="url" id="modalFileUrl" name="file_url" placeholder="https://drive.google.com/... or Figma / Pinterest link" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Buttons -->
+          <div class="pt-4 border-t border-[#E9E0D1] flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-[11px] font-mono text-ash text-center sm:text-left flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-gold text-sm shrink-0">lock</span>
+              <span>All brief submissions are confidential.</span>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+              <button type="button" onclick="closeEnquiryModal()" class="w-1/3 sm:w-auto px-5 py-3.5 border border-[#E9E0D1] text-xs font-mono uppercase tracking-wider text-charcoal hover:border-charcoal transition-colors touch-target">
+                Cancel
+              </button>
+              <button type="submit" id="modalSubmitBtn" class="w-2/3 sm:w-auto px-8 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 shadow-md flex items-center justify-center gap-2 group touch-target">
+                <span id="modalSubmitText">Submit Gifting Requirements</span>
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" id="modalSubmitIcon">send</span>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Success Confirmation State (shown upon submission) -->
+      <div id="modalSuccessContainer" class="hidden text-center py-6 sm:py-10 space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-full bg-gold/10 border-2 border-gold flex items-center justify-center text-gold">
+          <span class="material-symbols-outlined text-3xl">done</span>
+        </div>
+        <div class="space-y-2">
+          <div class="inline-block px-3 py-1 bg-[#FAF7F2] border border-[#E9E0D1] text-[10px] font-mono uppercase tracking-wider text-gold-dark font-medium">
+            TRANSMITTED TO ATELIER
+          </div>
+          <h3 class="font-serif text-2xl sm:text-4xl text-charcoal font-normal">
+            Your Gifting Brief Has Been Received
+          </h3>
+          <p class="text-charcoal-muted text-xs sm:text-base font-light max-w-md mx-auto leading-relaxed">
+            Our creative director will review your requirements and reach out within 24 hours with custom concepts and budget options.
+          </p>
+        </div>
+
+        <!-- Reference Tag -->
+        <div class="p-3 bg-[#FAF7F2] border border-[#E9E0D1] inline-block font-mono text-xs text-charcoal">
+          <span class="text-ash uppercase text-[10px] block">Reference Number</span>
+          <span id="modalSuccessId" class="font-semibold text-gold-dark text-sm">#OPL-INQ-PENDING</span>
+        </div>
+
+        <!-- WhatsApp Direct Chat Link -->
+        <div class="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a id="modalWhatsAppChatLink" href="https://wa.me/918106489375" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3.5 bg-[#25D366] text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-[#20ba5a] transition-all shadow-md flex items-center justify-center gap-2 touch-target">
+            <svg class="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.88 2.791.88 3.182 0 5.768-2.587 5.768-5.766.001-3.18-2.585-5.766-5.768-5.766zm9.969 5.828c0 5.523-4.477 10-10 10-1.777 0-3.447-.464-4.896-1.275l-7.104 1.864 1.898-6.938c-.904-1.516-1.428-3.29-1.428-5.181 0-5.523 4.477-10 10-10s10 4.477 10 10z"/>
+            </svg>
+            <span>Follow Up on WhatsApp Now</span>
+          </a>
+          <button type="button" onclick="closeEnquiryModal()" class="w-full sm:w-auto px-6 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-colors touch-target">
+            Return to Studio
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FLOATING WHATSAPP CONCIERGE BUTTON (Mobile Priority) -->
+  <aside aria-label="WhatsApp Concierge" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-40">
+    <a href="https://wa.me/918106489375?text=Hi%20Opulence%2C%20I%20would%20like%20to%20enquire%20about%20a%20bespoke%20gift%20hamper" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2.5 bg-[#25D366] text-white pl-3.5 pr-4 py-2.5 sm:py-3 shadow-2xl hover:bg-[#20ba5a] transition-all duration-300 font-mono text-xs tracking-wider uppercase font-semibold border border-white/20 touch-target" aria-label="Direct WhatsApp Concierge Chat">
+      <svg class="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24">
+        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.88 2.791.88 3.182 0 5.768-2.587 5.768-5.766.001-3.18-2.585-5.766-5.768-5.766zm9.969 5.828c0 5.523-4.477 10-10 10-1.777 0-3.447-.464-4.896-1.275l-7.104 1.864 1.898-6.938c-.904-1.516-1.428-3.29-1.428-5.181 0-5.523 4.477-10 10-10s10 4.477 10 10z"/>
+      </svg>
+      <span class="hidden sm:inline">WhatsApp Concierge</span>
+      <span class="sm:hidden">Chat</span>
+    </a>
+  </aside>
+
+  <!-- JAVASCRIPT: LOGIC, TOUCH SWIPING, GALLERY & BACKEND WIRING -->
+  <script>
+    const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '8000'
+      ? 'http://127.0.0.1:8000'
+      : window.location.origin;
+
+    /* =========================================================
+       1. HERO CAROUSEL WITH TOUCH SWIPE (MOBILE-OPTIMIZED)
+       ========================================================= */
+    const heroCarousel = {
+      slides: document.querySelectorAll('.hero-slide'),
+      dots: document.querySelectorAll('.carousel-dot'),
+      categoryEl: document.getElementById('slideBadgeCategory'),
+      titleEl: document.getElementById('slideBadgeTitle'),
+      descEl: document.getElementById('slideBadgeDesc'),
+      linkEl: document.getElementById('slideBadgeLink'),
+      currentNumEl: document.getElementById('currentSlideNum'),
+      prevBtn: document.getElementById('carouselPrevBtn'),
+      nextBtn: document.getElementById('carouselNextBtn'),
+      playPauseBtn: document.getElementById('carouselPlayPauseBtn'),
+      playPauseIcon: document.getElementById('carouselPlayPauseIcon'),
+      viewport: document.getElementById('carouselViewport'),
+      container: document.getElementById('heroCarousel'),
+      currentIndex: 0,
+      totalSlides: 6,
+      intervalId: null,
+      duration: 4000,
+      isPlaying: true,
+
+      // Touch variables for mobile swipe
+      touchStartX: 0,
+      touchStartY: 0,
+      touchEndX: 0,
+      touchEndY: 0,
+
+      init() {
+        if (!this.slides.length) return;
+        this.totalSlides = this.slides.length;
+
+        // Button clicks
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => { this.goToSlide(this.currentIndex + 1); this.restartTimer(); });
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => { this.goToSlide(this.currentIndex - 1); this.restartTimer(); });
+
+        // Dot clicks
+        this.dots.forEach((dot, idx) => {
+          dot.addEventListener('click', () => {
+            this.goToSlide(idx);
+            this.restartTimer();
+          });
+        });
+
+        // Hover & Focus (Desktop)
+        if (this.container) {
+          this.container.addEventListener('mouseenter', () => this.pauseTimer());
+          this.container.addEventListener('mouseleave', () => { if (this.isPlaying) this.startTimer(); });
+        }
+
+        // Play/Pause button
+        if (this.playPauseBtn) {
+          this.playPauseBtn.addEventListener('click', () => {
+            if (this.isPlaying) {
+              this.isPlaying = false;
+              this.pauseTimer();
+              if (this.playPauseIcon) this.playPauseIcon.textContent = 'play_arrow';
+              this.playPauseBtn.setAttribute('aria-label', 'Resume slide rotation');
+            } else {
+              this.isPlaying = true;
+              this.startTimer();
+              if (this.playPauseIcon) this.playPauseIcon.textContent = 'pause';
+              this.playPauseBtn.setAttribute('aria-label', 'Pause slide rotation');
+            }
+          });
+        }
+
+        // Keyboard arrow navigation
+        if (this.viewport) {
+          this.viewport.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { this.goToSlide(this.currentIndex + 1); this.restartTimer(); }
+            else if (e.key === 'ArrowLeft') { this.goToSlide(this.currentIndex - 1); this.restartTimer(); }
+          });
+
+          // Touch Event Handlers for Horizontal Mobile Swipe
+          this.viewport.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.touches[0].clientX;
+            this.touchStartY = e.touches[0].clientY;
+            this.pauseTimer();
+          }, { passive: true });
+
+          this.viewport.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].clientX;
+            this.touchEndY = e.changedTouches[0].clientY;
+            this.handleSwipeGesture();
+            if (this.isPlaying) this.startTimer();
+          }, { passive: true });
+        }
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!prefersReducedMotion) {
+          this.startTimer();
+        } else {
+          this.isPlaying = false;
+          if (this.playPauseIcon) this.playPauseIcon.textContent = 'play_arrow';
+        }
+        this.updateSlideDOM(0);
+      },
+
+      handleSwipeGesture() {
+        const deltaX = this.touchEndX - this.touchStartX;
+        const deltaY = this.touchEndY - this.touchStartY;
+        // Only trigger horizontal swipe if deltaX exceeds 35px and is greater than vertical movement
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 35) {
+          if (deltaX < 0) {
+            // Swiped Left -> Next Slide
+            this.goToSlide(this.currentIndex + 1);
+          } else {
+            // Swiped Right -> Previous Slide
+            this.goToSlide(this.currentIndex - 1);
+          }
+        }
+      },
+
+      goToSlide(index) {
+        if (index < 0) index = this.totalSlides - 1;
+        else if (index >= this.totalSlides) index = 0;
+        this.currentIndex = index;
+        this.updateSlideDOM(index);
+      },
+
+      updateSlideDOM(index) {
+        this.slides.forEach((slide, idx) => {
+          if (idx === index) {
+            slide.classList.add('active');
+            slide.setAttribute('aria-hidden', 'false');
+          } else {
+            slide.classList.remove('active');
+            slide.setAttribute('aria-hidden', 'true');
+          }
+        });
+
+        this.dots.forEach((dot, idx) => {
+          if (idx === index) {
+            dot.classList.remove('bg-[#DCD2C2]', 'w-2.5');
+            dot.classList.add('bg-gold', 'w-6');
+          } else {
+            dot.classList.remove('bg-gold', 'w-6');
+            dot.classList.add('bg-[#DCD2C2]', 'w-2.5');
+          }
+        });
+
+        const activeSlide = this.slides[index];
+        if (activeSlide) {
+          const category = activeSlide.getAttribute('data-category');
+          const title = activeSlide.getAttribute('data-title');
+          const desc = activeSlide.getAttribute('data-desc');
+          const link = activeSlide.getAttribute('data-link');
+
+          if (this.categoryEl && category) this.categoryEl.textContent = category;
+          if (this.titleEl && title) this.titleEl.innerHTML = title;
+          if (this.descEl && desc) this.descEl.textContent = desc;
+          if (this.linkEl && link) this.linkEl.setAttribute('href', link);
+        }
+
+        if (this.currentNumEl) {
+          this.currentNumEl.textContent = String(index + 1).padStart(2, '0');
+        }
+      },
+
+      startTimer() {
+        this.pauseTimer();
+        this.intervalId = setInterval(() => { this.goToSlide(this.currentIndex + 1); }, this.duration);
+      },
+
+      pauseTimer() {
+        if (this.intervalId) { clearInterval(this.intervalId); this.intervalId = null; }
+      },
+
+      restartTimer() {
+        if (this.isPlaying) this.startTimer();
+      }
+    };
+
+    /* =========================================================
+       2. MOBILE DRAWER NAVIGATION & SCROLL LOCK
+       ========================================================= */
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenuDrawer = document.getElementById('mobileMenuDrawer');
+    const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+    const menuIcon = document.getElementById('menuIcon');
+
+    function openMobileMenu() {
+      if (!mobileMenuDrawer) return;
+      mobileMenuDrawer.classList.remove('hidden');
+      if (mobileMenuBackdrop) mobileMenuBackdrop.classList.remove('hidden');
+      if (menuIcon) menuIcon.textContent = 'close';
+      mobileMenuBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeMobileMenu() {
+      if (!mobileMenuDrawer) return;
+      mobileMenuDrawer.classList.add('hidden');
+      if (mobileMenuBackdrop) mobileMenuBackdrop.classList.add('hidden');
+      if (menuIcon) menuIcon.textContent = 'menu';
+      mobileMenuBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener('click', () => {
+        const isHidden = mobileMenuDrawer.classList.contains('hidden');
+        if (isHidden) openMobileMenu();
+        else closeMobileMenu();
+      });
+    }
+
+    if (mobileMenuBackdrop) {
+      mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
+    }
+
+    document.querySelectorAll('.mobile-nav-link').forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+
+    /* =========================================================
+       3. WORK GALLERY FILTERING & DETAIL MODAL
+       ========================================================= */
+    const filterButtons = document.querySelectorAll('.portfolio-filter-btn');
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        filterButtons.forEach(b => {
+          b.classList.remove('border-gold', 'bg-[#FAF7F2]', 'font-medium');
+          b.classList.add('border-[#E9E0D1]', 'bg-white', 'text-ash');
+        });
+        btn.classList.add('border-gold', 'bg-[#FAF7F2]', 'font-medium');
+        btn.classList.remove('border-[#E9E0D1]', 'bg-white', 'text-ash');
+
+        portfolioItems.forEach(item => {
+          const itemCat = item.getAttribute('data-category');
+          item.style.display = (filter === 'all' || itemCat === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+
+    function openHamperModal(title, desc, cat) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalDescription').textContent = desc;
+      document.getElementById('modalCategory').textContent = cat;
+      const modal = document.getElementById('hamperDetailModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+    }
+
+    function closeHamperModal() {
+      const modal = document.getElementById('hamperDetailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    // Backdrop click on modal
+    const hamperModal = document.getElementById('hamperDetailModal');
+    if (hamperModal) {
+      hamperModal.addEventListener('click', (e) => {
+        if (e.target === hamperModal) closeHamperModal();
+      });
+    }
+
+    /* =========================================================
+       5. FAQ ACCORDION
+       ========================================================= */
+    document.querySelectorAll('.faq-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const content = item.querySelector('.faq-content');
+        const icon = btn.querySelector('.faq-icon');
+        const isClosed = content.classList.contains('hidden');
+
+        document.querySelectorAll('.faq-content').forEach(c => c.classList.add('hidden'));
+        document.querySelectorAll('.faq-icon').forEach(i => i.textContent = '+');
+
+        if (isClosed) {
+          content.classList.remove('hidden');
+          icon.textContent = '−';
+        }
+      });
+    });
+
+    /* =========================================================
+       6. COMMISSION & ENQUIRY MODAL (BACKEND POST /api/enquiries)
+       ========================================================= */
+
+    function openEnquiryModal(options = {}) {
+      const modal = document.getElementById('enquiryModal');
+      if (!modal) return;
+
+      // Reset form views
+      const formContainer = document.getElementById('modalFormContainer');
+      const successContainer = document.getElementById('modalSuccessContainer');
+      const errorBox = document.getElementById('modalErrorMessage');
+      if (formContainer) formContainer.classList.remove('hidden');
+      if (successContainer) successContainer.classList.add('hidden');
+      if (errorBox) {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+      }
+
+      // Set type if specified
+      if (options.type) {
+        setModalEnquiryType(options.type);
+      } else {
+        setModalEnquiryType(document.getElementById('modalEnquiryType')?.value || 'corporate');
+      }
+
+      // Prefill fields if provided
+      if (options.occasion !== undefined) {
+        const occInput = document.getElementById('modalOccasion');
+        if (occInput) occInput.value = options.occasion;
+      }
+      if (options.quantity !== undefined) {
+        const qtyInput = document.getElementById('modalQuantity');
+        if (qtyInput) qtyInput.value = options.quantity;
+      }
+      if (options.budget !== undefined) {
+        const budgetInput = document.getElementById('modalBudget');
+        if (budgetInput) budgetInput.value = options.budget;
+      }
+      if (options.theme !== undefined) {
+        const themeInput = document.getElementById('modalTheme');
+        if (themeInput) themeInput.value = options.theme;
+      }
+      if (options.details !== undefined) {
+        const detailsInput = document.getElementById('modalDetails');
+        if (detailsInput) detailsInput.value = options.details;
+      }
+
+      // Minimum date for delivery
+      const dateInput = document.getElementById('modalRequiredDate');
+      if (dateInput && !dateInput.min) {
+        dateInput.min = new Date().toISOString().slice(0, 10);
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.classList.add('overflow-hidden');
+
+      setTimeout(() => {
+        const nameInput = document.getElementById('modalFullName');
+        if (nameInput) nameInput.focus();
+      }, 150);
+    }
+
+    function closeEnquiryModal() {
+      const modal = document.getElementById('enquiryModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.classList.remove('overflow-hidden');
+    }
+
+    function setModalEnquiryType(type) {
+      const typeInput = document.getElementById('modalEnquiryType');
+      if (typeInput) typeInput.value = type;
+
+      const buttons = document.querySelectorAll('.enquiry-type-btn');
+      buttons.forEach(btn => {
+        const btnType = btn.getAttribute('data-type');
+        const dot = btn.querySelector('span.rounded-full');
+        if (btnType === type) {
+          btn.className = 'enquiry-type-btn p-3 border-2 border-gold bg-[#FAF7F2] text-left transition-all touch-target';
+          if (dot) dot.className = 'w-2 h-2 rounded-full bg-gold';
+        } else {
+          btn.className = 'enquiry-type-btn p-3 border border-[#E9E0D1] bg-white text-left hover:border-gold transition-all touch-target';
+          if (dot) dot.className = 'w-2 h-2 rounded-full bg-transparent border border-ash/40';
+        }
+      });
+
+      const companyMark = document.getElementById('modalCompanyRequiredMark');
+      const qtyHelper = document.getElementById('modalQtyHelper');
+      const qtyInput = document.getElementById('modalQuantity');
+
+      if (type === 'corporate') {
+        if (companyMark) companyMark.classList.remove('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Corporate: 50+ recommended';
+        if (qtyInput && !qtyInput.value) qtyInput.placeholder = '50';
+      } else if (type === 'customized') {
+        if (companyMark) companyMark.classList.add('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Celebrations: 20–50 recommended';
+        if (qtyInput && !qtyInput.value) qtyInput.placeholder = '25';
+      } else {
+        if (companyMark) companyMark.classList.add('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Individual: Single bespoke gift';
+        if (qtyInput && !qtyInput.value) qtyInput.value = '1';
+      }
+    }
+
+    // Modal click & escape key listeners
+    const modalEl = document.getElementById('enquiryModal');
+    if (modalEl) {
+      modalEl.addEventListener('click', (e) => {
+        if (e.target === modalEl) closeEnquiryModal();
+      });
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeEnquiryModal();
+        closeHamperModal();
+      }
+    });
+
+    // Hash change handler to open modal when URL has #enquiry
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#enquiry') {
+        openEnquiryModal();
+      }
+    });
+
+    // Quick trigger helpers
+    function preselectCorporateEnquiry() {
+      openEnquiryModal({ type: 'corporate', occasion: 'Corporate Gifting' });
+    }
+
+    function preselectOccasion(occ) {
+      let type = 'customized';
+      if (occ && (occ.toLowerCase().includes('midnight sovereign') || occ.toLowerCase().includes('corporate'))) {
+        type = 'corporate';
+      }
+      openEnquiryModal({ occasion: occ, type: type });
+    }
+
+    // Submit Enquiry Form to FastAPI Endpoint POST /api/enquiries
+    async function submitModalEnquiry(e) {
+      if (e) e.preventDefault();
+      const errorBox = document.getElementById('modalErrorMessage');
+      const submitBtn = document.getElementById('modalSubmitBtn');
+      const submitText = document.getElementById('modalSubmitText');
+      const submitIcon = document.getElementById('modalSubmitIcon');
+
+      errorBox.classList.add('hidden');
+      errorBox.textContent = '';
+      submitBtn.disabled = true;
+      submitText.textContent = 'Transmitting brief…';
+      submitIcon.textContent = 'hourglass_empty';
+
+      const enquiryType = document.getElementById('modalEnquiryType').value || 'corporate';
+      const name = (document.getElementById('modalFullName')?.value || '').trim();
+      const phone = (document.getElementById('modalPhone')?.value || '').trim();
+      const email = (document.getElementById('modalEmail')?.value || '').trim() || null;
+      let companyName = (document.getElementById('modalCompanyName')?.value || '').trim();
+      if (enquiryType === 'corporate' && !companyName) {
+        companyName = 'N/A';
+      } else if (!companyName) {
+        companyName = null;
+      }
+      const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
+      const qtyRaw = document.getElementById('modalQuantity')?.value;
+      const quantity = qtyRaw ? parseInt(qtyRaw) : null;
+      const budgetRaw = (document.getElementById('modalBudget')?.value || '').toString().replace(/[^0-9.]/g, '');
+      const budget = budgetRaw ? parseFloat(budgetRaw) : null;
+      const requiredDate = document.getElementById('modalRequiredDate')?.value || null;
+      const theme = (document.getElementById('modalTheme')?.value || '').trim() || null;
+      const details = (document.getElementById('modalDetails')?.value || '').trim() || null;
+      const fileUrl = (document.getElementById('modalFileUrl')?.value || '').trim() || null;
+
+      const payload = {
+        enquiry_type: enquiryType,
+        name: name,
+        phone: phone,
+        email: email,
+        company_name: companyName,
+        occasion: occasion,
+        quantity: quantity,
+        budget: budget,
+        required_date: requiredDate,
+        theme: theme,
+        customization_details: details,
+        file_url: fileUrl
+      };
+
+      try {
+        const response = await fetch(`${API_BASE}/api/enquiries`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errData = await response.json().catch(() => ({}));
+          throw new Error(errData.detail || `Server returned status ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('modalFormContainer').classList.add('hidden');
+          const successContainer = document.getElementById('modalSuccessContainer');
+          successContainer.classList.remove('hidden');
+
+          const enquiryId = data.data && data.data.enquiry_id ? data.data.enquiry_id : '';
+          const idEl = document.getElementById('modalSuccessId');
+          if (idEl) {
+            idEl.textContent = enquiryId ? `#OPL-${enquiryId}` : '#OPL-COMMISSION';
+          }
+
+          const waLink = document.getElementById('modalWhatsAppChatLink');
+          if (waLink) {
+            const msg = encodeURIComponent(`Hi Opulence, I just submitted brief Ref #OPL-${enquiryId || 'ONLINE'} for ${name} (${occasion || 'Bespoke Hamper'}). Would love to connect!`);
+            waLink.href = `https://wa.me/918106489375?text=${msg}`;
+          }
+        } else {
+          throw new Error(data.message || 'Submission could not be completed');
+        }
+      } catch (err) {
+        console.error('Modal enquiry error:', err);
+        // Fallback: If backend is offline or errors, show clear message and WhatsApp direct transfer
+        errorBox.innerHTML = `
+          <div class="space-y-1.5">
+            <div><strong>Notice:</strong> Unable to transmit brief directly to server (${err.message}).</div>
+            <div class="text-[11px] text-charcoal-muted">Our hotline and direct WhatsApp concierge are active 24/7. Connect immediately with our team:</div>
+            <div class="pt-1">
+              <a href="https://wa.me/918106489375?text=${encodeURIComponent(`Hi Opulence, I would like to submit a gifting brief for: ${name} (${phone}), Occasion: ${occasion || 'Bespoke Hamper'}, Quantity: ${quantity || 'Flexible'}`)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#25D366] text-white font-mono text-[11px] font-semibold hover:bg-[#20ba5a] transition-colors">
+                <span>Connect with Concierge on WhatsApp</span>
+                <span class="material-symbols-outlined text-xs">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        `;
+        errorBox.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Submit Gifting Requirements';
+        submitIcon.textContent = 'send';
+      }
+    }
+
+    // Load active banner from backend
+    async function loadActiveBanner() {
+      try {
+        const res = await fetch(`${API_BASE}/api/banners/active`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.success && json.data) {
+          const b = json.data;
+          const liveBadge = document.getElementById('announcementLiveBadge');
+          if (liveBadge && (b.event || b.title)) {
+            liveBadge.textContent = (b.event || b.title).toUpperCase() + ' · LIVE FESTIVE FEATURE';
+          }
+          const callout = document.getElementById('activeBannerCallout');
+          if (callout) {
+            const imgUrl = b.image_url.startsWith('http') ? b.image_url : (API_BASE + b.image_url);
+            callout.innerHTML = `
+              <div class="p-3 sm:p-3.5 bg-white border border-gold shadow-sm flex items-center gap-3 sm:gap-3.5">
+                <img src="${imgUrl}" alt="${b.title || 'Featured Festive Hamper'}" class="w-14 sm:w-16 h-14 sm:h-16 object-cover border border-[#E9E0D1] shrink-0"/>
+                <div class="space-y-0.5 min-w-0 flex-1">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0"></span>
+                    <span class="text-[9px] font-mono uppercase tracking-wider text-gold-dark font-semibold truncate">Active Atelier Feature</span>
+                  </div>
+                  <h4 class="font-serif text-sm sm:text-base text-charcoal font-medium truncate">${b.event || b.title}</h4>
+                  <p class="text-[11px] text-charcoal-muted line-clamp-1 font-light">${b.note || 'Bespoke commissions currently open.'}</p>
+                </div>
+                <button type="button" onclick="preselectOccasion('${b.event || b.title}')" class="text-[10px] font-mono uppercase tracking-wider px-2.5 sm:px-3 py-1.5 sm:py-2 bg-gold text-white font-semibold whitespace-nowrap hover:bg-gold-dark shadow-xs shrink-0 cursor-pointer">Enquire</button>
+              </div>
+            `;
+            callout.classList.remove('hidden');
+          }
+        }
+      } catch (e) {
+        console.log('Banner active check silent:', e);
+      }
+    }
+
+    // Festive Marquee Play/Pause Control
+    const festiveTrack = document.getElementById('festiveMarqueeTrack');
+    const festiveToggle = document.getElementById('festiveMarqueeToggle');
+    const festiveIcon = document.getElementById('festiveMarqueeIcon');
+    if (festiveToggle && festiveTrack) {
+      festiveToggle.addEventListener('click', () => {
+        const isPaused = festiveTrack.classList.toggle('is-paused');
+        if (festiveIcon) festiveIcon.textContent = isPaused ? 'play_arrow' : 'pause';
+        festiveToggle.setAttribute('aria-label', isPaused ? 'Play automated scroll' : 'Pause automated scroll');
+      });
+    }
+
+    // Load dynamic gallery work from backend (if admin uploaded any items)
+    async function loadDynamicGallery() {
+      try {
+        const res = await fetch(`${API_BASE}/api/gallery`);
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const grid = document.getElementById('portfolioGrid');
+          if (!grid) return;
+          json.data.forEach(item => {
+            const imgUrl = item.image_url.startsWith('http') ? item.image_url : (API_BASE + item.image_url);
+            const card = document.createElement('div');
+            card.className = "portfolio-item bg-white border border-[#E9E0D1] p-3.5 sm:p-4 group hover:border-gold transition-all duration-300 shadow-sm flex flex-col justify-between";
+            card.setAttribute('data-category', 'corporate');
+            card.innerHTML = `
+              <div>
+                <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
+                  <img src="${imgUrl}" alt="${item.title || 'Archived Work'}" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+                  <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">Atelier Commission</span>
+                </div>
+                <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">${item.title || 'Bespoke Gift Hamper'}</h3>
+                <p class="text-charcoal-muted text-xs font-sans leading-relaxed mb-3">${item.description || 'Custom handcrafted hamper composed around the client brief.'}</p>
+              </div>
+              <div class="pt-3 border-t border-[#E9E0D1] text-[11px] font-mono text-ash flex justify-between items-center">
+                <span>Archived work</span>
+                <button type="button" class="text-gold-dark font-medium hover:underline touch-target flex items-center">View Detail</button>
+              </div>
+            `;
+            const detailBtn = card.querySelector('button');
+            if (detailBtn) {
+              detailBtn.addEventListener('click', () => {
+                openHamperModal(item.title || 'Bespoke Hamper', item.description || 'Custom handcrafted hamper.', 'Atelier Commission');
+              });
+            }
+            grid.prepend(card);
+          });
+        }
+      } catch (e) {
+        console.log('Dynamic gallery load silent:', e);
+      }
+    }
+
+    // Initialize all components on load
+    document.addEventListener('DOMContentLoaded', () => {
+      heroCarousel.init();
+      loadActiveBanner();
+      loadDynamicGallery();
+      if (window.location.hash === '#enquiry') {
+        setTimeout(openEnquiryModal, 200);
+      }
+    });
+  </script>
 </body>
 </html>
