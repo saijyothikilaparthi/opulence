@@ -31,40 +31,63 @@
 
   /* ---------------- Fetch Active Banner / Announcement ---------------- */
   function loadActiveBanner() {
-    var article = document.querySelector('.announce__article');
-    if (!article) return;
-
-    fetch(API_BASE + '/api/banners/active')
-      .then(function (res) { return res.json(); })
-      .then(function (json) {
-        if (json.success && json.data) {
-          var b = json.data;
-          var img = article.querySelector('.announce__img');
-          var title = article.querySelector('#sankranti-title');
-          var body = article.querySelector('.announce__copy .body');
-          var btn = article.querySelector('.announce__copy .btn');
-
-          if (img && b.image_url) {
-            img.src = b.image_url.startsWith('http') ? b.image_url : (API_BASE + b.image_url);
-            img.removeAttribute('srcset');
-          }
-          if (title && (b.event || b.title)) title.textContent = b.event || b.title;
-          if (body && b.note) body.textContent = b.note;
-          if (btn && (b.event || b.title)) btn.setAttribute('data-occasion', b.event || b.title);
-        }
-      })
-      .catch(function (err) {
-        console.log('Banner fetch error:', err);
-      });
+    // Banner functionality removed as requested
   }
   loadActiveBanner();
 
-  /* ---------------- Fetch Work Gallery ---------------- */
+  /* ---------------- Fetch Carousel Gallery ---------------- */
+  function loadCarouselGallery() {
+    var carouselViewport = document.getElementById('carouselViewport');
+    if (!carouselViewport) return;
+
+    fetch(API_BASE + '/api/gallery')
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+          // Clear existing slides
+          carouselViewport.innerHTML = '';
+          
+          // Add new slides
+          json.data.forEach(function (item, idx) {
+            var imgUrl = item.image_url.startsWith('http') ? item.image_url : (API_BASE + item.image_url);
+            var slide = document.createElement('div');
+            slide.className = 'hero-slide' + (idx === 0 ? ' active' : '');
+            slide.setAttribute('data-index', idx);
+            slide.setAttribute('data-title', item.title || 'Gift Hamper');
+            slide.setAttribute('data-category', item.category || 'Bespoke Work');
+            slide.setAttribute('data-desc', item.description || 'Custom Designed');
+            slide.setAttribute('data-link', '#work');
+            slide.setAttribute('aria-roledescription', 'slide');
+            slide.setAttribute('aria-label', (idx + 1) + ' of ' + json.data.length);
+            
+            slide.innerHTML = 
+              '<img src="' + imgUrl + '" alt="' + (item.title || 'Work photo') + '" class="w-full h-full object-cover object-center" draggable="false"/>' +
+              '<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>';
+            
+            carouselViewport.appendChild(slide);
+          });
+
+          // Re-initialize carousel logic if needed (assuming it's handled elsewhere or needs to be triggered)
+          // For now, just updating the DOM is sufficient if the carousel script handles dynamic content
+        }
+      })
+      .catch(function (err) {
+        console.log('Carousel fetch error:', err);
+      });
+  }
+  loadCarouselGallery();
   function loadWorkGallery() {
     var gallery = document.querySelector('.gallery');
     if (!gallery) return;
 
-    fetch(API_BASE + '/api/gallery')
+    // Get category from data attribute if it exists
+    var category = gallery.getAttribute('data-category');
+    var url = API_BASE + '/api/gallery';
+    if (category) {
+      url += '?category=' + encodeURIComponent(category);
+    }
+
+    fetch(url)
       .then(function (res) { return res.json(); })
       .then(function (json) {
         if (json.success && Array.isArray(json.data) && json.data.length > 0) {
@@ -83,7 +106,7 @@
             btn.innerHTML = 
               '<img src="' + imgUrl + '" alt="' + (item.title || 'Work photo') + '" loading="lazy">' +
               '<span class="tile__overlay">' +
-                '<span class="tile__cat">Bespoke Work</span>' +
+                '<span class="tile__cat">' + (item.category || 'Bespoke Work') + '</span>' +
                 '<span class="tile__title">' + (item.title || 'Gift Hamper') + '</span>' +
                 '<span class="tile__meta"><span>' + (item.description || 'Custom Designed') + '</span></span>' +
               '</span>';
@@ -265,6 +288,7 @@
       required_date: rawData.get('date') || null,
       theme: (rawData.get('theme') || '').toString().trim() || null,
       file_url: (rawData.get('file_url') || '').toString().trim() || null,
+      personalize_hamper: (rawData.get('personalize_hamper') || '').toString().trim() || null,
       customization_details: "Designation: " + (rawData.get('designation') || '') + " | Loves: " + (rawData.get('loves') || '') + " | Note: " + (rawData.get('note') || '') + " | Delivery: " + (rawData.get('delivery') || '')
     };
 
