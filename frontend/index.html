@@ -1641,7 +1641,7 @@
       currentIndex: 0,
       totalSlides: 6,
       intervalId: null,
-      duration: 4000,
+      duration: 2500,
       isPlaying: true,
 
       // Touch variables for mobile swipe
@@ -1713,7 +1713,9 @@
 
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!prefersReducedMotion) {
+          this.isPlaying = true;
           this.startTimer();
+          if (this.playPauseIcon) this.playPauseIcon.textContent = 'pause';
         } else {
           this.isPlaying = false;
           if (this.playPauseIcon) this.playPauseIcon.textContent = 'play_arrow';
@@ -1784,6 +1786,7 @@
 
       startTimer() {
         this.pauseTimer();
+        this.isPlaying = true;
         this.intervalId = setInterval(() => { this.goToSlide(this.currentIndex + 1); }, this.duration);
       },
 

@@ -49,23 +49,51 @@ def init_db():
         CREATE TABLE IF NOT EXISTS public.orders (
             id SERIAL PRIMARY KEY,
             source VARCHAR(50) DEFAULT 'offline',
+            enquiry_id INT,
+            category_type VARCHAR(50),
             customer_name VARCHAR(100) NOT NULL,
             phone VARCHAR(20) NOT NULL,
             email VARCHAR(100),
+            company_name VARCHAR(150),
             event VARCHAR(100),
+            occasion VARCHAR(100),
             quantity INT DEFAULT 1,
             amount NUMERIC(10, 2),
+            amount_paid NUMERIC(10, 2) DEFAULT 0,
             status VARCHAR(30) DEFAULT 'pending',
             payment_status VARCHAR(30) DEFAULT 'unpaid',
+            details TEXT,
             notes TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     """)
 
     try:
-        cursor.execute("""
-            ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS payment_status VARCHAR(30) DEFAULT 'unpaid';
-        """)
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS payment_status VARCHAR(30) DEFAULT 'unpaid';")
+    except Exception:
+        conn.rollback()
+    try:
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS enquiry_id INT;")
+    except Exception:
+        conn.rollback()
+    try:
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS category_type VARCHAR(50);")
+    except Exception:
+        conn.rollback()
+    try:
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS company_name VARCHAR(150);")
+    except Exception:
+        conn.rollback()
+    try:
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS occasion VARCHAR(100);")
+    except Exception:
+        conn.rollback()
+    try:
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS amount_paid NUMERIC(10, 2) DEFAULT 0;")
+    except Exception:
+        conn.rollback()
+    try:
+        cursor.execute("ALTER TABLE public.orders ADD COLUMN IF NOT EXISTS details TEXT;")
     except Exception:
         conn.rollback()
 

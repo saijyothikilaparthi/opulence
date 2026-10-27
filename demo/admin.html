@@ -36,9 +36,9 @@
         header { background-color: var(--ink); color: var(--on-dark); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
         header h1 { margin: 0; font-size: 22px; font-family: var(--serif); font-weight: 500; }
         .nav-tabs { display: flex; background-color: var(--ink-soft); padding: 0 30px; overflow-x: auto; }
-        .tab-btn { background: none; border: none; color: var(--on-dark-soft); padding: 15px 20px; cursor: pointer; font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.3s; }
+        .tab-btn { background: none; border: none; color: var(--on-dark-soft); padding: 15px 20px; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.3s; }
         .tab-btn:hover, .tab-btn.active { background-color: var(--ink); border-bottom-color: var(--gold); color: var(--on-dark); }
-        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        .container { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
         .tab-content { display: none; background: var(--surface); padding: 30px; border-radius: 0; border: 1px solid var(--line); box-shadow: 0 24px 48px rgba(60, 45, 20, .08); }
         .tab-content.active { display: block; }
         h2 { margin-top: 0; border-bottom: 1px solid var(--line); padding-bottom: 10px; color: var(--ink); font-family: var(--serif); font-weight: 500; font-size: 32px; }
@@ -47,117 +47,139 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         .form-group { margin-bottom: 15px; }
         .form-group.full { grid-column: span 2; }
-        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
-        input, select, textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 0; font-size: 15px; font-family: var(--sans); color: var(--ink); background: #FFFFFF; }
+        label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+        input, select, textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--line-strong); border-radius: 0; font-size: 14px; font-family: var(--sans); color: var(--ink); background: #FFFFFF; }
         input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(154, 118, 50, .15); }
-        button.submit-btn { background-color: var(--ink); color: var(--on-dark); padding: 14px 24px; border: 1px solid var(--ink); border-radius: 0; cursor: pointer; font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+        button.submit-btn { background-color: var(--ink); color: var(--on-dark); padding: 12px 22px; border: 1px solid var(--ink); border-radius: 0; cursor: pointer; font-weight: 600; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
         button.submit-btn:hover { background-color: var(--gold-deep); border-color: var(--gold-deep); }
-        button.btn-danger { background-color: transparent; color: var(--ink); border: 1px solid var(--ink); padding: 8px 16px; border-radius: 0; cursor: pointer; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+        button.btn-danger { background-color: transparent; color: var(--ink); border: 1px solid var(--ink); padding: 6px 12px; border-radius: 0; cursor: pointer; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
         button.btn-danger:hover { background-color: var(--ink); color: var(--on-dark); }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid var(--line); padding: 12px; text-align: left; font-size: 14px; vertical-align: top; }
-        th { background-color: var(--band); color: var(--ink); font-weight: 600; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+        button.btn-gold { background-color: transparent; color: var(--ink); border: 1px solid var(--gold); padding: 6px 12px; border-radius: 0; cursor: pointer; font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+        button.btn-gold:hover { background-color: var(--gold); color: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 13px; }
+        th, td { border: 1px solid var(--line); padding: 10px; text-align: left; font-size: 13px; vertical-align: top; }
+        th { background-color: var(--band); color: var(--ink); font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
         tr:nth-child(even) { background-color: var(--bg); }
-        .badge { padding: 4px 8px; border-radius: 0; font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line-strong); }
+        .badge { padding: 4px 8px; border-radius: 0; font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; border: 1px solid var(--line-strong); display:inline-block; }
         .badge-pending { background-color: var(--surface); color: var(--ink); }
-        .badge-contacted, .badge-in-progress { background-color: var(--band); color: var(--ink); }
-        .badge-converted, .badge-completed { background-color: var(--gold-light); color: var(--ink); border-color: var(--gold); }
-        .badge-cancelled { background-color: var(--ink-mute); color: var(--on-dark); border-color: var(--ink); }
-        .action-select { padding: 6px 10px; font-size: 13px; }
+        .badge-contacted { background-color: var(--band); color: var(--ink); }
+        .badge-order_confirmed, .badge-converted { background-color: var(--gold-light); color: var(--ink); border-color: var(--gold); }
+        .badge-order_canceled, .badge-cancelled { background-color: var(--ink-mute); color: var(--on-dark); border-color: var(--ink); }
+        .badge-in-progress { background-color: var(--band); color: var(--ink); }
+        .badge-completed, .badge-delivered { background-color: #dff0d8; color: #3c763d; border-color: #b2dba1; }
+        .action-select { padding: 6px 8px; font-size: 12px; }
+        .filter-bar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; background: var(--bg); padding:15px; border:1px solid var(--line); margin-bottom:15px; }
+        .filter-bar .form-group { margin-bottom:0; flex:1; min-width:150px; }
+        @media print {
+            header, .nav-tabs, .filter-bar button, .tab-btn, button { display:none !important; }
+            .tab-content { display:block !important; box-shadow:none; border:none; }
+            body { background:#fff; }
+            .container { max-width:100%; margin:0; padding:0; }
+        }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Gift Business Admin Dashboard</h1>
-    <span style="font-size: 14px; color: #bdc3c7;">Backend Active</span>
+    <span style="font-size: 13px; color: #bdc3c7;">Backend Active</span>
 </header>
 
 <div class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('ordersTab', this)">📦 Orders (Offline/All)</button>
-    <button class="tab-btn" onclick="switchTab('enquiriesTab', this)">🌐 Website Enquiries</button>
-    <button class="tab-btn" onclick="switchTab('galleryTab', this)">🎨 Work Gallery Showcase</button>
+    <button class="tab-btn active" onclick="switchTab('addOfflineTab', this)">Add a new order from offline</button>
+    <button class="tab-btn" onclick="switchTab('enquiriesTab', this)">Website Enquiries</button>
+    <button class="tab-btn" onclick="switchTab('allOrdersTab', this)">All Orders</button>
+    <button class="tab-btn" onclick="switchTab('galleryTab', this)">Work Gallery Showcase</button>
 </div>
 
 <div class="container">
 
-    <!-- ORDERS MANAGEMENT TAB -->
-    <div id="ordersTab" class="tab-content active">
-        <h2>Manual & Offline Orders Management</h2>
-        
-        <div style="background: var(--bg); padding: 20px; border: 1px solid var(--line); margin-bottom: 25px;">
-            <h4 style="margin-top:0;">Add New Order (Offline / WhatsApp / Instagram)</h4>
-            <form id="orderForm" class="form-grid">
+    <!-- ADD NEW ORDER FROM OFFLINE -->
+    <div id="addOfflineTab" class="tab-content active">
+        <h2>Add a new order from offline</h2>
+        <p style="color: var(--ink-soft); font-size: 13px;">Add orders received via WhatsApp, Instagram, Walk-in etc. directly to All Orders.</p>
+        <div style="background: var(--bg); padding: 25px; border: 1px solid var(--line); margin-bottom: 25px;">
+            <form id="offlineOrderForm" class="form-grid">
                 <div class="form-group">
-                    <label>Order Source *</label>
-                    <select id="orderSource">
+                    <label>Source *</label>
+                    <select id="offSource">
                         <option value="WhatsApp">WhatsApp</option>
                         <option value="Instagram">Instagram</option>
                         <option value="Walk-in">Walk-in / Offline</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Category / Type</label>
+                    <select id="offCategory">
+                        <option value="">Select</option>
+                        <option value="individual">Individual</option>
+                        <option value="corporate">Corporate</option>
+                        <option value="customized">Customized</option>
+                        <option value="Non-Corporate">Non-Corporate</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Customer Name *</label>
-                    <input type="text" id="orderCustName" required placeholder="Customer Name">
+                    <input type="text" id="offCustName" required placeholder="Customer Name">
                 </div>
                 <div class="form-group">
                     <label>Phone Number *</label>
-                    <input type="tel" id="orderPhone" required placeholder="9876543210">
+                    <input type="tel" id="offPhone" required placeholder="9876543210">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="offEmail" placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="offCompany" placeholder="Company Name">
                 </div>
                 <div class="form-group">
                     <label>Event / Occasion</label>
-                    <input type="text" id="orderEvent" placeholder="Diwali / Wedding / Corporate">
+                    <input type="text" id="offEvent" placeholder="Diwali / Wedding / Corporate">
                 </div>
                 <div class="form-group">
                     <label>Quantity</label>
-                    <input type="number" id="orderQty" value="1" min="1">
+                    <input type="number" id="offQty" value="1" min="1">
                 </div>
                 <div class="form-group">
-                    <label>Amount (₹)</label>
-                    <input type="number" id="orderAmount" step="0.01" placeholder="1500.00">
+                    <label>Total Amount (₹)</label>
+                    <input type="number" id="offAmount" step="0.01" placeholder="15000.00">
+                </div>
+                <div class="form-group">
+                    <label>Amount Paid by Customer (₹)</label>
+                    <input type="number" id="offAmountPaid" step="0.01" value="0" placeholder="0.00">
                 </div>
                 <div class="form-group full">
-                    <label>Order Notes</label>
-                    <textarea id="orderNotes" rows="2" placeholder="Customization details or special instructions..."></textarea>
+                    <label>Details / Customization Notes</label>
+                    <textarea id="offDetails" rows="2" placeholder="Customization details, preferences..."></textarea>
                 </div>
                 <div class="form-group full">
-                    <button type="submit" class="submit-btn">+ Add Order</button>
+                    <label>Internal Notes</label>
+                    <textarea id="offNotes" rows="2" placeholder="Internal notes..."></textarea>
+                </div>
+                <div class="form-group full">
+                    <button type="submit" class="submit-btn">+ Add Order to All Orders</button>
                 </div>
             </form>
         </div>
-
-        <h3>Orders List</h3>
-        <button onclick="loadOrders()" style="padding: 6px 12px; cursor: pointer; margin-bottom: 10px;">🔄 Refresh Orders</button>
-        <table id="ordersTable">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Source</th>
-                    <th>Customer Name & Contact</th>
-                    <th>Event</th>
-                    <th>Qty / Amount</th>
-                    <th>Order Status</th>
-                    <th>Payment Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody><tr><td colspan="8">Loading orders...</td></tr></tbody>
-        </table>
     </div>
 
     <!-- WEBSITE ENQUIRIES TAB -->
     <div id="enquiriesTab" class="tab-content">
-        <h2>Website Form Enquiries</h2>
-        <p style="color: #666; font-size: 13px;">Submissions directly from the website registration form appear here. Instant WhatsApp notifications are sent upon submission.</p>
-        <button onclick="loadEnquiries()" style="padding: 6px 12px; cursor: pointer; margin-bottom: 10px;">🔄 Refresh Enquiries</button>
+        <h2>Website Enquiries</h2>
+        <p style="color: var(--ink-soft); font-size: 13px;">Manage website enquiries. Only <strong>Contacted</strong>, <strong>Order Confirmed</strong>, or <strong>Order Canceled</strong> actions are available. Mark as <strong>Order Confirmed</strong> to create the order in All Orders.</p>
+        <button onclick="loadEnquiries()" style="padding: 8px 14px; cursor: pointer; margin-bottom: 15px;">🔄 Refresh Enquiries</button>
+        <div style="overflow-x:auto;">
         <table id="enquiriesTable">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Category Type</th>
-                    <th>Name & Phone</th>
+                    <th>Name & Contact</th>
                     <th>Company / Occasion</th>
-                    <th>Details</th>
+                    <th>Details (Qty/Budget/Notes)</th>
                     <th>Reference / Files</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -165,18 +187,91 @@
             </thead>
             <tbody><tr><td colspan="8">Loading enquiries...</td></tr></tbody>
         </table>
+        </div>
+    </div>
+
+    <!-- ALL ORDERS TAB -->
+    <div id="allOrdersTab" class="tab-content">
+        <h2>All Orders</h2>
+        <p style="color: var(--ink-soft); font-size: 13px;">Unified view of all orders (from website enquiries marked as Order Confirmed and offline entries). Track payments, update status and print as needed.</p>
+        
+        <div class="filter-bar">
+            <div class="form-group">
+                <label>Filter by Category/Type</label>
+                <select id="fltCategory" onchange="loadAllOrders()">
+                    <option value="">All</option>
+                    <option value="individual">Individual</option>
+                    <option value="corporate">Corporate</option>
+                    <option value="customized">Customized</option>
+                    <option value="Non-Corporate">Non-Corporate</option>
+                    <option value="website">Website</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Walk-in">Walk-in</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Filter by Order Status</label>
+                <select id="fltOrderStatus" onchange="loadAllOrders()">
+                    <option value="">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">In-Progress</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="processing">Processing</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Show</label>
+                <select id="fltLimit" onchange="loadAllOrders()">
+                    <option value="50">Last 50</option>
+                    <option value="20">Last 20</option>
+                    <option value="10">Last 10</option>
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="form-group" style="flex:0 0 auto;">
+                <button class="btn-gold" onclick="printAllOrders()">🖨️ Print Orders</button>
+                <button class="btn-gold" onclick="loadAllOrders()" style="margin-left:5px;">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+        <table id="allOrdersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Source</th>
+                    <th>Category/Type</th>
+                    <th>Customer Name & Contact</th>
+                    <th>Company / Occasion</th>
+                    <th>Event</th>
+                    <th>Qty / Amount</th>
+                    <th>Payment (Paid / Total / %)</th>
+                    <th>Order Status</th>
+                    <th>Payment Status</th>
+                    <th>Details</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody><tr><td colspan="12">Loading orders...</td></tr></tbody>
+        </table>
+        </div>
     </div>
 
     <!-- GALLERY TAB -->
     <div id="galleryTab" class="tab-content">
         <h2>Work Gallery Showcase</h2>
-        <p style="color: #666; font-size: 13px;">Upload pictures of recent gift hampers to display on the live website showcase gallery.</p>
+        <p style="color: var(--ink-soft); font-size: 13px;">Upload pictures of recent gift hampers to display on the live website showcase gallery.</p>
         
-        <form id="galleryForm" style="margin-bottom: 30px;">
-            <div class="form-group">
-                <label>Hamper Work Title</label>
-                <input type="text" id="workTitle" placeholder="e.g. Artisanal Coffee Box">
-            </div>
+        <form id="galleryForm" style="margin-bottom: 30px; background: var(--bg); padding:20px; border:1px solid var(--line);">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Hamper Work Title</label>
+                    <input type="text" id="workTitle" placeholder="e.g. Artisanal Coffee Box">
+                </div>
             <div class="form-group">
                 <label>Category</label>
                 <select id="workCategory">
@@ -186,15 +281,18 @@
                     <option value="Individual Hampers">Individual Hampers</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label>Short Description</label>
-                <input type="text" id="workDesc" placeholder="e.g. Handcrafted Brass with Dark Roast">
+                <div class="form-group full">
+                    <label>Short Description</label>
+                    <input type="text" id="workDesc" placeholder="e.g. Handcrafted Brass with Dark Roast">
+                </div>
+                <div class="form-group full">
+                    <label>Upload Hamper Picture *</label>
+                    <input type="file" id="workImage" accept="image/*" required>
+                </div>
+                <div class="form-group full">
+                    <button type="submit" class="submit-btn">+ Upload Showcase Picture</button>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Upload Hamper Picture *</label>
-                <input type="file" id="workImage" accept="image/*" required>
-            </div>
-            <button type="submit" class="submit-btn">+ Upload Showcase Picture</button>
         </form>
 
         <h3>Uploaded Gallery Photos</h3>
@@ -216,92 +314,182 @@ function switchTab(tabId, btn) {
     document.getElementById(tabId).classList.add('active');
     btn.classList.add('active');
 
-    if (tabId === 'ordersTab') loadOrders();
+    if (tabId === 'addOfflineTab') {}
     if (tabId === 'enquiriesTab') loadEnquiries();
+    if (tabId === 'allOrdersTab') loadAllOrders();
     if (tabId === 'galleryTab') loadGalleryWork();
 }
 
-async function loadOrders() {
-    const res = await fetch(`${API_BASE}/api/orders`);
-    const json = await res.json();
-    const tbody = document.querySelector("#ordersTable tbody");
-    if (!json.data || json.data.length === 0) {
-        tbody.innerHTML = "<tr><td colspan='8'>No orders recorded yet. Add your first offline order above.</td></tr>";
-        return;
-    }
-    tbody.innerHTML = json.data.map(o => `
-        <tr>
-            <td>#${o.id}</td>
-            <td><strong>${o.source}</strong></td>
-            <td>${o.customer_name}<br><small>${o.phone}</small></td>
-            <td>${o.event_type || '-'}</td>
-            <td>Qty: ${o.quantity} | ₹${o.total_amount ? Number(o.total_amount).toFixed(2) : '0.00'}</td>
-            <td>
-                <select class="action-select" onchange="updateOrderStatus(${o.id}, this.value)">
-                    <option value="pending" ${o.order_status === 'pending' ? 'selected' : ''}>Pending</option>
-                    <option value="in-progress" ${o.order_status === 'in-progress' ? 'selected' : ''}>In-Progress</option>
-                    <option value="completed" ${o.order_status === 'completed' ? 'selected' : ''}>Completed</option>
-                    <option value="cancelled" ${o.order_status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
-                </select>
-            </td>
-            <td>
-                <select class="action-select" onchange="updatePaymentStatus(${o.id}, this.value)">
-                    <option value="unpaid" ${o.payment_status === 'unpaid' ? 'selected' : ''}>Unpaid</option>
-                    <option value="partial" ${o.payment_status === 'partial' ? 'selected' : ''}>Partial</option>
-                    <option value="paid" ${o.payment_status === 'paid' ? 'selected' : ''}>Paid</option>
-                </select>
-            </td>
-            <td>
-                <button class="btn-danger" onclick="deleteOrder(${o.id})">Delete</button>
-            </td>
-        </tr>
-    `).join("");
-}
-
-document.getElementById("orderForm").addEventListener("submit", async function(e) {
+// Add offline order directly to All Orders
+document.getElementById("offlineOrderForm").addEventListener("submit", async function(e) {
     e.preventDefault();
     const payload = {
-        source: document.getElementById("orderSource").value,
-        customer_name: document.getElementById("orderCustName").value,
-        phone: document.getElementById("orderPhone").value,
-        event_type: document.getElementById("orderEvent").value || null,
-        quantity: parseInt(document.getElementById("orderQty").value) || 1,
-        total_amount: parseFloat(document.getElementById("orderAmount").value) || null,
-        notes: document.getElementById("orderNotes").value || null
+        source: document.getElementById("offSource").value,
+        category_type: document.getElementById("offCategory").value || null,
+        customer_name: document.getElementById("offCustName").value,
+        phone: document.getElementById("offPhone").value,
+        email: document.getElementById("offEmail").value || null,
+        company_name: document.getElementById("offCompany").value || null,
+        event: document.getElementById("offEvent").value || null,
+        occasion: document.getElementById("offEvent").value || null,
+        quantity: parseInt(document.getElementById("offQty").value) || 1,
+        amount: parseFloat(document.getElementById("offAmount").value) || 0,
+        amount_paid: parseFloat(document.getElementById("offAmountPaid").value) || 0,
+        details: document.getElementById("offDetails").value || null,
+        notes: document.getElementById("offNotes").value || null,
+        status: "pending"
     };
 
-    await fetch(`${API_BASE}/api/orders`, {
+    await fetch(`${API_BASE}/api/orders/admin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
     });
 
+    alert("Order added to All Orders successfully");
     this.reset();
-    loadOrders();
+    document.getElementById("offQty").value = 1;
+    document.getElementById("offAmountPaid").value = 0;
+    // Switch to All Orders tab
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('allOrdersTab').classList.add('active');
+    tabs[2].classList.add('active');
+    loadAllOrders();
 });
 
-async function updateOrderStatus(id, newStatus) {
+let allOrdersCache = [];
+async function loadAllOrders() {
+    const res = await fetch(`${API_BASE}/api/orders`);
+    const json = await res.json();
+    allOrdersCache = json.data || [];
+    
+    const fltCat = document.getElementById('fltCategory').value;
+    const fltStatus = document.getElementById('fltOrderStatus').value;
+    const fltLim = document.getElementById('fltLimit').value;
+    
+    let filtered = allOrdersCache.slice();
+    if (fltCat) {
+        filtered = filtered.filter(o => 
+            (o.category_type && o.category_type.toLowerCase() === fltCat.toLowerCase()) ||
+            (o.source && o.source.toLowerCase() === fltCat.toLowerCase())
+        );
+    }
+    if (fltStatus) {
+        filtered = filtered.filter(o => (o.status && o.status.toLowerCase() === fltStatus.toLowerCase()));
+    }
+    if (fltLim !== 'all') {
+        filtered = filtered.slice(0, parseInt(fltLim));
+    }
+    
+    const tbody = document.querySelector("#allOrdersTable tbody");
+    if (filtered.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='12'>No orders found.</td></tr>";
+        return;
+    }
+    tbody.innerHTML = filtered.map(o => {
+        const amount = o.amount || 0;
+        const amountPaid = o.amount_paid || 0;
+        const paidPct = amount > 0 ? ((amountPaid/amount)*100).toFixed(1) : '0.0';
+        const remPct = amount > 0 ? (Math.max(0, 100 - (amountPaid/amount)*100)).toFixed(1) : '0.0';
+        return `
+        <tr>
+            <td>#${o.id}</td>
+            <td>${o.source || '-'}</td>
+            <td>${o.category_type || '-'}</td>
+            <td>${o.customer_name}<br><small>${o.phone} ${o.email ? '| '+o.email : ''}</small></td>
+            <td>${o.company_name || '-'}<br><small>${o.occasion || o.event || '-'}</small></td>
+            <td>${o.event || o.occasion || '-'}</td>
+            <td>Qty: ${o.quantity || 1}<br>₹${Number(amount).toFixed(2)}</td>
+            <td>
+                <div style="font-size:12px;">Paid: ₹${Number(amountPaid).toFixed(2)} / ₹${Number(amount).toFixed(2)}</div>
+                <div style="font-size:11px; color:var(--ink-soft);">Paid: ${paidPct}% | Remaining: ${remPct}%</div>
+                <div style="margin-top:5px; display:flex; gap:4px;">
+                    <input type="number" step="0.01" id="paid_${o.id}" value="${amountPaid}" style="width:80px; padding:4px;">
+                    <button class="btn-gold" style="padding:4px 8px;" onclick="updatePaymentAmount(${o.id})">Update</button>
+                </div>
+            </td>
+            <td>
+                <select class="action-select" onchange="updateAllOrderStatus(${o.id}, this.value)">
+                    <option value="pending" ${o.status === 'pending' ? 'selected' : ''}>Pending</option>
+                    <option value="confirmed" ${o.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                    <option value="in-progress" ${o.status === 'in-progress' ? 'selected' : ''}>In-Progress</option>
+                    <option value="processing" ${o.status === 'processing' ? 'selected' : ''}>Processing</option>
+                    <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                    <option value="completed" ${o.status === 'completed' ? 'selected' : ''}>Completed</option>
+                    <option value="cancelled" ${o.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                </select>
+            </td>
+            <td>
+                <span class="badge badge-${o.payment_status}">${o.payment_status}</span>
+            </td>
+            <td style="max-width:200px; font-size:12px;">${o.details || o.notes || '-'}</td>
+            <td>
+                <button class="btn-danger" onclick="deleteOrderAll(${o.id})">Delete</button>
+            </td>
+        </tr>
+    `}).join("");
+}
+
+async function updatePaymentAmount(id) {
+    const amt = document.getElementById('paid_' + id).value;
+    await fetch(`${API_BASE}/api/orders/admin/${id}/payment`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount_paid: parseFloat(amt) || 0 })
+    });
+    loadAllOrders();
+}
+
+async function updateAllOrderStatus(id, newStatus) {
     await fetch(`${API_BASE}/api/orders/admin/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus })
     });
-    loadOrders();
+    loadAllOrders();
 }
 
-async function updatePaymentStatus(id, newStatus) {
-    await fetch(`${API_BASE}/api/orders/admin/${id}/payment`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: newStatus })
-    });
-    loadOrders();
-}
-
-async function deleteOrder(id) {
-    if (!confirm(`Are you sure you want to delete Order #${id}?`)) return;
+async function deleteOrderAll(id) {
+    if (!confirm(`Delete Order #${id}?`)) return;
     await fetch(`${API_BASE}/api/orders/admin/${id}`, { method: "DELETE" });
-    loadOrders();
+    loadAllOrders();
+}
+
+function printAllOrders() {
+    const fltCat = document.getElementById('fltCategory').value;
+    const fltStatus = document.getElementById('fltOrderStatus').value;
+    const fltLim = document.getElementById('fltLimit').value;
+    
+    let filtered = allOrdersCache.slice();
+    if (fltCat) {
+        filtered = filtered.filter(o => 
+            (o.category_type && o.category_type.toLowerCase() === fltCat.toLowerCase()) ||
+            (o.source && o.source.toLowerCase() === fltCat.toLowerCase())
+        );
+    }
+    if (fltStatus) {
+        filtered = filtered.filter(o => (o.status && o.status.toLowerCase() === fltStatus.toLowerCase()));
+    }
+    if (fltLim !== 'all') {
+        filtered = filtered.slice(0, parseInt(fltLim));
+    }
+    
+    let html = `<html><head><title>Orders Report</title>
+    <style>body{font-family:Arial,sans-serif;font-size:12px;} table{width:100%;border-collapse:collapse;} th,td{border:1px solid #ccc;padding:6px;text-align:left;} th{background:#f0f0f0;}</style>
+    </head><body><h2>Orders Report</h2><p>Generated: ${new Date().toLocaleString()}</p><table><thead><tr>
+    <th>ID</th><th>Source</th><th>Type</th><th>Customer</th><th>Contact</th><th>Company/Occasion</th><th>Qty</th><th>Amount</th><th>Paid</th><th>Paid%</th><th>Status</th><th>Payment</th></tr></thead><tbody>`;
+    filtered.forEach(o => {
+        const amount = o.amount||0; const ap=o.amount_paid||0;
+        const pp = amount>0?((ap/amount)*100).toFixed(1):'0.0';
+        html += `<tr><td>${o.id}</td><td>${o.source||''}</td><td>${o.category_type||''}</td><td>${o.customer_name||''}</td><td>${o.phone||''}</td><td>${o.company_name||''} / ${o.occasion||o.event||''}</td><td>${o.quantity||1}</td><td>₹${amount}</td><td>₹${ap}</td><td>${pp}%</td><td>${o.status||''}</td><td>${o.payment_status||''}</td></tr>`;
+    });
+    html += `</tbody></table></body></html>`;
+    const w = window.open('', '_blank');
+    w.document.write(html);
+    w.document.close();
+    w.print();
 }
 
 function renderEnquiryReferences(fileUrl) {
@@ -313,9 +501,9 @@ function renderEnquiryReferences(fileUrl) {
         const fullUrl = isUpload ? (API_BASE + (item.startsWith('/') ? item : '/' + item)) : item;
         const isImage = /\.(jpg|jpeg|png|webp|gif|svg|bmp|heic)$/i.test(item) || isUpload;
         if (isImage) {
-            return `<a href="${fullUrl}" target="_blank" title="View attached image" style="display:inline-block;"><img src="${fullUrl}" style="width:36px; height:36px; object-fit:cover; border:1px solid #ccc; border-radius:3px;" onerror="this.outerHTML='<span style=\\'font-size:11px;\\'>📷 Image</span>'"/></a>`;
+            return `<a href="${fullUrl}" target="_blank" title="View attached image"><img src="${fullUrl}" style="width:36px; height:36px; object-fit:cover; border:1px solid #ccc;" onerror="this.outerHTML='<span style=\\'font-size:11px;\\'>📷</span>'"/></a>`;
         }
-        return `<a href="${fullUrl}" target="_blank" style="font-size:11px; color:#9A7632; text-decoration:underline; word-break:break-all;">🔗 Link</a>`;
+        return `<a href="${fullUrl}" target="_blank" style="font-size:11px; color:#9A7632; text-decoration:underline; word-break:break-all;">Link</a>`;
     }).join('') + `</div>`;
 }
 
@@ -330,24 +518,49 @@ async function loadEnquiries() {
     tbody.innerHTML = json.data.map(e => `
         <tr>
             <td>#${e.id}</td>
-            <td><strong>${e.enquiry_type.toUpperCase()}</strong></td>
-            <td>${e.name}<br><small>${e.phone} | ${e.email || 'N/A'}</small></td>
+            <td><strong>${e.enquiry_type ? e.enquiry_type.toUpperCase() : '-'}</strong></td>
+            <td>${e.name}<br><small>${e.phone} ${e.email ? '| '+e.email : ''}</small></td>
             <td>${e.company_name || '-'}<br><small>${e.occasion || e.theme || '-'}</small></td>
-            <td>Qty: ${e.quantity || 1} | Budget: ₹${e.budget || 'N/A'}<br><small>${e.customization_details || '-'}</small></td>
+            <td>Qty: ${e.quantity || 1} | Budget: ₹${e.budget || 'N/A'}<br><small style="color:var(--ink-soft);">${(e.customization_details||'').substring(0,80)}${(e.customization_details||'').length>80?'...':''}</small></td>
             <td>${renderEnquiryReferences(e.file_url)}</td>
-            <td><span class="badge badge-${e.status}">${e.status}</span></td>
+            <td><span class="badge badge-${e.status.replace(/ /g,'_')}">${e.status.replace('_',' ')}</span></td>
             <td>
-                <select class="action-select" onchange="updateEnquiryStatus(${e.id}, this.value)">
-                    <option value="pending" ${e.status === 'pending' ? 'selected' : ''}>Pending</option>
+                <select class="action-select" onchange="handleEnquiryAction(${e.id}, this.value, '${e.name.replace(/'/g,"\\'")}', '${e.phone.replace(/'/g,"\\'")}')">
+                    <option value="">Select Action</option>
                     <option value="contacted" ${e.status === 'contacted' ? 'selected' : ''}>Contacted</option>
-                    <option value="in-progress" ${e.status === 'in-progress' ? 'selected' : ''}>In-Progress</option>
-                    <option value="converted" ${e.status === 'converted' ? 'selected' : ''}>Converted</option>
-                    <option value="cancelled" ${e.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                    <option value="order_confirmed" ${e.status === 'order_confirmed' ? 'selected' : ''}>Order Confirmed</option>
+                    <option value="order_canceled" ${e.status === 'order_canceled' ? 'selected' : ''}>Order Canceled</option>
                 </select>
-                <button class="btn-danger" onclick="deleteEnquiry(${e.id})" style="margin-left: 5px;">Delete</button>
+                <button class="btn-danger" onclick="deleteEnquiry(${e.id})" style="margin-left: 4px;">Delete</button>
             </td>
         </tr>
     `).join("");
+}
+
+async function handleEnquiryAction(id, action, name, phone) {
+    if (!action) return;
+    await fetch(`${API_BASE}/api/enquiries/admin/${id}/status`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: action })
+    });
+    if (action === 'order_confirmed') {
+        if (confirm(`Create order in All Orders for enquiry #${id} (${name})?`)) {
+            await fetch(`${API_BASE}/api/orders/from-enquiry/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({})
+            });
+            alert("Order created in All Orders");
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById('allOrdersTab').classList.add('active');
+            tabs[2].classList.add('active');
+            loadAllOrders();
+        }
+    }
+    loadEnquiries();
 }
 
 async function updateEnquiryStatus(id, newStatus) {
@@ -404,7 +617,8 @@ async function deleteWork(id) {
 }
 
 // Initial load
-loadOrders();
+loadEnquiries();
+loadAllOrders();
 </script>
 
 </body>

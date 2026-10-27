@@ -121,15 +121,21 @@ class HamperResponse(BaseModel):
 
 
 class OrderCreate(BaseModel):
-    source: Optional[str] = Field("offline", max_length=50) # whatsapp, instagram, offline
+    source: Optional[str] = Field("offline", max_length=50)  # whatsapp, instagram, offline
+    enquiry_id: Optional[int] = None
+    category_type: Optional[str] = None
     customer_name: str = Field(..., min_length=1, max_length=100)
     phone: str = Field(..., min_length=7, max_length=20)
     email: Optional[str] = Field(None, max_length=100)
+    company_name: Optional[str] = Field(None, max_length=150)
     event: Optional[str] = Field(None, max_length=100)
+    occasion: Optional[str] = Field(None, max_length=100)
     quantity: Optional[int] = Field(1, ge=1)
     amount: Optional[float] = Field(None, ge=0)
+    amount_paid: Optional[float] = Field(0, ge=0)
     status: Optional[str] = Field("pending", max_length=30)
-    payment_status: Optional[str] = Field("unpaid", max_length=30) # unpaid, partial, paid
+    payment_status: Optional[str] = Field("unpaid", max_length=30)  # unpaid, partial, paid
+    details: Optional[str] = None
     notes: Optional[str] = None
 
 
