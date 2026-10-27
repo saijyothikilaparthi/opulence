@@ -23,26 +23,29 @@
             --sans: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
         }
         * { box-sizing: border-box; }
-        body { font-family: var(--sans); margin: 0; padding: 0; background-color: var(--bg); color: var(--ink); display:flex; min-height:100vh; }
-        .sidebar { width:280px; background:#1A1816; color:#F6F2EA; display:flex; flex-direction:column; transition:width 0.25s ease; border-right:1px solid #3A3228; }
-        .sidebar.collapsed { width:80px; }
-        .sidebar-header { padding:18px 16px; display:flex; align-items:center; gap:10px; border-bottom:1px solid #3A3228; min-height:72px; }
-        .sidebar-logo { height:34px; width:auto; object-fit:contain; }
-        .sidebar-title { font-family: var(--serif); font-size:18px; font-weight:500; white-space:nowrap; overflow:hidden; }
-        .sidebar.collapsed .sidebar-title { display:none; }
-        .sidebar-toggle { margin-left:auto; background:transparent; border:none; color:#CFC5B4; cursor:pointer; padding:6px; display:flex; align-items:center; }
-        .sidebar-nav { flex:1; padding:12px 10px; display:flex; flex-direction:column; gap:4px; overflow-y:auto; }
-        .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:transparent; border:none; color:#CFC5B4; text-align:left; cursor:pointer; font-size:12px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; border-radius:0; transition:all 0.2s ease; white-space:nowrap; }
-        .nav-item .material-symbols-outlined { font-size:20px; }
+        html, body { height:100%; }
+        body { font-family: var(--sans); margin: 0; padding: 0; background-color: var(--bg); color: var(--ink); display:flex; min-height:100vh; overflow:hidden; }
+        .sidebar { width:280px; background:#1A1816; color:#F6F2EA; display:flex; flex-direction:column; transition:width 0.25s ease; border-right:1px solid #3A3228; height:100vh; position:sticky; top:0; flex-shrink:0; }
+        .sidebar.collapsed { width:72px; }
+        .sidebar-header { padding:16px 12px; display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid #3A3228; min-height:72px; flex-shrink:0; position:relative; background:#151310; }
+        .sidebar-logo { height:34px; width:auto; object-fit:contain; filter:brightness(1.05); }
+        .sidebar-header a { display:flex; align-items:center; }
+        .sidebar.collapsed .sidebar-header { justify-content:center; padding:16px 8px; }
+        .sidebar.collapsed .sidebar-header a { display:none; }
+        .sidebar-toggle { position:absolute; right:-14px; top:50%; transform:translateY(-50%); background:#1A1816; border:1px solid #3A3228; color:#CFC5B4; cursor:pointer; padding:4px; display:flex; align-items:center; border-radius:50%; width:28px; height:28px; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.25); }
+        .sidebar.collapsed .sidebar-toggle { right:-14px; }
+        .sidebar-nav { flex:1; padding:12px 10px; display:flex; flex-direction:column; gap:4px; overflow-y:auto; overflow-x:hidden; }
+        .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:transparent; border:none; color:#CFC5B4; text-align:left; cursor:pointer; font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; border-radius:0; transition:all 0.2s ease; white-space:nowrap; overflow:hidden; }
+        .nav-item .material-symbols-outlined { font-size:20px; flex-shrink:0; }
         .nav-item:hover { background:#25221C; color:#F6F2EA; }
         .nav-item.active { background:linear-gradient(90deg, rgba(179,151,97,0.25) 0%, transparent 100%); color:#F6F2EA; border-left:2px solid var(--gold); padding-left:10px; }
         .sidebar.collapsed .nav-item { justify-content:center; padding:10px; }
         .sidebar.collapsed .nav-item .label { display:none; }
-        .main { flex:1; display:flex; flex-direction:column; min-width:0; }
-        .topbar { background:var(--bg); border-bottom:1px solid var(--line); padding:16px 28px; display:flex; align-items:center; justify-content:space-between; min-height:72px; }
+        .main { flex:1; display:flex; flex-direction:column; min-width:0; height:100vh; overflow:hidden; }
+        .topbar { background:var(--bg); border-bottom:1px solid var(--line); padding:16px 28px; display:flex; align-items:center; justify-content:space-between; min-height:72px; flex-shrink:0; }
         .topbar-title { font-family:var(--serif); font-size:26px; font-weight:500; }
         .topbar-sub { font-size:11px; text-transform:uppercase; letter-spacing:.12em; color:var(--ink-mute); }
-        .content { padding:28px; max-width:1400px; width:100%; margin:0 auto; }
+        .content { padding:28px; max-width:1400px; width:100%; margin:0 auto; flex:1; overflow-y:auto; overflow-x:auto; }
         .tab-content { display:none; background:var(--surface); padding:28px; border:1px solid var(--line); box-shadow:0 24px 48px rgba(60,45,20,.06); }
         .tab-content.active { display:block; }
         h2 { margin-top:0; border-bottom:1px solid var(--line); padding-bottom:10px; color:var(--ink); font-family:var(--serif); font-weight:500; font-size:32px; }
@@ -71,21 +74,29 @@
         .badge-completed, .badge-delivered { background:#e8f3e6; border-color:#b9d5b0; color:#3c5f36; }
         .filter-bar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; background:var(--bg); padding:14px; border:1px solid var(--line); margin-bottom:14px; }
         .filter-bar .form-group { margin-bottom:0; flex:1; min-width:150px; }
+        @media (max-width: 1024px) {
+            body { overflow:auto; }
+            .sidebar { position:fixed; left:0; top:0; z-index:50; transform:translateX(-100%); }
+            .sidebar.mobile-open { transform:translateX(0); }
+            .main { height:auto; overflow:visible; }
+            .content { overflow:visible; }
+        }
         @media print {
             .sidebar, .topbar { display:none !important; }
-            .content { padding:0; max-width:100%; }
+            .content { padding:0; max-width:100%; overflow:visible; }
             .tab-content { display:block !important; box-shadow:none; border:none; }
-            body { background:#fff; }
+            body { background:#fff; overflow:visible; }
         }
     </style>
 </head>
 <body>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="https://lh3.googleusercontent.com/aida/AEtjO1UrGDwqYUmENrYL1Z5G1fp-_YodzOqxsYG14bmtJkITsW6Rk5zZjUEPzqjlhdU_ouiJofm4q4OLS5sYwKvOHzF87vzdsNvCH5t1KtUVEI192n2R4XAl2fWwUU0VinvBs9DLkqvhP_UJcvcnV8CUAS0Qn4GoKuTrETpJ7yl51w0mBCucIGqbHrws0UhInzBlm3Xpam5Y-DbohKSIRjd4zfQoXkedAX9CGCm-Kk7S3u9ov7lfiSJXmkJg6Q" onerror="this.onerror=null; this.src='assets/opulence-logo.png';" alt="Opulence" class="sidebar-logo"/>
-            <div class="sidebar-title">OPULENCE</div>
+            <a href="/" title="Go to website" style="display:flex; align-items:center; text-decoration:none;">
+                <img src="/frontend/assets/opulence-logo.png" onerror="this.onerror=null; this.src='/assets/opulence-logo.png';" alt="Opulence" class="sidebar-logo"/>
+            </a>
             <button class="sidebar-toggle" onclick="toggleSidebar()">
-                <span class="material-symbols-outlined" id="sidebarToggleIcon">menu_open</span>
+                <span class="material-symbols-outlined" id="sidebarToggleIcon">chevron_left</span>
             </button>
         </div>
         <nav class="sidebar-nav">
@@ -241,7 +252,7 @@ function toggleSidebar(){
     const sb = document.getElementById('sidebar');
     sb.classList.toggle('collapsed');
     const icon = document.getElementById('sidebarToggleIcon');
-    icon.textContent = sb.classList.contains('collapsed') ? 'menu' : 'menu_open';
+    icon.textContent = sb.classList.contains('collapsed') ? 'chevron_right' : 'chevron_left';
 }
 
 function switchTab(tabId, btn, title){
