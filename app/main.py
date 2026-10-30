@@ -1,13 +1,10 @@
-import os
-import uuid
-from typing import Optional
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.database import get_connection, init_db
+from app.database import init_db
 from app.routers import enquiries, categories, products, hampers, orders, gallery
 
 
@@ -23,7 +20,8 @@ app = FastAPI(title="Gift Management API", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    # The site uses no cookies or auth headers; a wildcard origin must not carry credentials
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )

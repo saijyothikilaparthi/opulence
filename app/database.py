@@ -1,13 +1,17 @@
+import os
+
 import psycopg
 
 
 def get_connection():
+    # Defaults match the local development setup; override via environment in production
     return psycopg.connect(
-        host="localhost",
-        port=5432,
-        dbname="gift_management",
-        user="gift_app",
-        password="change_this_password"
+        host=os.getenv("DB_HOST", "localhost"),
+        port=int(os.getenv("DB_PORT", "5432")),
+        dbname=os.getenv("DB_NAME", "gift_management"),
+        user=os.getenv("DB_USER", "gift_app"),
+        password=os.getenv("DB_PASSWORD", "change_this_password"),
+        connect_timeout=int(os.getenv("DB_CONNECT_TIMEOUT", "5"))
     )
 
 
@@ -77,6 +81,65 @@ def init_db():
             image_url TEXT NOT NULL,
             description TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    # Catalog tables used by the categories, products and hampers routers
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS public.categories (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            slug VARCHAR(100) NOT NULL UNIQUE,
+            description TEXT,
+            image_url TEXT,
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS public.products (
+            id SERIAL PRIMARY KEY,
+            category_id INT REFERENCES public.categories(id) ON DELETE SET NULL,
+            name VARCHAR(150) NOT NULL,
+            description TEXT,
+            price NUMERIC(10, 2),
+            image_url TEXT,
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS public.hamper_sizes (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            max_items INT NOT NULL CHECK (max_items >= 1),
+            description TEXT,
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS public.hampers (
+            id SERIAL PRIMARY KEY,
+            size_id INT REFERENCES public.hamper_sizes(id) ON DELETE SET NULL,
+            name VARCHAR(150) NOT NULL,
+            description TEXT,
+            price NUMERIC(10, 2),
+            image_url TEXT,
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS public.hamper_items (
+            id SERIAL PRIMARY KEY,
+            hamper_id INT NOT NULL REFERENCES public.hampers(id) ON DELETE CASCADE,
+            product_id INT NOT NULL REFERENCES public.products(id) ON DELETE CASCADE,
+            quantity INT NOT NULL DEFAULT 1 CHECK (quantity >= 1)
         );
     """)
 

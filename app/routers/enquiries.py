@@ -35,19 +35,14 @@ async def upload_enquiry_references(
 
     os.makedirs(UPLOAD_DIR, exist_ok=True)
     uploaded_urls = []
-    allowed_extensions = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".bmp", ".heic", ".heif", ".pdf"}
+    # Files are served back from the site's own origin, so the stored extension must be a
+    # known-safe type (no .svg/.html, which a browser could execute)
+    allowed_extensions = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".heic", ".heif", ".pdf"}
 
     for upload_item in all_files:
         ext = os.path.splitext(upload_item.filename or "")[1].lower()
-        if not ext:
-            ext = ".jpg"
 
-        is_allowed = (
-            (upload_item.content_type and (upload_item.content_type.startswith("image/") or upload_item.content_type == "application/pdf"))
-            or ext in allowed_extensions
-        )
-
-        if not is_allowed:
+        if ext not in allowed_extensions:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail=f"File '{upload_item.filename}' has unsupported format. Only images and PDF files are accepted."

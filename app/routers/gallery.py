@@ -9,6 +9,10 @@ router = APIRouter(prefix="/api/gallery", tags=["Gallery"])
 UPLOAD_DIR = "uploads/gallery"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# Uploads are served from the site's own origin, so only raster image types are accepted
+# (no .svg/.html, which a browser could execute)
+ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+
 
 @router.get("", status_code=status.HTTP_200_OK)
 def list_gallery_work(category: Optional[str] = None):
@@ -44,13 +48,13 @@ async def upload_gallery_work(
     description: Optional[str] = Form(None),
     image: UploadFile = File(...)
 ):
-    if not image.content_type.startswith("image/"):
+    file_extension = os.path.splitext(image.filename or "")[1].lower()
+    if not (image.content_type or "").startswith("image/") or file_extension not in ALLOWED_EXTENSIONS:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Only image files are allowed."
+            detail="Only JPG, PNG, WEBP or GIF images are allowed."
         )
 
-    file_extension = os.path.splitext(image.filename)[1] or ".jpg"
     unique_filename = f"{uuid.uuid4()}{file_extension}"
     file_path = os.path.join(UPLOAD_DIR, unique_filename)
 
@@ -79,6 +83,8 @@ async def upload_gallery_work(
         }
     except Exception as e:
         connection.rollback()
+        if os.path.exists(file_path):
+            os.remove(file_path)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database error: {str(e)}")
     finally:
         cursor.close()
@@ -95,6 +101,13 @@ def delete_gallery_work(work_id: int):
         if not row:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Work image not found")
         connection.commit()
+
+        # Remove the stored file too, so deleted photos don't stay publicly reachable
+        stored_name = os.path.basename(row[0] or "")
+        stored_path = os.path.join(UPLOAD_DIR, stored_name)
+        if row[0] and row[0].startswith("/uploads/gallery/") and os.path.isfile(stored_path):
+            os.remove(stored_path)
+
         return {"success": True, "message": f"Gallery work #{work_id} deleted"}
     finally:
         cursor.close()

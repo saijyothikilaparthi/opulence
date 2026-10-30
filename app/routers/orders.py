@@ -4,6 +4,9 @@ from app.schemas import OrderCreate
 
 router = APIRouter(prefix="/api/orders", tags=["Orders"])
 
+ORDER_STATUSES = {"pending", "in-progress", "completed", "cancelled"}
+PAYMENT_STATUSES = {"unpaid", "partial", "paid"}
+
 
 @router.get("", status_code=status.HTTP_200_OK)
 def list_orders():
@@ -41,6 +44,11 @@ def list_orders():
 
 @router.post("/admin", status_code=status.HTTP_201_CREATED)
 def create_order(order: OrderCreate):
+    if order.status not in ORDER_STATUSES:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid status '{order.status}'")
+    if order.payment_status not in PAYMENT_STATUSES:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid payment_status '{order.payment_status}'")
+
     connection = get_connection()
     cursor = connection.cursor()
     try:
@@ -88,16 +96,33 @@ def update_order_status(order_id: int, status_payload: dict):
     new_status = status_payload.get("status")
     new_payment_status = status_payload.get("payment_status")
 
+    if not new_status and not new_payment_status:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Provide status or payment_status")
+    if new_status and new_status not in ORDER_STATUSES:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid status '{new_status}'")
+    if new_payment_status and new_payment_status not in PAYMENT_STATUSES:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid payment_status '{new_payment_status}'")
+
     connection = get_connection()
     cursor = connection.cursor()
     try:
-        if new_status:
-            cursor.execute("UPDATE orders SET status = %s WHERE id = %s", (new_status, order_id))
-        if new_payment_status:
-            cursor.execute("UPDATE orders SET payment_status = %s WHERE id = %s", (new_payment_status, order_id))
-        
+        cursor.execute(
+            """
+            UPDATE orders
+            SET status = COALESCE(%s, status), payment_status = COALESCE(%s, payment_status)
+            WHERE id = %s
+            RETURNING id
+            """,
+            (new_status, new_payment_status, order_id)
+        )
+        if not cursor.fetchone():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
+
         connection.commit()
         return {"success": True, "message": "Order updated successfully"}
+    except HTTPException:
+        connection.rollback()
+        raise
     except Exception as e:
         connection.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Failed to update order: {str(e)}")
