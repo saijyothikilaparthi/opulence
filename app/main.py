@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -32,6 +33,20 @@ app.include_router(products.router)
 app.include_router(hampers.router)
 app.include_router(orders.router)
 app.include_router(gallery.router)
+
+
+# Admin console lives at /admin. These routes must be registered before the
+# static mounts below, otherwise the "/" mount would swallow the request.
+@app.get("/admin", include_in_schema=False)
+def admin_console():
+    return FileResponse("demo/admin.html")
+
+
+@app.get("/admin/", include_in_schema=False)
+@app.get("/demo/admin.html", include_in_schema=False)
+@app.get("/demo/admin", include_in_schema=False)
+def admin_console_redirect():
+    return RedirectResponse(url="/admin", status_code=301)
 
 
 app.mount(

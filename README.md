@@ -38,7 +38,7 @@ python -m uvicorn app.main:app --reload
 ## 🌐 Application Portals
 
 * **Website Frontend:** `http://127.0.0.1:8000/`
-* **Admin Dashboard Console:** `http://127.0.0.1:8000/demo/admin.html`
+* **Admin Dashboard Console:** `http://127.0.0.1:8000/admin`
 * **Interactive API Documentation (Swagger):** `http://127.0.0.1:8000/docs`
 
 ---
@@ -73,7 +73,7 @@ python -m uvicorn app.main:app --reload
 
 ---
 
-## 🎛️ Admin Dashboard Console (`/demo/admin.html`)
+## 🎛️ Admin Dashboard Console (`/admin`)
 
 A tabbed administration dashboard allowing the team to manage operations without code changes:
 
