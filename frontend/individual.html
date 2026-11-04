@@ -343,7 +343,7 @@
         <p class="text-xs font-mono text-ash">Every element tailored to your recipient's passions</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div id="individual-gallery-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Theme 1 -->
         <div class="bg-white border border-[#E9E0D1] p-6 flex flex-col justify-between hover:border-gold transition-colors">
           <div class="space-y-4">
@@ -1213,6 +1213,34 @@
         submitIcon.textContent = 'send';
       }
     }
+  </script>
+  <script src="js/main.js"></script>
+  <script>
+    (function(){
+      try {
+        var API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '8000'
+          ? 'http://127.0.0.1:8000'
+          : window.location.origin;
+        fetch(API_BASE + '/api/gallery').then(function(r){return r.json();}).then(function(json){
+          if(!json.success || !Array.isArray(json.data)) return;
+          var grid = document.getElementById('individual-gallery-grid');
+          if(!grid) return;
+          if(grid.dataset.loaded) return;
+          var items = json.data.filter(function(it){
+            var c=(it.category||'').toLowerCase();
+            return c.indexOf('individual') !== -1;
+          });
+          items.slice(0,12).forEach(function(item){
+            var imgUrl = item.image_url.startsWith('http') ? item.image_url : (API_BASE + item.image_url);
+            var card = document.createElement('div');
+            card.className = 'bg-white border border-[#E9E0D1] p-6 flex flex-col justify-between hover:border-gold transition-colors';
+            card.innerHTML = '<div class="space-y-4"><div class="overflow-hidden aspect-[4/3] border border-[#E9E0D1]"><img src="'+imgUrl+'" alt="'+(item.title||'Bespoke Hamper')+'" class="w-full h-full object-cover"/></div><div><span class="text-[10px] font-mono uppercase tracking-wider text-gold-dark font-medium">'+(item.category||'INDIVIDUAL HAMPERS')+'</span><h3 class="font-serif text-xl text-charcoal font-medium mt-1">'+(item.title||'Bespoke Hamper')+'</h3><p class="text-charcoal-muted text-xs leading-relaxed font-light mt-1">'+(item.description||'')+'</p></div></div><div class="mt-6 pt-4 border-t border-[#E9E0D1]"><button type="button" onclick="window.location.href=\'index.html#enquire\'" class="inline-flex items-center gap-1.5 text-xs font-mono text-gold-dark uppercase tracking-wider font-semibold hover:text-charcoal">Commission Similar <span class="material-symbols-outlined text-[13px]">arrow_forward</span></button></div>';
+            grid.prepend(card);
+          });
+          grid.dataset.loaded = 'true';
+        }).catch(function(){});
+      }catch(e){}
+    })();
   </script>
 </body>
 </html>
