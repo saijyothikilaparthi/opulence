@@ -367,7 +367,7 @@ async function loadAllOrders() {
                 <div style="margin-top:5px; display:flex; gap:4px;"><input type="number" step="0.01" id="paid_${o.id}" value="${amountPaid}" style="width:80px; padding:4px;"><button class="btn-gold" style="padding:4px 8px;" onclick="updatePaymentAmount(${o.id})">Update</button></div>
             </td>
             <td>
-                <select class="action-select" onchange="updateAllOrderStatus(${o.id}, this.value)">
+                <select class="action-select" style="color:var(--ink); background:var(--surface); padding:8px 10px; min-width:130px; border:1px solid var(--line-strong);" onchange="updateAllOrderStatus(${o.id}, this.value)">
                     ${statusOption(o, 'pending', 'Pending')}${statusOption(o, 'confirmed', 'Confirmed')}${statusOption(o, 'in-progress', 'In-Progress')}${statusOption(o, 'processing', 'Processing')}${statusOption(o, 'delivered', 'Delivered')}${statusOption(o, 'completed', 'Completed')}${statusOption(o, 'cancelled', 'Cancelled')}
                 </select>
             </td>
