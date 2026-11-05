@@ -48,24 +48,25 @@
         .content { padding:28px; max-width:1400px; width:100%; margin:0 auto; flex:1; overflow-y:auto; overflow-x:auto; }
         .tab-content { display:none; background:var(--surface); padding:28px; border:1px solid var(--line); box-shadow:0 24px 48px rgba(60,45,20,.06); }
         .tab-content.active { display:block; }
-        h2 { margin-top:0; border-bottom:1px solid var(--line); padding-bottom:10px; color:var(--ink); font-family:var(--serif); font-weight:500; font-size:32px; }
-        h3 { font-family:var(--serif); font-weight:500; font-size:24px; color:var(--ink); }
-        h4 { font-family:var(--serif); font-weight:500; font-size:20px; color:var(--ink); }
+        h2 { margin-top:0; border-bottom:1px solid var(--line); padding-bottom:10px; color:var(--ink); font-family:var(--serif); font-weight:500; font-size:clamp(24px, 3.2vw, 32px); }
+        h3 { font-family:var(--serif); font-weight:500; font-size:clamp(20px, 2.6vw, 24px); color:var(--ink); }
+        h4 { font-family:var(--serif); font-weight:500; font-size:clamp(18px, 2.2vw, 20px); color:var(--ink); }
         .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px; }
         .form-group { margin-bottom:14px; }
         .form-group.full { grid-column:span 2; }
-        label { display:block; font-weight:600; margin-bottom:6px; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); }
-        input, select, textarea { width:100%; padding:10px 14px; border:1px solid var(--line-strong); font-size:14px; font-family:var(--sans); color:var(--ink); background:#FFFFFF; }
+        label { display:block; font-weight:600; margin-bottom:6px; font-size:clamp(10px, 1.4vw, 11px); letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); }
+        input, select, textarea { width:100%; padding:clamp(10px, 1.6vw, 12px) clamp(12px, 1.8vw, 14px); border:1px solid var(--line-strong); font-size:clamp(14px, 1.8vw, 15px); font-family:var(--sans); color:var(--ink); background:#FFFFFF; min-height:44px; }
+        textarea { min-height:88px; }
         input:focus, select:focus, textarea:focus { outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(179,151,97,.12); }
-        button.submit-btn { background-color:var(--ink); color:#F6F2EA; padding:12px 22px; border:1px solid var(--ink); cursor:pointer; font-weight:600; font-size:12px; letter-spacing:.14em; text-transform:uppercase; }
+        button.submit-btn { background-color:var(--ink); color:#F6F2EA; padding:clamp(11px, 1.8vw, 13px) clamp(16px, 2.2vw, 22px); border:1px solid var(--ink); cursor:pointer; font-weight:600; font-size:clamp(11px, 1.5vw, 12px); letter-spacing:.14em; text-transform:uppercase; min-height:44px; }
         button.submit-btn:hover { background-color:var(--gold-deep); border-color:var(--gold-deep); }
-        button.btn-danger { background:transparent; color:var(--ink); border:1px solid var(--ink); padding:6px 12px; cursor:pointer; font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
-        button.btn-gold { background:transparent; color:var(--ink); border:1px solid var(--gold); padding:6px 12px; cursor:pointer; font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
-        table { width:100%; border-collapse:collapse; margin-top:18px; font-size:13px; }
-        th, td { border:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; }
-        th { background:var(--band); font-weight:600; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+        button.btn-danger { background:transparent; color:var(--ink); border:1px solid var(--ink); padding:clamp(7px, 1.2vw, 8px) clamp(10px, 1.6vw, 12px); cursor:pointer; font-size:clamp(10px, 1.4vw, 11px); letter-spacing:.12em; text-transform:uppercase; min-height:36px; }
+        button.btn-gold { background:transparent; color:var(--ink); border:1px solid var(--gold); padding:clamp(7px, 1.2vw, 8px) clamp(10px, 1.6vw, 12px); cursor:pointer; font-size:clamp(10px, 1.4vw, 11px); letter-spacing:.12em; text-transform:uppercase; min-height:36px; }
+        table { width:100%; border-collapse:collapse; margin-top:18px; font-size:clamp(12px, 1.6vw, 13px); }
+        th, td { border:1px solid var(--line); padding:clamp(8px, 1.4vw, 10px); text-align:left; vertical-align:top; }
+        th { background:var(--band); font-weight:600; font-size:clamp(10px, 1.3vw, 11px); letter-spacing:.08em; text-transform:uppercase; }
         tr:nth-child(even) { background:var(--bg); }
-        .badge { padding:4px 8px; border:1px solid var(--line-strong); font-size:10px; letter-spacing:.1em; text-transform:uppercase; display:inline-block; }
+        .badge { padding:4px 8px; border:1px solid var(--line-strong); font-size:clamp(9px, 1.2vw, 10px); letter-spacing:.1em; text-transform:uppercase; display:inline-block; }
         .badge-pending { background:var(--surface); }
         .badge-contacted { background:var(--band); }
         .badge-order_confirmed, .badge-converted { background:#f3e7cf; border-color:var(--gold); }
@@ -74,12 +75,38 @@
         .badge-completed, .badge-delivered { background:#e8f3e6; border-color:#b9d5b0; color:#3c5f36; }
         .filter-bar { display:flex; flex-wrap:wrap; gap:10px; align-items:end; background:var(--bg); padding:14px; border:1px solid var(--line); margin-bottom:14px; }
         .filter-bar .form-group { margin-bottom:0; flex:1; min-width:150px; }
+        .tab-content { border-radius:0; }
         @media (max-width: 1024px) {
-            body { overflow:auto; }
-            .sidebar { position:fixed; left:0; top:0; z-index:50; transform:translateX(-100%); }
-            .sidebar.mobile-open { transform:translateX(0); }
-            .main { height:auto; overflow:visible; }
-            .content { overflow:visible; }
+            html, body { overflow-x:hidden; height:100%; }
+            .layout { height:100vh; height:100dvh; min-height:100vh; flex-direction:row; }
+            .sidebar { position:fixed !important; left:0; top:0; z-index:300 !important; transform:translateX(-100%); height:100vh !important; height:100dvh !important; width:280px !important; display:flex !important; visibility:visible !important; opacity:1 !important; }
+            .sidebar.mobile-open { transform:translateX(0) !important; }
+            .main { height:100vh; height:100dvh; overflow:hidden; margin-left:0 !important; width:100% !important; display:flex; flex-direction:column; }
+            .content { overflow-y:auto; overflow-x:auto; padding:16px; flex:1; }
+            .topbar { position:sticky; top:0; z-index:200; flex-shrink:0; padding:12px 14px; min-height:60px; }
+            .topbar-title { font-size:18px; line-height:1.2; }
+            .topbar-sub { display:none; }
+            .sidebar-toggle { display:none !important; }
+            #mobileMenuBtn { display:flex !important; }
+            .grid-2, .grid-3, .form-grid { grid-template-columns:1fr; }
+            .form-group.full { grid-column:span 1; }
+            .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+            .filter-bar .form-group { min-width:100%; }
+            .filter-bar { align-items:stretch; }
+            .tab-content { padding:16px; }
+            button.submit-btn, button.btn-gold, button.btn-danger { width:100%; }
+            .filter-bar .form-group > div, .filter-bar button { width:100%; }
+        }
+        @media (max-width: 640px) {
+            .content { padding:12px; }
+            .tab-content { padding:14px; }
+            .topbar-title { font-size:16px; }
+            h2 { font-size:22px; }
+            label { font-size:10px; }
+            input, select, textarea { font-size:16px; } /* prevent iOS zoom */
+            table { min-width:720px; }
+            .filter-bar { padding:12px; }
+            .nav-item { font-size:14px; }
         }
         @media print {
             .sidebar, .topbar { display:none !important; }
@@ -90,7 +117,7 @@
     </style>
 </head>
 <body>
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar" id="sidebar" style="display:flex;">
         <div class="sidebar-header">
             <a href="/" title="Go to website" style="display:flex; align-items:center; text-decoration:none;">
                 <img src="/frontend/assets/opulence-logo.png" onerror="this.onerror=null; this.src='/assets/opulence-logo.png';" alt="Opulence" class="sidebar-logo"/>
@@ -120,12 +147,18 @@
     </aside>
     <div class="main">
         <header class="topbar">
-            <div>
-                <div class="topbar-title" id="topbarTitle">Add a new order from offline</div>
-                <div class="topbar-sub">Opulence Admin Console</div>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <button id="mobileMenuBtn" onclick="toggleMobileSidebar()" aria-label="Open menu" style="display:none; background:#fff; border:1px solid var(--line); padding:8px; border-radius:8px; cursor:pointer; align-items:center; justify-content:center; flex-shrink:0;">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div>
+                    <div class="topbar-title" id="topbarTitle">Add a new order from offline</div>
+                    <div class="topbar-sub">Opulence Admin Console</div>
+                </div>
             </div>
             <div style="font-size:12px; color:var(--ink-mute);">Bespoke Gifting Studio</div>
         </header>
+        <div id="mobileSidebarOverlay" onclick="closeMobileSidebar()" aria-hidden="true" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:155;"></div>
         <main class="content">
             <div id="addOfflineTab" class="tab-content active">
                 <h2>Add a new order from offline</h2>
@@ -202,7 +235,7 @@
                 <h2>Website Enquiries</h2>
                 <p style="color:var(--ink-soft); font-size:13px;">Manage website enquiries. Only Contacted, Order Confirmed, or Order Canceled actions are available.</p>
                 <button onclick="loadEnquiries()" style="padding:8px 14px; cursor:pointer; margin-bottom:14px;">Refresh Enquiries</button>
-                <div style="overflow-x:auto;">
+                <div class="table-wrap" style="overflow-x:auto;">
                     <table id="enquiriesTable">
                         <thead><tr><th>ID</th><th>Category Type</th><th>Name & Contact</th><th>Company / Occasion</th><th>Details</th><th>Reference / Files</th><th>Status</th><th>Actions</th></tr></thead>
                         <tbody><tr><td colspan="8">Loading enquiries...</td></tr></tbody>
@@ -219,7 +252,7 @@
                     <div class="form-group"><label>Show</label><select id="fltLimit" onchange="loadAllOrders()"><option value="50">Last 50</option><option value="20">Last 20</option><option value="10">Last 10</option><option value="all">All</option></select></div>
                     <div class="form-group" style="flex:0 0 auto;"><button class="btn-gold" onclick="printAllOrders()">Print Orders</button><button class="btn-gold" onclick="loadAllOrders()" style="margin-left:6px;">Refresh</button></div>
                 </div>
-                <div style="overflow-x:auto;">
+                <div class="table-wrap" style="overflow-x:auto;">
                     <table id="allOrdersTable">
                         <thead><tr><th>ID</th><th>Source</th><th>Category/Type</th><th>Customer Name & Contact</th><th>Company / Occasion</th><th>Event</th><th>Qty / Amount</th><th>Payment (Paid / Total / %)</th><th>Order Status</th><th>Payment Status</th><th>Details</th><th>Actions</th></tr></thead>
                         <tbody><tr><td colspan="12">Loading orders...</td></tr></tbody>
@@ -282,15 +315,33 @@ function toggleSidebar(){
     const sb = document.getElementById('sidebar');
     sb.classList.toggle('collapsed');
     const icon = document.getElementById('sidebarToggleIcon');
-    icon.textContent = sb.classList.contains('collapsed') ? 'chevron_right' : 'chevron_left';
+    if(icon) icon.textContent = sb.classList.contains('collapsed') ? 'chevron_right' : 'chevron_left';
+}
+
+function toggleMobileSidebar(){
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    sb.classList.toggle('mobile-open');
+    if(overlay){
+        overlay.style.display = sb.classList.contains('mobile-open') ? 'block' : 'none';
+    }
+}
+
+function closeMobileSidebar(){
+    const sb = document.getElementById('sidebar');
+    const overlay = document.getElementById('mobileSidebarOverlay');
+    sb.classList.remove('mobile-open');
+    if(overlay) overlay.style.display = 'none';
 }
 
 function switchTab(tabId, btn, title){
     document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
+    const target = document.getElementById(tabId);
+    if(target) target.classList.add('active');
     if(btn) btn.classList.add('active');
     if(title) document.getElementById('topbarTitle').textContent = title;
+    closeMobileSidebar();
     if(tabId === 'enquiriesTab') loadEnquiries();
     if(tabId === 'allOrdersTab') loadAllOrders();
     if(tabId === 'galleryTab') loadGalleryWork();
