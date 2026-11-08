@@ -36,6 +36,7 @@ def init_db():
             phone VARCHAR(20) NOT NULL,
             email VARCHAR(100),
             company_name VARCHAR(150),
+            place VARCHAR(150),
             occasion VARCHAR(100),
             quantity INT,
             budget NUMERIC(10, 2),
@@ -48,6 +49,10 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     """)
+    try:
+        cursor.execute("ALTER TABLE public.enquiries ADD COLUMN IF NOT EXISTS place VARCHAR(150);")
+    except Exception:
+        conn.rollback()
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS public.orders (
@@ -111,6 +116,44 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
     """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS public.announcements (
+            id SERIAL PRIMARY KEY,
+            title VARCHAR(200),
+            event VARCHAR(200),
+            category VARCHAR(50) DEFAULT 'upcoming_event',
+            upcoming_text VARCHAR(200),
+            offer_text VARCHAR(200),
+            description TEXT,
+            image_url TEXT NOT NULL,
+            upcoming_title VARCHAR(200),
+            upcoming_description TEXT,
+            upcoming_image_url TEXT,
+            status VARCHAR(30) DEFAULT 'upcoming',
+            display_order INT DEFAULT 0,
+            is_active BOOLEAN NOT NULL DEFAULT TRUE,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+    for col_sql in [
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS title VARCHAR(200);",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS event VARCHAR(200);",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS category VARCHAR(50) DEFAULT 'upcoming_event';",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS upcoming_text VARCHAR(200);",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS offer_text VARCHAR(200);",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS description TEXT;",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS upcoming_title VARCHAR(200);",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS upcoming_description TEXT;",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS upcoming_image_url TEXT;",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS status VARCHAR(30) DEFAULT 'upcoming';",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS display_order INT DEFAULT 0;",
+        "ALTER TABLE public.announcements ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT TRUE;",
+    ]:
+        try:
+            cursor.execute(col_sql)
+        except Exception:
+            conn.rollback()
 
     # Catalog tables used by the categories, products and hampers routers
     cursor.execute("""
