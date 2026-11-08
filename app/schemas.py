@@ -16,6 +16,7 @@ class EnquiryCreate(BaseModel):
     phone: str = Field(..., min_length=7, max_length=20)
     email: Optional[str] = Field(None, max_length=100)
     company_name: Optional[str] = Field(None, max_length=150)
+    place: Optional[str] = Field(None, max_length=150)
     occasion: Optional[str] = Field(None, max_length=100)
     quantity: Optional[int] = Field(None, ge=1)
     budget: Optional[float] = Field(None, ge=0)
@@ -29,12 +30,18 @@ class EnquiryCreate(BaseModel):
     def validate_corporate_fields(cls, v, info):
         enquiry_type = info.data.get("enquiry_type")
         if enquiry_type == EnquiryType.CORPORATE and not v:
-            # Default to "N/A" if company_name not specified so frontend submission succeeds
             return "N/A"
         return v
 
     @field_validator("quantity")
     def validate_quantity(cls, v, info):
+        enquiry_type = info.data.get("enquiry_type")
+        if v is None:
+            return v
+        if enquiry_type == EnquiryType.CORPORATE and v < 50:
+            raise ValueError("Corporate quantity must be 50 or above")
+        if enquiry_type == EnquiryType.CUSTOMIZED and v < 20:
+            raise ValueError("Celebrations quantity must be 20 or above")
         return v
 
 
