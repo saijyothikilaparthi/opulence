@@ -132,38 +132,16 @@
     .nav-luxury-link:focus-visible::after {
       width: 100%;
     }
-    /* Continuous Auto-Scrolling Festive Reel */
-    @keyframes festiveMarquee {
-      0% {
-        transform: translate3d(0, 0, 0);
-      }
-      100% {
-        transform: translate3d(-50%, 0, 0);
-      }
-    }
-    .festive-marquee-container {
-      overflow: hidden;
-      position: relative;
-      width: 100%;
-      mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
-      -webkit-mask-image: linear-gradient(to right, transparent, black 3%, black 97%, transparent);
-    }
-    .festive-marquee-track {
-      display: flex;
-      gap: 1.25rem;
-      width: max-content;
-      animation: festiveMarquee 32s linear infinite;
-      will-change: transform;
-    }
-    .festive-marquee-track:hover,
-    .festive-marquee-track.is-paused {
-      animation-play-state: paused;
-    }
+    /* Announcement flip card */
+    .announcement-flip { perspective: 1200px; }
+    .announcement-flip-inner { position: relative; width: 100%; height: 100%; min-height: 320px; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+    .announcement-flip:hover .announcement-flip-inner,
+    .announcement-flip:focus-within .announcement-flip-inner,
+    .announcement-flip.is-flipped .announcement-flip-inner { transform: rotateY(180deg); }
+    .announcement-flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
+    .announcement-flip-back { transform: rotateY(180deg); }
     @media (prefers-reduced-motion: reduce) {
-      .festive-marquee-track {
-        animation: none;
-        overflow-x: auto;
-      }
+      .announcement-flip-inner { transition: none; }
     }
   </style>
 </head>
@@ -479,309 +457,84 @@
       </div>
     </section>
 
-    <!-- SECTION: FESTIVE ANNOUNCEMENT (DIWALI & CHRISTMAS COMMISSIONS) -->
+    <!-- SECTION: ANNOUNCEMENT (Dynamic from Admin) -->
     <section id="announcement" class="py-10 sm:py-16 md:py-20 border-b border-[#E9E0D1] bg-[#FAF7F2] relative overflow-hidden">
-      <!-- Anchor alias for seasonal links -->
       <span id="seasonal" class="absolute -top-24"></span>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        
-        <!-- Left: Announcement Copy & CTAs (col-span 5) -->
+        <!-- Left: Dynamic Copy -->
         <div class="lg:col-span-5 space-y-4 sm:space-y-6">
           <div class="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#E9E0D1] text-[11px] font-mono tracking-wider uppercase text-gold-dark font-medium shadow-xs">
             <span class="w-2 h-2 rounded-full bg-gold inline-block animate-pulse shrink-0"></span>
-            <span id="announcementLiveBadge">UPCOMING FESTIVE COMMISSIONS</span>
+            <span id="announcementLiveBadge">ANNOUNCEMENTS</span>
           </div>
 
-          <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-[1.1] tracking-tight">
-            Festive Curations Ahead.<br/>
-            <span class="italic font-normal text-gold-dark">Diwali, Christmas &amp; New Year.</span>
-          </h2>
+          <div id="announcementType" class="text-[11px] font-mono uppercase tracking-wider text-gold-dark"></div>
 
-          <p class="text-charcoal-muted text-sm sm:text-base leading-relaxed font-light">
-            We are now designing and accepting bespoke commissions for the upcoming celebratory season. From radiant <strong class="text-charcoal font-medium">Diwali heirloom suites</strong> with hand-poured brass lamps and artisanal sweets, to warm <strong class="text-charcoal font-medium">Christmas &amp; winter cocoa hampers</strong> and <strong class="text-charcoal font-medium">New Year 2027</strong> milestone curations.
-          </p>
+          <h2 id="announcementHeading" class="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-[1.1] tracking-tight"></h2>
 
-          <!-- Active Dynamic Backend Banner Container (Loaded from API) -->
-          <div id="dynamicBannerContainer" class="hidden"></div>
+          <div id="announcementEvent" class="text-sm text-charcoal font-medium"></div>
+          <div id="announcementOffer" class="hidden inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal"></div>
+          <div id="announcementUpcoming" class="hidden inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal"></div>
 
-          <!-- Lead Time & Booking Notice Box -->
-          <div class="p-3.5 bg-white border-l-2 border-l-gold border-y border-r border-[#E9E0D1] space-y-1 shadow-xs">
-            <div class="flex items-center justify-between text-xs font-mono">
-              <span class="font-semibold text-charcoal flex items-center gap-1.5">
-                <span class="material-symbols-outlined text-gold text-base">schedule</span>
-                <span>Atelier Lead Time: 3 Months</span>
-              </span>
-              <span class="text-gold-dark text-[11px] uppercase tracking-wider font-semibold">Limited Slots</span>
-            </div>
-            <p class="text-[11px] font-sans text-ash leading-relaxed">
-              To ensure handcrafted packaging, custom gold foiling, and freshly crafted artisanal confectionery, we recommend reserving your slots in advance.
-            </p>
-          </div>
-
-          <!-- CTAs -->
           <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
-            <button type="button" onclick="preselectOccasion('Diwali &amp; Christmas Festive Gifting')" class="px-7 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 text-center shadow-md flex items-center justify-center gap-2 group touch-target">
-              <span>Reserve Festive Commission</span>
+            <button type="button" onclick="openEnquiryModal({ type: 'customized', occasion: (document.getElementById('announcementHeading')||{}).textContent || 'Announcement' })" class="px-7 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 text-center shadow-md flex items-center justify-center gap-2 group touch-target">
+              <span>Reserve Commission</span>
               <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </button>
-            <a href="celebrations.html" class="px-6 py-3.5 bg-white border border-[#DCD2C2] text-charcoal text-xs font-mono uppercase tracking-wider hover:border-charcoal hover:bg-[#FAF7F2] transition-colors text-center font-medium touch-target flex items-center justify-center">
-              View Celebration Suites
-            </a>
-          </div>
-
-          <div class="flex items-center gap-3 pt-1 text-[11px] font-mono text-ash">
-            <span class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-gold text-sm">verified</span>
-              <span>Small-batch crafting</span>
-            </span>
-            <span>·</span>
-            <span class="flex items-center gap-1">
-              <span class="material-symbols-outlined text-gold text-sm">local_shipping</span>
-              <span>Pan-India delivery</span>
-            </span>
           </div>
         </div>
 
-        <!-- Right: Creative Auto-Scrolling Picture Reel (col-span 7) -->
+        <!-- Right: Two Flip Images (Upcoming optional) -->
         <div class="lg:col-span-7">
-          <div class="relative bg-white p-3 sm:p-5 border border-[#E9E0D1] shadow-xl overflow-hidden group/marquee">
-            
-            <!-- Header bar for the reel -->
-            <div class="flex items-center justify-between pb-3 mb-3 border-b border-[#FAF7F2] text-xs font-mono">
-              <div class="flex items-center gap-2">
-                <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                <span class="text-charcoal font-semibold text-[11px] sm:text-xs tracking-wider uppercase">Festive Edition Gallery</span>
-                <span class="text-ash text-[10px] hidden sm:inline">(Auto-scrolling showcase)</span>
+          <div class="bg-white p-3 sm:p-4 border border-[#E9E0D1] shadow-xl">
+            <div id="announcementCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+              <div>
+                <div class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Current Event</div>
+                <div class="announcement-flip" id="announcementFlipCurrent" tabindex="0" aria-label="Flip to view current event details">
+                  <div class="announcement-flip-inner">
+                    <div class="announcement-flip-face border border-[#E9E0D1] bg-[#1A1816]">
+                      <img id="announcementImage" src="assets/hamper-florals.jpg" alt="Current event" class="w-full h-full object-cover min-h-[300px]" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';"/>
+                      <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/75 to-transparent text-white">
+                        <div id="announcementImageLabel" class="text-[10px] font-mono uppercase tracking-wider text-gold-light">Hover or tap to flip</div>
+                      </div>
+                    </div>
+                    <div class="announcement-flip-face announcement-flip-back border border-[#E9E0D1] bg-[#FAF7F2] p-5 sm:p-6 flex flex-col justify-center">
+                      <div id="announcementBackStatus" class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2"></div>
+                      <h3 id="announcementBackTitle" class="font-serif text-xl sm:text-2xl text-charcoal font-medium mb-2"></h3>
+                      <div id="announcementBackOffer" class="hidden text-xs font-mono text-charcoal mb-3"></div>
+                      <p id="announcementBackDescription" class="text-charcoal-muted text-sm leading-relaxed"></p>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] text-ash hidden md:inline">Hover to pause</span>
-                <button id="festiveMarqueeToggle" type="button" class="p-1 sm:p-1.5 border border-[#E9E0D1] hover:border-gold text-charcoal hover:text-gold transition-colors touch-target flex items-center justify-center" aria-label="Pause automated scroll">
-                  <span class="material-symbols-outlined text-sm" id="festiveMarqueeIcon">pause</span>
-                </button>
-              </div>
-            </div>
 
-            <!-- Auto-scrolling Masked Track -->
-            <div class="festive-marquee-container py-1">
-              <div id="festiveMarqueeTrack" class="festive-marquee-track">
-                
-                <!-- Card 1: Diwali Luminary -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHYPTU3fZ6npnEGaesi5T3VRmLSyCnM2R7uTEAtFftOczdBwNRFCNZJODXJqVDmIsVEY9YhmBdV2DP8pgL_s7W4ex9rPZaH6qM3pqfVh79DjOt9e_AIn6rpxUNL_rW3yfz_dx6WOwpPWiOTPg1yVA-MT1ud7zu0qqpUrRjniK4VEYjP94JTzoet1nY8moXyChicgy0sVXo-wPJ04Liiu7UT9DBLi0WwTyZYDopGzVZreldzNr9c9YZkA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Diwali Heirloom Hamper" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        Diwali 2026 Edition
+              <div id="announcementUpcomingWrap" class="hidden">
+                <div class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Upcoming Event</div>
+                <div class="announcement-flip" id="announcementFlipUpcoming" tabindex="0" aria-label="Flip to view upcoming event details">
+                  <div class="announcement-flip-inner">
+                    <div class="announcement-flip-face border border-[#E9E0D1] bg-[#1A1816]">
+                      <img id="announcementUpcomingImageEl" src="assets/hamper-florals.jpg" alt="Upcoming event" class="w-full h-full object-cover min-h-[300px]" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';"/>
+                      <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/75 to-transparent text-white">
+                        <div id="announcementUpcomingImageLabel" class="text-[10px] font-mono uppercase tracking-wider text-gold-light">Hover or tap to flip</div>
                       </div>
                     </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Diwali Royal Luminary</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Pure brass deepam, roasted mamra almonds, saffron honey &amp; gold-foiled greetings.
-                      </p>
+                    <div class="announcement-flip-face announcement-flip-back border border-[#E9E0D1] bg-[#FAF7F2] p-5 sm:p-6 flex flex-col justify-center">
+                      <div id="announcementBackUpcomingStatus" class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Upcoming</div>
+                      <h3 id="announcementBackUpcomingTitle" class="font-serif text-xl sm:text-2xl text-charcoal font-medium mb-2"></h3>
+                      <div id="announcementBackUpcoming" class="hidden text-xs font-mono text-charcoal mb-3"></div>
+                      <p id="announcementBackUpcomingDescription" class="text-charcoal-muted text-sm leading-relaxed"></p>
                     </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Artisanal Sweets</span>
-                    <button type="button" onclick="preselectOccasion('Diwali Royal Luminary')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
                   </div>
                 </div>
-
-                <!-- Card 2: Christmas Winter Velvet -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Christmas &amp; Winter Hamper" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        Christmas Holidays
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Christmas Spiced Velvet</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Single-origin dark cacao, spiced winter tea, pine cones &amp; hand-poured clove candle.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Warm Botanicals</span>
-                    <button type="button" onclick="preselectOccasion('Christmas Spiced Velvet')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Card 3: New Year Midnight Sovereign -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="New Year 2027 Hamper" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        New Year 2027
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">New Year Midnight Sovereign</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Single-origin Araku Valley roast, embossed leather journal &amp; Belgian pralines.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Executive Box</span>
-                    <button type="button" onclick="preselectOccasion('New Year Midnight Sovereign')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Card 4: Sankranti & Harvest Cane Tray -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Sankranti Cane Tray" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        Sankranti Harvest
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">The Harvest Cane Tray</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Hand-woven cane tray, sesame jaggery crunch, medjool dates &amp; brass puja bell.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Family Tradition</span>
-                    <button type="button" onclick="preselectOccasion('Sankranti Harvest')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- [CLONES FOR SEAMLESS INFINITE LOOP] -->
-                <!-- Clone 1: Diwali Luminary -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VHYPTU3fZ6npnEGaesi5T3VRmLSyCnM2R7uTEAtFftOczdBwNRFCNZJODXJqVDmIsVEY9YhmBdV2DP8pgL_s7W4ex9rPZaH6qM3pqfVh79DjOt9e_AIn6rpxUNL_rW3yfz_dx6WOwpPWiOTPg1yVA-MT1ud7zu0qqpUrRjniK4VEYjP94JTzoet1nY8moXyChicgy0sVXo-wPJ04Liiu7UT9DBLi0WwTyZYDopGzVZreldzNr9c9YZkA" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        Diwali 2026 Edition
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Diwali Royal Luminary</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Pure brass deepam, roasted mamra almonds, saffron honey &amp; gold-foiled greetings.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Artisanal Sweets</span>
-                    <button type="button" onclick="preselectOccasion('Diwali Royal Luminary')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Clone 2: Christmas Winter Velvet -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1VGKuamDC5dYUF7FyKDW12dMULIj3bJx8omqQwZp6RYgeC45EOn8pFyEvDFkLWjrjkqltmiKQE3J8UchbKasJPc0aTzr3NmqYs5nVPudRv21aXIPBRsOeeUZ4f9GH3_TDOs4uurZ19b05IAhJc2M5YAWwhD9lPEYLACgrD1rCiEa82TuQKDPWfeZG2q4qGb6no91DFUJRMRtww0esWPlx0GNZ3eS03MsRJtSLjpcjY82H5nvcmlI3c_YA" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        Christmas Holidays
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">Christmas Spiced Velvet</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Single-origin dark cacao, spiced winter tea, pine cones &amp; hand-poured clove candle.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Warm Botanicals</span>
-                    <button type="button" onclick="preselectOccasion('Christmas Spiced Velvet')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Clone 3: New Year Midnight Sovereign -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1WnT5rXvtqbMZAVfUKFBPaxumc0gI3VPR9sAVsaggAMSaUJ2-CRlJZTicu6G9s6CSTCg1XQDYGuMho7CQq36-7C4jJGM0D9MlQM_wBRAmpgcN0Ouhb2mCN6rytl_6QhaKKnAVgifWVHbSon8ASfRKnDXJfem3gGmHBsg1oH_TSfWQWzfQw0S98NWZmqJ5adN5wCOzFjo1go3uiXbuJ0T4WbpHg2JXL8FHHTxQHvcFTdODcIPXfXq1q5qQ" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        New Year 2027
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">New Year Midnight Sovereign</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Single-origin Araku Valley roast, embossed leather journal &amp; Belgian pralines.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Executive Box</span>
-                    <button type="button" onclick="preselectOccasion('New Year Midnight Sovereign')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Clone 4: Sankranti & Harvest Cane Tray -->
-                <div class="w-[260px] sm:w-[290px] bg-[#FAF7F2] border border-[#E9E0D1] p-3 shadow-xs flex-shrink-0 flex flex-col justify-between group/card hover:border-gold transition-all duration-300" aria-hidden="true">
-                  <div class="space-y-2.5">
-                    <div class="relative aspect-[4/3] overflow-hidden border border-[#E9E0D1] bg-[#1A1816]">
-                      <img src="https://lh3.googleusercontent.com/aida/AEtjO1UvVnA0Hwp86FTmTBhxYOcrlRB2usMSBX5daaiffDyL0ipWPN8hbQ76nrtRgLIPBUIqYN2pkREjZpuFCUI2pZqsFHWGzPuPSErNOg_GVpb5U6zgfOdC0B65Sy7Dmt5x-dvHHSyjeH-9bkgJ_qjrRJM7B9YlW3NJo7obWe1FNKxvn5762KE1UuhIEkXKi973hC6ziBq3JzU3yY2RxO_3kDO2ML07mrQ9U0sbDeY7MZjcE4rswkkP62Zpjw" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500" loading="lazy"/>
-                      <div class="absolute top-2 left-2 px-2 py-0.5 bg-black/80 backdrop-blur-xs text-[9px] font-mono uppercase tracking-wider text-gold-light border border-white/20">
-                        Sankranti Harvest
-                      </div>
-                    </div>
-                    <div>
-                      <h4 class="font-serif text-base sm:text-lg text-charcoal font-medium leading-tight">The Harvest Cane Tray</h4>
-                      <p class="text-[11px] text-charcoal-muted font-sans font-light line-clamp-2 mt-1 leading-relaxed">
-                        Hand-woven cane tray, sesame jaggery crunch, medjool dates &amp; brass puja bell.
-                      </p>
-                    </div>
-                  </div>
-                  <div class="mt-3 pt-2 border-t border-[#E9E0D1]/60 flex items-center justify-between text-[11px] font-mono">
-                    <span class="text-[10px] text-ash">Family Tradition</span>
-                    <button type="button" onclick="preselectOccasion('Sankranti Harvest')" class="text-gold-dark font-medium hover:text-charcoal flex items-center gap-1 cursor-pointer">
-                      <span>Reserve</span>
-                      <span class="material-symbols-outlined text-[12px]">arrow_forward</span>
-                    </button>
-                  </div>
-                </div>
-
               </div>
             </div>
-
-            <!-- Bottom reel status -->
-            <div class="mt-3 pt-2 px-1 border-t border-[#FAF7F2] flex items-center justify-between text-[11px] font-mono text-ash">
-              <span class="flex items-center gap-1">
-                <span class="material-symbols-outlined text-gold text-xs">auto_awesome</span>
-                <span>Automatic continuous showcase · Touch to pause</span>
-              </span>
-              <a href="celebrations.html" class="text-gold-dark hover:text-charcoal hover:underline">Explore All Collections →</a>
+            <div class="mt-3 text-[11px] font-mono text-ash flex items-center gap-1">
+              <span class="material-symbols-outlined text-gold text-sm">touch_app</span>
+              <span>Hover or tap images to view descriptions</span>
             </div>
-
           </div>
         </div>
-
       </div>
     </section>
 
@@ -1316,6 +1069,14 @@
                 </label>
                 <input type="text" id="modalCompanyName" name="company_name" maxlength="150" placeholder="e.g. Pinnacle Global Holdings" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
               </div>
+
+              <div id="modalPlaceFieldWrapper">
+                <label for="modalPlace" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  <span id="modalPlaceLabel">Address / Place</span>
+                  <span id="modalPlaceRequiredMark" class="text-gold">*</span>
+                </label>
+                <input type="text" id="modalPlace" name="place" maxlength="150" placeholder="e.g. Jubilee Hills, Hyderabad" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
             </div>
           </div>
 
@@ -1337,7 +1098,7 @@
                   Quantity (Units)
                 </label>
                 <input type="number" id="modalQuantity" name="quantity" min="1" placeholder="50" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
-                <span class="text-[10px] font-mono text-ash mt-1 block" id="modalQtyHelper">Corporate: 50+ recommended</span>
+                <span class="text-[10px] font-mono text-ash mt-1 block" id="modalQtyHelper">Corporate: 50+ required</span>
               </div>
 
               <div>
@@ -1997,22 +1758,46 @@
         }
       });
 
+      const companyWrapper = document.getElementById('modalCompanyFieldWrapper');
+      const companyInput = document.getElementById('modalCompanyName');
+      const companyLabel = document.getElementById('modalCompanyLabel');
       const companyMark = document.getElementById('modalCompanyRequiredMark');
+      const placeWrapper = document.getElementById('modalPlaceFieldWrapper');
+      const placeInput = document.getElementById('modalPlace');
+      const placeLabel = document.getElementById('modalPlaceLabel');
+      const placeMark = document.getElementById('modalPlaceRequiredMark');
       const qtyHelper = document.getElementById('modalQtyHelper');
       const qtyInput = document.getElementById('modalQuantity');
 
       if (type === 'corporate') {
+        if (companyWrapper) companyWrapper.classList.remove('hidden');
+        if (companyLabel) companyLabel.textContent = 'Company / Organisation Name';
+        if (companyInput) { companyInput.required = true; companyInput.placeholder = 'e.g. Pinnacle Global Holdings'; companyInput.value = companyInput.value || ''; }
         if (companyMark) companyMark.classList.remove('hidden');
-        if (qtyHelper) qtyHelper.textContent = 'Corporate: 50+ recommended';
-        if (qtyInput && !qtyInput.value) qtyInput.placeholder = '50';
+        if (placeWrapper) placeWrapper.classList.remove('hidden');
+        if (placeLabel) placeLabel.textContent = 'Company / Event Place';
+        if (placeInput) { placeInput.placeholder = 'e.g. BKC, Mumbai'; placeInput.required = false; }
+        if (placeMark) placeMark.classList.add('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Corporate: minimum 50 units';
+        if (qtyInput) { qtyInput.min = '50'; qtyInput.placeholder = '50'; qtyInput.value = '50'; }
       } else if (type === 'customized') {
-        if (companyMark) companyMark.classList.add('hidden');
-        if (qtyHelper) qtyHelper.textContent = 'Celebrations: 20–50 recommended';
-        if (qtyInput && !qtyInput.value) qtyInput.placeholder = '25';
+        if (companyWrapper) companyWrapper.classList.add('hidden');
+        if (companyInput) { companyInput.required = false; companyInput.value = ''; }
+        if (placeWrapper) placeWrapper.classList.remove('hidden');
+        if (placeLabel) placeLabel.textContent = 'Address / Place';
+        if (placeInput) { placeInput.placeholder = 'e.g. Jubilee Hills, Hyderabad'; placeInput.required = true; }
+        if (placeMark) placeMark.classList.remove('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Celebrations: minimum 20 units';
+        if (qtyInput) { qtyInput.min = '20'; qtyInput.placeholder = '20'; qtyInput.value = '20'; }
       } else {
-        if (companyMark) companyMark.classList.add('hidden');
-        if (qtyHelper) qtyHelper.textContent = 'Individual: Single bespoke gift';
-        if (qtyInput && !qtyInput.value) qtyInput.value = '1';
+        if (companyWrapper) companyWrapper.classList.add('hidden');
+        if (companyInput) { companyInput.required = false; companyInput.value = ''; }
+        if (placeWrapper) placeWrapper.classList.remove('hidden');
+        if (placeLabel) placeLabel.textContent = 'Address / Place';
+        if (placeInput) { placeInput.placeholder = 'e.g. Indiranagar, Bengaluru'; placeInput.required = true; }
+        if (placeMark) placeMark.classList.remove('hidden');
+        if (qtyHelper) qtyHelper.textContent = 'Individual: single bespoke gift';
+        if (qtyInput) { qtyInput.min = '1'; qtyInput.placeholder = '1'; if (!qtyInput.value) qtyInput.value = '1'; }
       }
     }
 
@@ -2094,15 +1879,24 @@
         const name = (document.getElementById('modalFullName')?.value || '').trim();
         const phone = (document.getElementById('modalPhone')?.value || '').trim();
         const email = (document.getElementById('modalEmail')?.value || '').trim() || null;
-        let companyName = (document.getElementById('modalCompanyName')?.value || '').trim();
-        if (enquiryType === 'corporate' && !companyName) {
-          companyName = 'N/A';
-        } else if (!companyName) {
-          companyName = null;
-        }
-        const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
+        const companyNameRaw = (document.getElementById('modalCompanyName')?.value || '').trim();
+        const placeRaw = (document.getElementById('modalPlace')?.value || '').trim();
         const qtyRaw = document.getElementById('modalQuantity')?.value;
-        const quantity = qtyRaw ? parseInt(qtyRaw) : null;
+        const quantity = qtyRaw ? parseInt(qtyRaw, 10) : null;
+
+        if (enquiryType === 'corporate') {
+          if (!companyNameRaw) throw new Error('Company / Organisation name is required for corporate gifting.');
+          if (quantity == null || quantity < 50) throw new Error('Corporate quantity must be 50 or above.');
+        } else if (enquiryType === 'customized') {
+          if (!placeRaw) throw new Error('Address / Place is required for celebrations enquiries.');
+          if (quantity == null || quantity < 20) throw new Error('Celebrations quantity must be 20 or above.');
+        } else {
+          if (!placeRaw) throw new Error('Address / Place is required for individual enquiries.');
+        }
+
+        const companyName = enquiryType === 'corporate' ? (companyNameRaw || null) : null;
+        const place = placeRaw || null;
+        const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
         const budgetRaw = (document.getElementById('modalBudget')?.value || '').toString().replace(/[^0-9.]/g, '');
         const budget = budgetRaw ? parseFloat(budgetRaw) : null;
         const requiredDate = document.getElementById('modalRequiredDate')?.value || null;
@@ -2125,6 +1919,7 @@
           phone: phone,
           email: email,
           company_name: companyName,
+          place: place,
           occasion: occasion,
           quantity: quantity,
           budget: budget,
@@ -2199,17 +1994,84 @@
       }
     }
 
-    // Festive Marquee Play/Pause Control
-    const festiveTrack = document.getElementById('festiveMarqueeTrack');
-    const festiveToggle = document.getElementById('festiveMarqueeToggle');
-    const festiveIcon = document.getElementById('festiveMarqueeIcon');
-    if (festiveToggle && festiveTrack) {
-      festiveToggle.addEventListener('click', () => {
-        const isPaused = festiveTrack.classList.toggle('is-paused');
-        if (festiveIcon) festiveIcon.textContent = isPaused ? 'play_arrow' : 'pause';
-        festiveToggle.setAttribute('aria-label', isPaused ? 'Play automated scroll' : 'Pause automated scroll');
-      });
-    }
+    // Dynamic Announcements (admin-managed). Current event + optional upcoming event, each image flips for description.
+    (async function loadAnnouncements() {
+      const bindFlip = (id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const toggle = () => el.classList.toggle('is-flipped');
+        el.addEventListener('click', toggle);
+        el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+      };
+      bindFlip('announcementFlipCurrent');
+      bindFlip('announcementFlipUpcoming');
+
+      try {
+        const res = await fetch(`${API_BASE}/api/announcements?active_only=true`);
+        if (!res.ok) return;
+        const json = await res.json();
+        const items = (json && json.success && Array.isArray(json.data)) ? json.data : [];
+        if (!items.length) return;
+
+        const a = items.find(i => i.status === 'running') || items.find(i => i.status === 'upcoming') || items[0];
+        const esc = (v) => String(v ?? '');
+        const imgUrl = (u) => {
+          const s = String(u || '');
+          if (s.startsWith('http://') || s.startsWith('https://')) return s;
+          if (s.startsWith('/')) return API_BASE + s;
+          return API_BASE + '/' + s;
+        };
+        const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v || ''; };
+        const show = (id, text, prefix = '') => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (text) { el.textContent = prefix ? `${prefix}${text}` : text; el.classList.remove('hidden'); }
+          else { el.textContent = ''; el.classList.add('hidden'); }
+        };
+
+        const title = esc(a.title || a.event || '');
+        const desc = esc(a.description || '');
+        const status = esc(a.status || 'upcoming').toUpperCase();
+        const category = ({ upcoming_event: 'Upcoming Event', offer: 'Offer', announcement: 'Announcement' }[a.category] || 'Current Event');
+        const label = a.event ? `${status} · ${esc(a.event)}` : status;
+
+        setText('announcementLiveBadge', label);
+        setText('announcementType', category);
+        setText('announcementHeading', title);
+        setText('announcementEvent', a.event ? esc(a.event) : '');
+        setText('announcementBackStatus', label);
+        setText('announcementBackTitle', title);
+        setText('announcementBackDescription', desc);
+        setText('announcementImageLabel', 'Hover or tap to flip');
+        show('announcementUpcoming', esc(a.upcoming_text || ''), 'Upcoming: ');
+        show('announcementOffer', esc(a.offer_text || ''), 'Offer: ');
+        show('announcementBackOffer', esc(a.offer_text || ''));
+
+        const currentImg = document.getElementById('announcementImage');
+        if (currentImg && a.image_url) { currentImg.src = imgUrl(a.image_url); currentImg.alt = title || 'Current event'; }
+
+        const hasUpcoming = !!(a.upcoming_image_url || a.upcoming_title || a.upcoming_description || a.upcoming_text);
+        const wrap = document.getElementById('announcementUpcomingWrap');
+        const grid = document.getElementById('announcementCardsGrid');
+        if (wrap) wrap.classList.toggle('hidden', !hasUpcoming);
+        if (grid) grid.classList.toggle('sm:grid-cols-2', hasUpcoming);
+        if (grid) grid.classList.toggle('sm:grid-cols-1', !hasUpcoming);
+        if (hasUpcoming) {
+          const upTitle = esc(a.upcoming_title || a.upcoming_text || 'Upcoming Event');
+          setText('announcementBackUpcomingTitle', upTitle);
+          setText('announcementBackUpcomingDescription', esc(a.upcoming_description || ''));
+          show('announcementBackUpcoming', esc(a.upcoming_text || ''));
+          setText('announcementUpcomingImageLabel', 'Hover or tap to flip');
+          const upImg = document.getElementById('announcementUpcomingImageEl');
+          if (upImg) {
+            if (a.upcoming_image_url) upImg.src = imgUrl(a.upcoming_image_url);
+            upImg.alt = upTitle;
+          }
+        }
+      } catch (e) {
+        console.warn('Announcements load skipped', e);
+      }
+    })();
 
     // Load dynamic gallery work from backend (if admin uploaded any items)
     async function loadDynamicGallery() {

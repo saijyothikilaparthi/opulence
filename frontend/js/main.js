@@ -171,34 +171,44 @@
     var helpQty = form.querySelector('.helpQuantity, #helpQuantity');
     var lblOccasion = form.querySelector('.labelOccasion, #labelOccasion');
     var inputCompany = form.querySelector('input[name="organisation"]');
+    var inputPlace = form.querySelector('input[name="place"]');
+    var fPlace = form.querySelector('.fieldPlace, #fieldPlace');
 
     if (typeVal === 'corporate') {
       if (fCompany) fCompany.style.display = 'block';
       if (inputCompany) inputCompany.required = true;
+      if (fPlace) fPlace.style.display = inputPlace ? 'block' : '';
+      if (inputPlace) inputPlace.required = false;
       if (fTheme) fTheme.style.display = 'none';
       if (inputQty) {
-        inputQty.min = '20';
-        if (parseInt(inputQty.value) < 20) inputQty.value = '20';
+        inputQty.min = '50';
+        inputQty.placeholder = '50';
+        inputQty.value = '50';
       }
-      if (helpQty) helpQty.style.display = 'block';
+      if (helpQty) { helpQty.style.display = 'block'; helpQty.textContent = 'Minimum 50 units for corporate gifting'; }
       if (lblOccasion) lblOccasion.textContent = 'Occasion / Event / Delegate Gifting';
     } else if (typeVal === 'customized') {
       if (fCompany) fCompany.style.display = 'none';
       if (inputCompany) inputCompany.required = false;
+      if (fPlace) fPlace.style.display = inputPlace ? 'block' : '';
+      if (inputPlace) inputPlace.required = true;
       if (fTheme) fTheme.style.display = 'block';
       if (inputQty) {
         inputQty.min = '20';
-        if (parseInt(inputQty.value) < 20) inputQty.value = '20';
+        inputQty.placeholder = '20';
+        inputQty.value = '20';
       }
-      if (helpQty) helpQty.style.display = 'block';
+      if (helpQty) { helpQty.style.display = 'block'; helpQty.textContent = 'Minimum 20 units for celebrations'; }
       if (lblOccasion) lblOccasion.textContent = 'Occasion';
     } else {
       if (fCompany) fCompany.style.display = 'none';
       if (inputCompany) inputCompany.required = false;
+      if (fPlace) fPlace.style.display = inputPlace ? 'block' : '';
+      if (inputPlace) inputPlace.required = true;
       if (fTheme) fTheme.style.display = 'none';
       if (inputQty) {
         inputQty.min = '1';
-        inputQty.value = '1';
+        inputQty.placeholder = '1';
       }
       if (helpQty) helpQty.style.display = 'none';
       if (lblOccasion) lblOccasion.textContent = 'Occasion';
@@ -274,18 +284,34 @@
     var rawData = new FormData(form);
     
     // Parse quantity and budget into numbers
-    var qty = parseInt(rawData.get('quantity')) || 1;
+    var qty = parseInt(rawData.get('quantity'), 10);
     var budgetVal = parseFloat((rawData.get('budget') || '').toString().replace(/[^0-9.]/g, '')) || null;
     var orgName = (rawData.get('organisation') || '').toString().trim();
+    var placeVal = (rawData.get('place') || '').toString().trim();
+    var enquiryType = typeSelect ? typeSelect.value : (qty >= 20 ? 'corporate' : 'individual');
+
+    if (enquiryType === 'corporate' && (!qty || qty < 50)) {
+      errorBox.hidden = false; errorBox.textContent = 'Corporate quantity must be 50 or above.'; submitBtn.disabled = false; submitBtn.textContent = 'Submit'; return;
+    }
+    if (enquiryType === 'customized' && (!qty || qty < 20)) {
+      errorBox.hidden = false; errorBox.textContent = 'Celebrations quantity must be 20 or above.'; submitBtn.disabled = false; submitBtn.textContent = 'Submit'; return;
+    }
+    if (enquiryType !== 'corporate' && !placeVal) {
+      errorBox.hidden = false; errorBox.textContent = 'Address / Place is required.'; submitBtn.disabled = false; submitBtn.textContent = 'Submit'; return;
+    }
+    if (enquiryType === 'corporate' && !orgName) {
+      errorBox.hidden = false; errorBox.textContent = 'Company / Organisation name is required for corporate gifting.'; submitBtn.disabled = false; submitBtn.textContent = 'Submit'; return;
+    }
 
     var payload = {
-      enquiry_type: typeSelect ? typeSelect.value : (qty >= 20 ? 'corporate' : 'individual'),
+      enquiry_type: enquiryType,
       name: (rawData.get('name') || '').toString().trim(),
       phone: (rawData.get('phone') || '').toString().trim(),
       email: (rawData.get('email') || '').toString().trim() || null,
-      company_name: orgName || null,
+      company_name: enquiryType === 'corporate' ? (orgName || null) : null,
+      place: placeVal || null,
       occasion: (rawData.get('occasion') || '').toString().trim() || null,
-      quantity: qty,
+      quantity: qty || null,
       budget: budgetVal,
       required_date: rawData.get('date') || null,
       theme: (rawData.get('theme') || '').toString().trim() || null,
