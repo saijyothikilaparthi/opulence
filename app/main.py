@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import init_db
-from app.routers import enquiries, categories, products, hampers, orders, gallery
+from app.routers import enquiries, categories, products, hampers, orders, gallery, announcements
 
 
 @asynccontextmanager
@@ -33,6 +33,7 @@ app.include_router(products.router)
 app.include_router(hampers.router)
 app.include_router(orders.router)
 app.include_router(gallery.router)
+app.include_router(announcements.router)
 
 
 # Admin console lives at /admin. These routes must be registered before the
