@@ -143,6 +143,10 @@
                 <span class="material-symbols-outlined">photo_library</span>
                 <span class="label">Work Gallery Showcase</span>
             </button>
+            <button class="nav-item" onclick="switchTab('announcementsTab', this, 'Announcements')">
+                <span class="material-symbols-outlined">campaign</span>
+                <span class="label">Announcements</span>
+            </button>
         </nav>
     </aside>
     <div class="main">
@@ -275,6 +279,36 @@
                 <h3>Uploaded Gallery Photos</h3>
                 <div id="galleryGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px; margin-top:14px;">Loading gallery photos...</div>
             </div>
+
+            <div id="announcementsTab" class="tab-content">
+                <h2>Announcements</h2>
+                <p style="color:var(--ink-soft); font-size:13px;">Upload upcoming events, offers, or announcements. Description appears only when the homepage image is flipped.</p>
+                <form id="announcementForm" style="margin-bottom:24px; background:var(--bg); padding:20px; border:1px solid var(--line);">
+                    <div class="form-grid">
+                        <div class="form-group full" style="padding-top:4px; border-top:1px solid var(--line);"><strong>Current Event</strong> <span style="color:var(--ink-soft); font-size:12px;">(image, offer, description shown on flip)</span></div>
+                        <div class="form-group"><label>Current Title</label><input type="text" id="announcementTitle" placeholder="e.g. Diwali Heirloom Suites"></div>
+                        <div class="form-group"><label>Event / Occasion</label><input type="text" id="announcementEvent" placeholder="e.g. Diwali / Christmas / Wedding Season"></div>
+                        <div class="form-group"><label>Offer / Highlight</label><input type="text" id="announcementOffer" placeholder="e.g. Early bookings open / Limited slots"></div>
+                        <div class="form-group"><label>Current Image *</label><input type="file" id="announcementImage" accept="image/*" required></div>
+                        <div class="form-group full"><label>Current Description (shown on image flip)</label><textarea id="announcementDesc" rows="3" placeholder="Details revealed when the user flips the current event image"></textarea></div>
+
+                        <div class="form-group full" style="padding-top:8px; border-top:1px solid var(--line);"><strong>Upcoming Event (Optional)</strong> <span style="color:var(--ink-soft); font-size:12px;">(adds a second flip image)</span></div>
+                        <div class="form-group"><label>Upcoming Title</label><input type="text" id="announcementUpcomingTitle" placeholder="e.g. Christmas Gifting"></div>
+                        <div class="form-group"><label>Upcoming Note</label><input type="text" id="announcementUpcoming" placeholder="e.g. Bookings open from November"></div>
+                        <div class="form-group"><label>Upcoming Image</label><input type="file" id="announcementUpcomingImage" accept="image/*"></div>
+                        <div class="form-group full"><label>Upcoming Description (shown on image flip)</label><textarea id="announcementUpcomingDesc" rows="3" placeholder="Details revealed when the user flips the upcoming event image"></textarea></div>
+
+                        <div class="form-group full" style="padding-top:8px; border-top:1px solid var(--line);"><strong>Display Settings</strong></div>
+                        <div class="form-group"><label>Type</label><select id="announcementCategory"><option value="upcoming_event">Upcoming Event</option><option value="offer">Offer</option><option value="announcement">Announcement</option></select></div>
+                        <div class="form-group"><label>Status</label><select id="announcementStatus"><option value="upcoming">Upcoming</option><option value="running">Running</option><option value="archived">Archived</option></select></div>
+                        <div class="form-group"><label>Display Order</label><input type="number" id="announcementOrder" value="0" min="0"></div>
+                        <div class="form-group"><label>Active</label><select id="announcementActive"><option value="true">Yes</option><option value="false">No</option></select></div>
+                        <div class="form-group full"><button type="submit" class="submit-btn">+ Upload Announcement</button></div>
+                    </div>
+                </form>
+                <h3>Uploaded Announcements</h3>
+                <div id="announcementsGrid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:18px; margin-top:14px;">Loading announcements...</div>
+            </div>
         </main>
     </div>
 
@@ -345,6 +379,7 @@ function switchTab(tabId, btn, title){
     if(tabId === 'enquiriesTab') loadEnquiries();
     if(tabId === 'allOrdersTab') loadAllOrders();
     if(tabId === 'galleryTab') loadGalleryWork();
+    if(tabId === 'announcementsTab') loadAnnouncements();
 }
 
 // Keep all existing JS functions below (same logic)
@@ -509,7 +544,7 @@ async function loadEnquiries() {
             <td>#${e.id}</td>
             <td><strong>${esc(e.enquiry_type ? e.enquiry_type.toUpperCase() : '-')}</strong></td>
             <td>${esc(e.name)}<br><small>${esc(e.phone)} ${e.email ? '| ' + esc(e.email) : ''}</small></td>
-            <td>${esc(e.company_name || '-')}<br><small>${esc(e.occasion || e.theme || '-')}</small></td>
+            <td>${esc(e.company_name || e.place || '-')}<br><small>${esc(e.place && e.company_name ? e.place + ' · ' : '')}${esc(e.occasion || e.theme || '-')}</small></td>
             <td>Qty: ${esc(e.quantity || 1)} | Budget: ₹${esc(e.budget || 'N/A')}<br><small>${esc((e.customization_details || '').substring(0, 80))}</small></td>
             <td>${renderEnquiryReferences(e.file_url)}</td>
             <td><span class="badge badge-${esc((e.status || '').replace(/ /g, '_'))}">${esc((e.status || '').replace('_', ' '))}</span></td>
@@ -601,6 +636,88 @@ async function deleteWork(id) {
         await apiRequest(`/api/gallery/admin/${id}`, { method: 'DELETE' });
     } finally {
         loadGalleryWork();
+    }
+}
+
+async function loadAnnouncements() {
+    const json = await apiRequest('/api/announcements');
+    const grid = document.getElementById('announcementsGrid');
+    if (!json.data || json.data.length === 0) {
+        grid.innerHTML = '<p>No announcements uploaded yet.</p>';
+        return;
+    }
+    const typeLabel = (c) => ({ upcoming_event: 'Upcoming Event', offer: 'Offer', announcement: 'Announcement' }[c] || c || 'Upcoming Event');
+    grid.innerHTML = json.data.map(a => `
+        <div style="border:1px solid var(--line); padding:14px; background:var(--bg);">
+            <div style="display:grid; grid-template-columns:1fr ${a.upcoming_image_url ? '1fr' : ''}; gap:8px;">
+                <img src="${esc(safeUrl(a.image_url) || '')}" style="width:100%; height:120px; object-fit:cover; border:1px solid var(--line);"/>
+                ${a.upcoming_image_url ? `<img src="${esc(safeUrl(a.upcoming_image_url) || '')}" style="width:100%; height:120px; object-fit:cover; border:1px solid var(--line);" title="Upcoming image"/>` : ''}
+            </div>
+            <h5 style="margin:10px 0 4px 0; font-family:var(--serif); font-size:18px;">${esc(a.title || a.event || 'Announcement')}</h5>
+            <p style="font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--gold-deep);">Current ${a.event ? '• ' + esc(a.event) : ''} ${a.status ? '• ' + esc(a.status) : ''}</p>
+            ${a.offer_text ? `<p style="font-size:12px; color:var(--ink); margin-top:4px;"><strong>Offer:</strong> ${esc(a.offer_text)}</p>` : ''}
+            <p style="font-size:12px; color:var(--ink-soft); margin-top:4px;">${esc(a.description || 'No current flip description')}</p>
+            ${a.upcoming_title || a.upcoming_text || a.upcoming_description || a.upcoming_image_url ? `<div style="margin-top:8px; padding-top:8px; border-top:1px solid var(--line);"><p style="font-size:11px; text-transform:uppercase; letter-spacing:.1em; color:var(--gold-deep);">Upcoming${a.upcoming_title ? ' • ' + esc(a.upcoming_title) : ''}</p>${a.upcoming_text ? `<p style="font-size:12px;"><strong>Note:</strong> ${esc(a.upcoming_text)}</p>` : ''}<p style="font-size:12px; color:var(--ink-soft);">${esc(a.upcoming_description || 'No upcoming flip description')}</p></div>` : ''}
+            <div style="display:flex; gap:8px; align-items:center; margin-top:8px;">
+                <select onchange="updateAnnouncementStatus(${a.id}, this.value, ${a.is_active ? 'true' : 'false'})" style="flex:1;">
+                    <option value="upcoming" ${a.status === 'upcoming' ? 'selected' : ''}>Upcoming</option>
+                    <option value="running" ${a.status === 'running' ? 'selected' : ''}>Running</option>
+                    <option value="archived" ${a.status === 'archived' ? 'selected' : ''}>Archived</option>
+                </select>
+                <select onchange="updateAnnouncementStatus(${a.id}, '${esc(a.status || 'upcoming')}', this.value === 'true')" style="flex:1;">
+                    <option value="true" ${a.is_active ? 'selected' : ''}>Active</option>
+                    <option value="false" ${!a.is_active ? 'selected' : ''}>Inactive</option>
+                </select>
+            </div>
+            <button class="btn-danger" style="width:100%; margin-top:8px;" onclick="deleteAnnouncement(${a.id})">Delete Announcement</button>
+        </div>
+    `).join('');
+}
+
+document.getElementById('announcementForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData();
+    if (document.getElementById('announcementTitle').value) formData.append('title', document.getElementById('announcementTitle').value);
+    if (document.getElementById('announcementEvent').value) formData.append('event', document.getElementById('announcementEvent').value);
+    if (document.getElementById('announcementCategory').value) formData.append('category', document.getElementById('announcementCategory').value);
+    if (document.getElementById('announcementUpcoming').value) formData.append('upcoming_text', document.getElementById('announcementUpcoming').value);
+    if (document.getElementById('announcementUpcomingTitle').value) formData.append('upcoming_title', document.getElementById('announcementUpcomingTitle').value);
+    if (document.getElementById('announcementUpcomingDesc').value) formData.append('upcoming_description', document.getElementById('announcementUpcomingDesc').value);
+    if (document.getElementById('announcementOffer').value) formData.append('offer_text', document.getElementById('announcementOffer').value);
+    if (document.getElementById('announcementDesc').value) formData.append('description', document.getElementById('announcementDesc').value);
+    formData.append('status', document.getElementById('announcementStatus').value || 'upcoming');
+    formData.append('display_order', document.getElementById('announcementOrder').value || '0');
+    formData.append('is_active', document.getElementById('announcementActive').value || 'true');
+    formData.append('image', document.getElementById('announcementImage').files[0]);
+    const upcomingImg = document.getElementById('announcementUpcomingImage').files[0];
+    if (upcomingImg) formData.append('upcoming_image', upcomingImg);
+    await apiRequest('/api/announcements/admin', { method: 'POST', body: formData });
+    this.reset();
+    document.getElementById('announcementCategory').value = 'upcoming_event';
+    document.getElementById('announcementStatus').value = 'upcoming';
+    document.getElementById('announcementActive').value = 'true';
+    document.getElementById('announcementOrder').value = '0';
+    loadAnnouncements();
+});
+
+async function updateAnnouncementStatus(id, status, isActive) {
+    try {
+        await apiRequest(`/api/announcements/admin/${id}/status`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status, is_active: isActive })
+        });
+    } finally {
+        loadAnnouncements();
+    }
+}
+
+async function deleteAnnouncement(id) {
+    if (!confirm('Delete this announcement?')) return;
+    try {
+        await apiRequest(`/api/announcements/admin/${id}`, { method: 'DELETE' });
+    } finally {
+        loadAnnouncements();
     }
 }
 
