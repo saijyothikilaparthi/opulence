@@ -82,11 +82,11 @@ def create_enquiry(enquiry: EnquiryCreate):
         cursor.execute(
             """
             INSERT INTO enquiries (
-                enquiry_type, name, phone, email, company_name,
+                enquiry_type, name, phone, email, company_name, place,
                 occasion, quantity, budget, required_date, theme,
                 customization_details, personalize_hamper, file_url, status
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'pending')
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 'pending')
             RETURNING id, created_at
             """,
             (
@@ -95,6 +95,7 @@ def create_enquiry(enquiry: EnquiryCreate):
                 enquiry.phone,
                 enquiry.email,
                 enquiry.company_name,
+                enquiry.place,
                 enquiry.occasion,
                 enquiry.quantity,
                 enquiry.budget,
@@ -146,7 +147,7 @@ def list_enquiries():
 
     try:
         cursor.execute("""
-            SELECT id, enquiry_type, name, phone, email, company_name,
+            SELECT id, enquiry_type, name, phone, email, company_name, place,
                    occasion, quantity, budget, required_date, theme,
                    customization_details, personalize_hamper, file_url, status, created_at
             FROM enquiries
@@ -162,16 +163,17 @@ def list_enquiries():
                 "phone": r[3],
                 "email": r[4],
                 "company_name": r[5],
-                "occasion": r[6],
-                "quantity": r[7],
-                "budget": float(r[8]) if r[8] is not None else None,
-                "required_date": str(r[9]) if r[9] is not None else None,
-                "theme": r[10],
-                "customization_details": r[11],
-                "personalize_hamper": r[12],
-                "file_url": r[13],
-                "status": r[14],
-                "created_at": r[15].isoformat() if r[15] is not None else None,
+                "place": r[6],
+                "occasion": r[7],
+                "quantity": r[8],
+                "budget": float(r[9]) if r[9] is not None else None,
+                "required_date": str(r[10]) if r[10] is not None else None,
+                "theme": r[11],
+                "customization_details": r[12],
+                "personalize_hamper": r[13],
+                "file_url": r[14],
+                "status": r[15],
+                "created_at": r[16].isoformat() if r[16] is not None else None
             }
             for r in rows
         ]
