@@ -35,6 +35,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# TEMPORARY diagnostics: logs anything probing OpenAI-compatible endpoints
+# (e.g. GET /v1/models) so the source client can be identified from its headers.
+# Safe to remove once the probe source is known.
+probe_logger = logging.getLogger("uvicorn.error")
+
+
+@app.middleware("http")
+async def log_unknown_api_probes(request, call_next):
+    response = await call_next(request)
+    if request.url.path.startswith("/v1/"):
+        probe_logger.info(
+            "Unknown API probe %s %s from %s | user-agent=%r referer=%r origin=%r",
+            request.method,
+            request.url.path,
+            request.client.host if request.client else "-",
+            request.headers.get("user-agent"),
+            request.headers.get("referer"),
+            request.headers.get("origin"),
+        )
+    return response
+
 app.include_router(admin_auth.router)
 app.include_router(enquiries.router)
 app.include_router(categories.router)
