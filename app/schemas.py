@@ -15,7 +15,7 @@ class EnquiryCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=100)
     phone: str = Field(..., min_length=7, max_length=20)
     email: Optional[str] = Field(None, max_length=100)
-    company_name: Optional[str] = Field(None, max_length=150)
+    company_name: Optional[str] = Field(None, max_length=150, validate_default=True)
     place: Optional[str] = Field(None, max_length=150)
     occasion: Optional[str] = Field(None, max_length=100)
     quantity: Optional[int] = Field(None, ge=1)
