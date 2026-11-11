@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opulence - Admin Console</title>
+    <link rel="icon" type="image/png" href="/assets/opulence-mark.png">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
     <style>
@@ -41,6 +42,12 @@
         .nav-item.active { background:linear-gradient(90deg, rgba(179,151,97,0.25) 0%, transparent 100%); color:#F6F2EA; border-left:2px solid var(--gold); padding-left:10px; }
         .sidebar.collapsed .nav-item { justify-content:center; padding:10px; }
         .sidebar.collapsed .nav-item .label { display:none; }
+        .sidebar-footer { border-top:1px solid #3A3228; padding:10px; display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+        .admin-user { display:flex; align-items:center; gap:10px; padding:10px 12px; color:#F6F2EA; font-size:11px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; white-space:nowrap; overflow:hidden; }
+        .admin-user .material-symbols-outlined { color:var(--gold); font-size:20px; flex-shrink:0; }
+        .admin-user .label { overflow:hidden; text-overflow:ellipsis; }
+        .sidebar.collapsed .admin-user { justify-content:center; padding:10px; }
+        .sidebar.collapsed .admin-user .label { display:none; }
         .main { flex:1; display:flex; flex-direction:column; min-width:0; height:100vh; overflow:hidden; }
         .topbar { background:var(--bg); border-bottom:1px solid var(--line); padding:16px 28px; display:flex; align-items:center; justify-content:space-between; min-height:72px; flex-shrink:0; }
         .topbar-title { font-family:var(--serif); font-size:26px; font-weight:500; }
@@ -120,7 +127,7 @@
     <aside class="sidebar" id="sidebar" style="display:flex;">
         <div class="sidebar-header">
             <a href="/" title="Go to website" style="display:flex; align-items:center; text-decoration:none;">
-                <img src="/frontend/assets/opulence-logo.png" onerror="this.onerror=null; this.src='/assets/opulence-logo.png';" alt="Opulence" class="sidebar-logo"/>
+                <img src="/assets/opulence-logo.png" onerror="this.onerror=null; this.src='/assets/opulence-mark.png';" alt="Opulence" class="sidebar-logo"/>
             </a>
             <button class="sidebar-toggle" onclick="toggleSidebar()">
                 <span class="material-symbols-outlined" id="sidebarToggleIcon">chevron_left</span>
@@ -148,6 +155,16 @@
                 <span class="label">Announcements</span>
             </button>
         </nav>
+        <div class="sidebar-footer">
+            <div class="admin-user" title="Signed in">
+                <span class="material-symbols-outlined">account_circle</span>
+                <span class="label" id="adminUsername">Admin</span>
+            </div>
+            <button class="nav-item" onclick="adminLogout()">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="label">Sign out</span>
+            </button>
+        </div>
     </aside>
     <div class="main">
         <header class="topbar">
@@ -313,7 +330,31 @@
     </div>
 
 <script>
-const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port !== '8000' ? 'http://127.0.0.1:8000' : window.location.origin;
+const API_BASE = window.location.origin;
+
+// The admin console is protected by an HttpOnly session cookie.
+async function checkSession() {
+    try {
+        const res = await fetch(`${API_BASE}/api/admin/me`, { credentials: 'same-origin' });
+        if (!res.ok) throw new Error('Not authenticated');
+        const body = await res.json();
+        const name = body && body.user && body.user.username ? body.user.username : 'Admin';
+        const el = document.getElementById('adminUsername');
+        if (el) el.textContent = name;
+        return true;
+    } catch (e) {
+        window.location.replace('/admin/login');
+        return false;
+    }
+}
+
+async function adminLogout() {
+    try {
+        await fetch(`${API_BASE}/api/admin/logout`, { method: 'POST', credentials: 'same-origin' });
+    } finally {
+        window.location.replace('/admin/login');
+    }
+}
 
 // Enquiry fields come from the public website form, so everything rendered via innerHTML is escaped
 function esc(value) {
@@ -334,9 +375,13 @@ function safeUrl(url) {
 }
 
 async function apiRequest(path, options = {}) {
-    const res = await fetch(`${API_BASE}${path}`, options);
+    const res = await fetch(`${API_BASE}${path}`, { credentials: 'same-origin', ...options });
     let body = null;
     try { body = await res.json(); } catch (e) { /* empty or non-JSON body */ }
+    if (res.status === 401) {
+        window.location.replace('/admin/login');
+        throw new Error('Session expired');
+    }
     if (!res.ok) {
         const detail = body && body.detail ? (typeof body.detail === 'string' ? body.detail : JSON.stringify(body.detail)) : res.statusText;
         alert(`Request failed (${res.status}): ${detail}`);
@@ -721,9 +766,13 @@ async function deleteAnnouncement(id) {
     }
 }
 
-// Initial load
-loadEnquiries();
-loadAllOrders();
+// Initial load (only after the session is confirmed)
+async function initAdmin() {
+    if (!(await checkSession())) return;
+    loadEnquiries();
+    loadAllOrders();
+}
+initAdmin();
 </script>
 </body>
 </html>
