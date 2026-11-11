@@ -128,8 +128,6 @@
   }
   loadWorkGallery();
 
-  }
-
   /* ---------------- Work gallery (tap to reveal on touch) ---------------- */
   var tiles = document.querySelectorAll('.tile');
   tiles.forEach(function (tile) {
