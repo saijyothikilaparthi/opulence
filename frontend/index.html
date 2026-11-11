@@ -470,13 +470,14 @@
             <span id="announcementLiveBadge">ANNOUNCEMENTS</span>
           </div>
 
-          <div id="announcementType" class="text-[11px] font-mono uppercase tracking-wider text-gold-dark"></div>
+          <div id="announcementType" class="text-[11px] font-mono uppercase tracking-wider text-gold-dark">Current Event</div>
 
-          <h2 id="announcementHeading" class="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-[1.1] tracking-tight"></h2>
+          <h2 id="announcementHeading" class="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal font-normal leading-[1.1] tracking-tight">Bespoke Hampers in Full Bloom</h2>
 
-          <div id="announcementEvent" class="text-sm text-charcoal font-medium"></div>
-          <div id="announcementOffer" class="hidden inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal"></div>
-          <div id="announcementUpcoming" class="hidden inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal"></div>
+          <div id="announcementEvent" class="text-sm text-charcoal font-medium">Seasonal Florals Collection</div>
+          <p id="announcementDescription" class="text-charcoal-muted text-sm leading-relaxed">Each Opulence hamper is composed by hand around fresh florals, artisan treats and personalised keepsakes — layered for the person and the occasion it celebrates.</p>
+          <div id="announcementOffer" class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal">Offer: Bespoke commissions now open</div>
+          <div id="announcementUpcoming" class="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-[#E9E0D1] text-xs font-mono text-charcoal">Upcoming Event: The Signature Collection</div>
 
           <div class="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
             <button type="button" onclick="openEnquiryModal({ type: 'customized', occasion: (document.getElementById('announcementHeading')||{}).textContent || 'Announcement' })" class="px-7 py-3.5 bg-charcoal text-white text-xs font-mono uppercase tracking-wider font-semibold hover:bg-gold transition-all duration-300 text-center shadow-md flex items-center justify-center gap-2 group touch-target">
@@ -501,30 +502,30 @@
                       </div>
                     </div>
                     <div class="announcement-flip-face announcement-flip-back border border-[#E9E0D1] bg-[#FAF7F2] p-5 sm:p-6 flex flex-col justify-center">
-                      <div id="announcementBackStatus" class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2"></div>
-                      <h3 id="announcementBackTitle" class="font-serif text-xl sm:text-2xl text-charcoal font-medium mb-2"></h3>
+                      <div id="announcementBackStatus" class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">ANNOUNCEMENTS</div>
+                      <h3 id="announcementBackTitle" class="font-serif text-xl sm:text-2xl text-charcoal font-medium mb-2">Bespoke Hampers in Full Bloom</h3>
                       <div id="announcementBackOffer" class="hidden text-xs font-mono text-charcoal mb-3"></div>
-                      <p id="announcementBackDescription" class="text-charcoal-muted text-sm leading-relaxed"></p>
+                      <p id="announcementBackDescription" class="text-charcoal-muted text-sm leading-relaxed">Each Opulence hamper is composed by hand around fresh florals, artisan treats and personalised keepsakes — layered for the person and the occasion it celebrates.</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div id="announcementUpcomingWrap" class="hidden">
+              <div id="announcementUpcomingWrap">
                 <div class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Upcoming Event</div>
                 <div class="announcement-flip" id="announcementFlipUpcoming" tabindex="0" aria-label="Flip to view upcoming event details">
                   <div class="announcement-flip-inner">
                     <div class="announcement-flip-face border border-[#E9E0D1] bg-[#1A1816]">
-                      <img id="announcementUpcomingImageEl" src="assets/hamper-florals.jpg" alt="Upcoming event" class="w-full h-full object-cover min-h-[300px]" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';"/>
+                      <img id="announcementUpcomingImageEl" src="assets/hamper-full.jpg" alt="Upcoming event" class="w-full h-full object-cover min-h-[300px]" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';"/>
                       <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/75 to-transparent text-white">
                         <div id="announcementUpcomingImageLabel" class="text-[10px] font-mono uppercase tracking-wider text-gold-light">Hover or tap to flip</div>
                       </div>
                     </div>
                     <div class="announcement-flip-face announcement-flip-back border border-[#E9E0D1] bg-[#FAF7F2] p-5 sm:p-6 flex flex-col justify-center">
                       <div id="announcementBackUpcomingStatus" class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Upcoming</div>
-                      <h3 id="announcementBackUpcomingTitle" class="font-serif text-xl sm:text-2xl text-charcoal font-medium mb-2"></h3>
+                      <h3 id="announcementBackUpcomingTitle" class="font-serif text-xl sm:text-2xl text-charcoal font-medium mb-2">The Signature Collection</h3>
                       <div id="announcementBackUpcoming" class="hidden text-xs font-mono text-charcoal mb-3"></div>
-                      <p id="announcementBackUpcomingDescription" class="text-charcoal-muted text-sm leading-relaxed"></p>
+                      <p id="announcementBackUpcomingDescription" class="text-charcoal-muted text-sm leading-relaxed">Our next release of full-sized signature hampers — tulle-wrapped cane trays, layered florals and personalised finishing, crafted for the season ahead.</p>
                     </div>
                   </div>
                 </div>
