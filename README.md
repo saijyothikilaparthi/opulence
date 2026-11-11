@@ -69,13 +69,15 @@ python -m uvicorn app.main:app --reload
 * **`gallery_work`**: Showcase pictures of past gift hampers for the homepage work gallery, categorised as Corporate Gifting, Celebrations & Bulk, or Individual Hampers.
 * **`categories`, `products`, `hamper_sizes`, `hampers`, `hamper_items`**: Catalog API (not yet used by the website or admin console).
 
-> ⚠️ The admin endpoints (`/api/*/admin`, `/api/orders`) have no authentication yet. Do not expose this server publicly until they are protected.
+> 🔐 The admin console (`/admin`, `/admin/login`) and admin endpoints (`/api/*/admin`, `/api/orders`, `/api/orders/from-enquiry/*`) are protected by a signed JWT stored in an HttpOnly cookie. Credentials and the signing secret live in `.env` (`ADMIN_USERNAME`, `ADMIN_PASSWORD`, `JWT_SECRET`). Sessions expire after `JWT_EXPIRE_MINUTES` (default 8 hours) and login attempts are rate-limited. **Change the defaults before deploying and always serve over HTTPS** (`COOKIE_SECURE=true`).
 
 ---
 
 ## 🎛️ Admin Dashboard Console (`/admin`)
 
 A tabbed administration dashboard allowing the team to manage operations without code changes:
+
+0. **🔑 Sign In (`/admin/login`):** Unauthenticated visitors to `/admin` are redirected to a branded login page. Sign in with the credentials in `.env`. Use **Sign out** in the sidebar footer to end the session.
 
 1. **📦 Orders Management:** Record offline orders, update order status, update payment status, and delete orders.
 2. **🌐 Website Enquiries:** View consultation leads submitted from the website, manage lead status, and delete entries.
