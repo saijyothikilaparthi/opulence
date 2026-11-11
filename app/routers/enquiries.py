@@ -1,12 +1,14 @@
 import os
 import uuid
 from typing import List, Optional
-from fastapi import APIRouter, HTTPException, status, UploadFile, File
+from fastapi import APIRouter, BackgroundTasks, HTTPException, status, UploadFile, File
 from app.database import get_connection
 from app.schemas import EnquiryCreate
 from app.services.whatsapp import send_whatsapp_notification
 
 router = APIRouter(prefix="/api/enquiries", tags=["Enquiries"])
+
+ENQUIRY_STATUSES = {"pending", "contacted", "order_confirmed", "order_canceled"}
 
 UPLOAD_DIR = "uploads/references"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -74,7 +76,7 @@ async def upload_enquiry_references(
 
 
 @router.post("", status_code=status.HTTP_201_CREATED)
-def create_enquiry(enquiry: EnquiryCreate):
+def create_enquiry(enquiry: EnquiryCreate, background_tasks: BackgroundTasks):
     connection = get_connection()
     cursor = connection.cursor()
 
@@ -114,8 +116,8 @@ def create_enquiry(enquiry: EnquiryCreate):
         enquiry_dict = enquiry.model_dump()
         enquiry_dict["id"] = enquiry_id
 
-        # Trigger isolated notification without blocking
-        send_whatsapp_notification(enquiry_dict)
+        # Send admin WhatsApp after successful DB save; runs in background and never affects the enquiry.
+        background_tasks.add_task(send_whatsapp_notification, enquiry_dict)
 
         return {
             "success": True,
@@ -189,11 +191,16 @@ def list_enquiries():
 
 @router.put("/admin/{enquiry_id}/status", status_code=status.HTTP_200_OK)
 def update_enquiry_status(enquiry_id: int, status_data: dict):
-    new_status = status_data.get("status")
+    new_status = str((status_data or {}).get("status", "")).strip().lower()
     if not new_status:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Status field is required"
+        )
+    if new_status not in ENQUIRY_STATUSES:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid status '{new_status}'. Allowed: {', '.join(sorted(ENQUIRY_STATUSES))}"
         )
 
     connection = get_connection()
