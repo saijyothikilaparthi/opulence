@@ -85,6 +85,16 @@ def admin_console_redirect():
     return RedirectResponse(url="/admin", status_code=301)
 
 
+@app.get("/health", include_in_schema=False)
+def health_check():
+    return {"status": "ok"}
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    return FileResponse("frontend/assets/opulence-mark.png", media_type="image/png")
+
+
 app.mount(
     "/uploads",
     StaticFiles(directory="uploads"),
