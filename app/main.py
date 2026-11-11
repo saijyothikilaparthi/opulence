@@ -1,12 +1,17 @@
+import logging
 from contextlib import asynccontextmanager
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
+load_dotenv()
+
+from app.auth import admin_auth_middleware
 from app.database import init_db
-from app.routers import enquiries, categories, products, hampers, orders, gallery, announcements
+from app.routers import admin_auth, enquiries, categories, products, hampers, orders, gallery, announcements
 
 
 @asynccontextmanager
@@ -18,6 +23,9 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Gift Management API", lifespan=lifespan)
 
+# Registered before CORS so CORS remains the outermost middleware.
+app.middleware("http")(admin_auth_middleware)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,6 +35,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(admin_auth.router)
 app.include_router(enquiries.router)
 app.include_router(categories.router)
 app.include_router(products.router)
@@ -38,6 +47,11 @@ app.include_router(announcements.router)
 
 # Admin console lives at /admin. These routes must be registered before the
 # static mounts below, otherwise the "/" mount would swallow the request.
+@app.get("/admin/login", include_in_schema=False)
+def admin_login_page():
+    return FileResponse("demo/admin-login.html")
+
+
 @app.get("/admin", include_in_schema=False)
 def admin_console():
     return FileResponse("demo/admin.html")
