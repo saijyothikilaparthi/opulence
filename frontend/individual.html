@@ -548,6 +548,13 @@
                 </label>
                 <input type="text" id="modalCompanyName" name="company_name" maxlength="150" placeholder="e.g. Maya (Wife) or Dr. Rao (Mentor)" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
               </div>
+
+              <div class="sm:col-span-2">
+                <label for="modalPlace" class="block text-[11px] font-mono uppercase text-ash tracking-wider mb-1.5">
+                  City / Delivery Location
+                </label>
+                <input type="text" id="modalPlace" name="place" maxlength="150" placeholder="e.g. Jubilee Hills, Hyderabad" class="w-full px-3.5 py-3 border border-[#E9E0D1] bg-white text-sm text-charcoal focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors"/>
+              </div>
             </div>
           </div>
 
@@ -1046,6 +1053,7 @@
         } else if (!companyName) {
           companyName = null;
         }
+        const place = (document.getElementById('modalPlace')?.value || '').trim() || null;
         const occasion = (document.getElementById('modalOccasion')?.value || '').trim() || null;
         const qtyRaw = document.getElementById('modalQuantity')?.value;
         const quantity = qtyRaw ? parseInt(qtyRaw) : 1;
@@ -1070,6 +1078,7 @@
           phone: phone,
           email: email,
           company_name: companyName,
+          place: place,
           occasion: occasion,
           quantity: quantity,
           budget: budget,
