@@ -4,14 +4,26 @@ import psycopg
 
 
 def get_connection():
-    # Defaults match the local development setup; override via environment in production
+    # Supports Supabase/hosted PostgreSQL via DATABASE_URL or individual DB_* vars.
+    database_url = os.getenv("DATABASE_URL")
+    connect_timeout = int(os.getenv("DB_CONNECT_TIMEOUT", "10"))
+    sslmode = os.getenv("DB_SSLMODE", "prefer")  # use "require" for Supabase/production
+
+    if database_url:
+        return psycopg.connect(
+            database_url,
+            sslmode=sslmode,
+            connect_timeout=connect_timeout,
+        )
+
     return psycopg.connect(
         host=os.getenv("DB_HOST", "localhost"),
         port=int(os.getenv("DB_PORT", "5432")),
         dbname=os.getenv("DB_NAME", "gift_management"),
         user=os.getenv("DB_USER", "gift_app"),
         password=os.getenv("DB_PASSWORD", "change_this_password"),
-        connect_timeout=int(os.getenv("DB_CONNECT_TIMEOUT", "5"))
+        sslmode=sslmode,
+        connect_timeout=connect_timeout,
     )
 
 
