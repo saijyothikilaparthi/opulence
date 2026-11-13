@@ -158,14 +158,29 @@ def _ensure_bucket() -> None:
                     json={"public": True},
                     timeout=15,
                 )
-        elif response.status_code == 404:
-            requests.post(
-                base,
-                headers=headers,
-                json={"id": _bucket(), "name": _bucket(), "public": True},
-                timeout=15,
+            _bucket_verified = True
+            return
+
+        # Supabase reports a missing bucket as 400 ("Bucket not found") or 404,
+        # depending on the API version, so create it whenever the lookup fails.
+        create = requests.post(
+            base,
+            headers=headers,
+            json={"id": _bucket(), "name": _bucket(), "public": True},
+            timeout=15,
+        )
+        if create.status_code in (200, 201):
+            logger.info("Created public Supabase Storage bucket '%s'", _bucket())
+            _bucket_verified = True
+        elif create.status_code == 400 and "already exists" in create.text.lower():
+            _bucket_verified = True
+        else:
+            logger.warning(
+                "Could not create Supabase Storage bucket '%s' (%s): %s",
+                _bucket(),
+                create.status_code,
+                create.text[:200],
             )
-        _bucket_verified = True
     except requests.RequestException as exc:
         # Do not fail the upload here; the upload call reports the real error.
         logger.warning(
