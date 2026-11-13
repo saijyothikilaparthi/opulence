@@ -1,15 +1,13 @@
 import os
-import uuid
 from typing import Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 
 from app.database import get_connection
+from app.services.media_storage import MediaStorageError, delete_media, save_media
 
 router = APIRouter(tags=["Announcements"])
 
-UPLOAD_DIR = "uploads/banners"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
 
 
@@ -106,20 +104,22 @@ async def create_announcement(
         file_extension = os.path.splitext(upload.filename or "")[1].lower()
         if not (upload.content_type or "").startswith("image/") or file_extension not in ALLOWED_EXTENSIONS:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only JPG, PNG, WEBP or GIF images are allowed.")
-        unique_filename = f"{uuid.uuid4()}{file_extension}"
-        file_path = os.path.join(UPLOAD_DIR, unique_filename)
-        content = await upload.read()
-        with open(file_path, "wb") as buffer:
-            buffer.write(content)
-        return f"/uploads/banners/{unique_filename}", file_path
+        try:
+            saved = save_media(
+                await upload.read(),
+                upload.filename,
+                upload.content_type,
+                folder="banners",
+            )
+        except MediaStorageError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Could not store uploaded image: {exc}",
+            )
+        return saved["url"]
 
-    image_result = await save_image(image, required=True)
-    image_url, image_path = image_result
-    upcoming_image_url = None
-    upcoming_image_path = None
-    upcoming_result = await save_image(upcoming_image, required=False)
-    if upcoming_result:
-        upcoming_image_url, upcoming_image_path = upcoming_result
+    image_url = await save_image(image, required=True)
+    upcoming_image_url = await save_image(upcoming_image, required=False)
 
     status_value = (status or "upcoming").strip().lower()
     if status_value not in {"upcoming", "running", "archived"}:
@@ -158,9 +158,8 @@ async def create_announcement(
         return {"success": True, "message": "Announcement uploaded successfully", "data": _row_to_item(row)}
     except Exception as e:
         connection.rollback()
-        for p in [image_path, upcoming_image_path]:
-            if p and os.path.exists(p):
-                os.remove(p)
+        for url in [image_url, upcoming_image_url]:
+            delete_media(url)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database error: {str(e)}")
     finally:
         cursor.close()
@@ -209,10 +208,7 @@ def delete_announcement(announcement_id: int):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Announcement not found")
         connection.commit()
         for url in [row[0], row[1]]:
-            stored_name = os.path.basename(url or "")
-            stored_path = os.path.join(UPLOAD_DIR, stored_name)
-            if url and str(url).startswith("/uploads/banners/") and os.path.isfile(stored_path):
-                os.remove(stored_path)
+            delete_media(url)
         return {"success": True, "message": f"Announcement #{announcement_id} deleted"}
     finally:
         cursor.close()

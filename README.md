@@ -61,7 +61,7 @@ python -m uvicorn app.main:app --reload
 * **Framework:** FastAPI (ASGI Python)
 * **Database:** PostgreSQL (`gift_management`) via `psycopg`
 * **Data Validation:** Pydantic v2
-* **Storage:** Local static uploads (`uploads/gallery/` for work photos, `uploads/references/` for customer reference files)
+* **Storage:** Uploaded images are stored in a public Supabase Storage bucket when `SUPABASE_URL` and `SUPABASE_SERVICE_KEY` are configured (recommended for hosted deployments), with only the public URL saved in the database. Without those variables they fall back to local uploads (`uploads/gallery/`, `uploads/banners/`, `uploads/references/`). Images are resized to 1600px and converted to WebP on upload.
 
 ### Database Tables:
 * **`enquiries`**: Website consultation requests (Individual, Corporate, Customized). A WhatsApp notification message is formatted and logged for each one (sending via the WhatsApp Business API is not wired up yet).

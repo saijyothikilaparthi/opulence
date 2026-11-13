@@ -1,13 +1,10 @@
 import os
-import uuid
 from fastapi import APIRouter, HTTPException, status, UploadFile, File, Form
 from typing import Optional
 from app.database import get_connection
+from app.services.media_storage import MediaStorageError, delete_media, save_media
 
 router = APIRouter(prefix="/api/gallery", tags=["Gallery"])
-
-UPLOAD_DIR = "uploads/gallery"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Uploads are served from the site's own origin, so only raster image types are accepted
 # (no .svg/.html, which a browser could execute)
@@ -55,13 +52,20 @@ async def upload_gallery_work(
             detail="Only JPG, PNG, WEBP or GIF images are allowed."
         )
 
-    unique_filename = f"{uuid.uuid4()}{file_extension}"
-    file_path = os.path.join(UPLOAD_DIR, unique_filename)
+    try:
+        saved = save_media(
+            await image.read(),
+            image.filename,
+            image.content_type,
+            folder="gallery",
+        )
+    except MediaStorageError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail=f"Could not store uploaded image: {exc}",
+        )
 
-    with open(file_path, "wb") as buffer:
-        buffer.write(await image.read())
-
-    image_url = f"/uploads/gallery/{unique_filename}"
+    image_url = saved["url"]
 
     connection = get_connection()
     cursor = connection.cursor()
@@ -83,8 +87,7 @@ async def upload_gallery_work(
         }
     except Exception as e:
         connection.rollback()
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        delete_media(image_url)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database error: {str(e)}")
     finally:
         cursor.close()
@@ -103,10 +106,7 @@ def delete_gallery_work(work_id: int):
         connection.commit()
 
         # Remove the stored file too, so deleted photos don't stay publicly reachable
-        stored_name = os.path.basename(row[0] or "")
-        stored_path = os.path.join(UPLOAD_DIR, stored_name)
-        if row[0] and row[0].startswith("/uploads/gallery/") and os.path.isfile(stored_path):
-            os.remove(stored_path)
+        delete_media(row[0])
 
         return {"success": True, "message": f"Gallery work #{work_id} deleted"}
     finally:
