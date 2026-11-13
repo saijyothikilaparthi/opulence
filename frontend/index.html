@@ -136,9 +136,13 @@
     /* Announcement flip card */
     .announcement-flip { perspective: 1200px; }
     .announcement-flip-inner { position: relative; width: 100%; height: 100%; min-height: 320px; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-    .announcement-flip:hover .announcement-flip-inner,
-    .announcement-flip:focus-within .announcement-flip-inner,
+    /* Hover flips only on real-pointer devices; touch/keyboard use .is-flipped (toggled in JS) so a tap can flip back */
+    @media (hover: hover) {
+      .announcement-flip:hover .announcement-flip-inner { transform: rotateY(180deg); }
+    }
     .announcement-flip.is-flipped .announcement-flip-inner { transform: rotateY(180deg); }
+    .announcement-box { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+    .announcement-box:hover, .announcement-box:focus-within { border-color: #CBB27E; box-shadow: 0 0 22px rgba(203, 178, 126, 0.45); }
     .announcement-flip-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; overflow: hidden; }
     .announcement-flip-back { transform: rotateY(180deg); }
     @media (prefers-reduced-motion: reduce) {
@@ -324,7 +328,7 @@
         <div class="lg:col-span-6 space-y-4 sm:space-y-6">
           <div class="inline-flex items-center gap-2 px-3 py-1 bg-white border border-[#E9E0D1] text-[11px] font-mono tracking-wider uppercase text-gold-dark font-medium shadow-xs">
             <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-            <span>BESPOKE GIFTING STUDIO · CURATED COMMISSIONS</span>
+            <span>BESPOKE GIFTING STUDIO · CURATED HAMPERS</span>
           </div>
 
           <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl text-charcoal font-normal leading-[1.1] sm:leading-[1.08] tracking-tight">
@@ -333,7 +337,7 @@
           </h1>
 
           <p class="text-charcoal-muted text-sm sm:text-lg leading-relaxed max-w-xl font-light">
-            Explore our archive of bespoke commissions. Every hamper is designed from scratch around your recipient, occasion, and budget—never from a static catalogue.
+            Explore our archive of bespoke commissions. Every hamper is designed from scratch around your recipient, occasion, and budget, never from a static catalogue.
           </p>
 
           <!-- CTAs: Prominent Explore Our Work + Personalise -->
@@ -343,7 +347,7 @@
               <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
             </a>
             <button type="button" onclick="openEnquiryModal()" class="px-7 py-3.5 sm:py-4 bg-white border border-[#DCD2C2] text-charcoal text-xs font-mono uppercase tracking-wider hover:border-charcoal hover:bg-[#FAF7F2] transition-colors text-center font-medium touch-target flex items-center justify-center cursor-pointer">
-              Commission a Hamper
+              Order a Hamper
             </button>
             <button type="button" onclick="openEnquiryModal()" class="px-5 py-3 text-xs font-mono text-ash hover:text-charcoal uppercase tracking-wider transition-colors text-center touch-target flex items-center justify-center">
               Discuss a Brief
@@ -352,7 +356,7 @@
 
           <div class="flex items-center gap-2 pt-1 text-[11px] sm:text-xs font-mono text-ash tracking-wide">
             <span class="material-symbols-outlined text-gold text-base shrink-0">verified</span>
-            <span class="truncate">Made to order · Archival bespoke craft · Pan-India delivery</span>
+            <span>Made to order · Handcrafted · Pan-India delivery</span>
           </div>
         </div>
 
@@ -363,57 +367,27 @@
             <div id="carouselViewport" class="relative overflow-hidden aspect-[4/3] sm:aspect-[16/11] bg-[#1A1816] cursor-grab active:cursor-grabbing" tabindex="0">
               <!-- Slide 1: Corporate Milestone Suite -->
               <div class="hero-slide active" data-index="0" data-title="Founders&#39; Celebration Tray" data-category="Previous Commission · Corporate Bespoke" data-desc="Cane-panelled tray wrapped in tulle, dried florals, nuts &amp; gourmet treats" data-link="#work" aria-roledescription="slide" aria-label="1 of 6">
-                <img src="assets/work/founders-tray.jpg" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Tulle-wrapped cane tray hamper made for a founders&#39; celebration" class="w-full h-full object-cover object-center" draggable="false"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-              </div>
+                <img src="assets/work/founders-tray.jpg" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Tulle-wrapped cane tray hamper made for a founders&#39; celebration" class="w-full h-full object-cover object-center" draggable="false"/>              </div>
 
               <!-- Slide 2: Festive & Wedding Heirloom Suite -->
               <div class="hero-slide" data-index="1" data-title="Buddha Keepsake Boxes" data-category="Previous Commission · Bulk Curation" data-desc="Rope-handled pine boxes, hand-painted Buddha figurines, almond brittle" data-link="#work" aria-roledescription="slide" aria-label="2 of 6">
-                <img src="assets/work/buddha-box-bulk.jpg" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Rows of rope-handled pine gift boxes with Buddha figurines and red ribbons" class="w-full h-full object-cover object-center" draggable="false"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-              </div>
+                <img src="assets/work/buddha-box-bulk.jpg" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Rows of rope-handled pine gift boxes with Buddha figurines and red ribbons" class="w-full h-full object-cover object-center" draggable="false"/>              </div>
 
               <!-- Slide 3: Intimate Leather & Literature Keepsake -->
               <div class="hero-slide" data-index="2" data-title="Lavender Birthday Box" data-category="Previous Commission · Individual Hamper" data-desc="Pearl-trimmed lavender box, chocolate truffles, handwritten birthday note" data-link="#work" aria-roledescription="slide" aria-label="3 of 6">
-                <img src="assets/work/lavender-birthday-box.jpg" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="Lavender gift box with chocolate truffles, a printed wallet, crochet toy and birthday note" class="w-full h-full object-cover object-center" draggable="false"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-              </div>
+                <img src="assets/work/lavender-birthday-box.jpg" onerror="this.onerror=null; this.src='assets/hamper-tag.jpg';" alt="Lavender gift box with chocolate truffles, a printed wallet, crochet toy and birthday note" class="w-full h-full object-cover object-center" draggable="false"/>              </div>
 
               <!-- Slide 4: Celebration & Landmark Gathering Cask -->
               <div class="hero-slide" data-index="3" data-title="Thirty Tubs of Golden Perfection" data-category="Previous Commission · Celebrations &amp; Bulk" data-desc="Pistachio cookies in Opulence-sealed tubs, made for a bulk order" data-link="#work" aria-roledescription="slide" aria-label="4 of 6">
-                <img src="assets/work/cookie-tubs.jpg" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Clear tubs of pistachio cookies sealed with Opulence labels" class="w-full h-full object-cover object-center" draggable="false"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-              </div>
+                <img src="assets/work/cookie-tubs.jpg" onerror="this.onerror=null; this.src='assets/hamper-tray.jpg';" alt="Clear tubs of pistachio cookies sealed with Opulence labels" class="w-full h-full object-cover object-center" draggable="false"/>              </div>
 
               <!-- Slide 5: Executive Boardroom Provision -->
               <div class="hero-slide" data-index="4" data-title="Kids&#39; Rakhi Hampers" data-category="Previous Commission · Festive" data-desc="Toys, treats &amp; rakhis in ribbon-tied clear boxes" data-link="#work" aria-roledescription="slide" aria-label="5 of 6">
-                <img src="assets/work/kids-rakhi.jpg" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Kids&#39; Rakhi hampers with toy cars, treats and rakhis" class="w-full h-full object-cover object-center" draggable="false"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-              </div>
+                <img src="assets/work/kids-rakhi.jpg" onerror="this.onerror=null; this.src='assets/hamper-full.jpg';" alt="Kids&#39; Rakhi hampers with toy cars, treats and rakhis" class="w-full h-full object-cover object-center" draggable="false"/>              </div>
 
               <!-- Slide 6: Warm Personal Birthday Tribute -->
               <div class="hero-slide" data-index="5" data-title="The Sibling Box" data-category="Previous Commission · Personal Rakhi" data-desc="Blue-and-cream printed box tied with a gold satin ribbon" data-link="#work" aria-roledescription="slide" aria-label="6 of 6">
-                <img src="assets/work/sibling-gift-box.jpg" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Blue striped Opulence gift box tied with a gold ribbon" class="w-full h-full object-cover object-center" draggable="false"/>
-                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
-              </div>
-
-              <!-- Mobile-Optimized Floating Commission Overlay -->
-              <div class="absolute bottom-2 left-2 right-2 sm:bottom-3 sm:left-3 sm:right-3 z-20 pointer-events-none">
-                <div class="bg-black/80 backdrop-blur-md border border-white/15 p-2.5 sm:p-4 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1.5 sm:gap-2 shadow-2xl pointer-events-auto">
-                  <div class="space-y-0.5 max-w-sm">
-                    <div class="flex items-center gap-1.5 sm:gap-2">
-                      <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>
-                      <span id="slideBadgeCategory" class="text-[9px] sm:text-[10px] font-mono uppercase tracking-wider text-gold-light truncate">Previous Commission · Corporate Bespoke</span>
-                    </div>
-                    <h3 id="slideBadgeTitle" class="font-serif text-base sm:text-xl text-white font-normal leading-tight truncate">Founders&#39; Celebration Tray</h3>
-                    <p id="slideBadgeDesc" class="text-[10px] sm:text-[11px] text-[#DDD6CA] font-sans line-clamp-1 hidden xs:block">Cane-panelled tray wrapped in tulle, dried florals, nuts &amp; gourmet treats</p>
-                  </div>
-                  <a href="#work" id="slideBadgeLink" class="inline-flex items-center gap-1 px-2.5 py-1 sm:px-3 sm:py-1.5 bg-gold/90 hover:bg-gold text-white text-[10px] sm:text-[11px] font-mono uppercase tracking-wider font-semibold whitespace-nowrap transition-colors touch-target">
-                    <span>View in Our Work</span>
-                    <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
-                  </a>
-                </div>
-              </div>
+                <img src="assets/work/sibling-gift-box.jpg" onerror="this.onerror=null; this.src='assets/hamper-florals.jpg';" alt="Blue striped Opulence gift box tied with a gold ribbon" class="w-full h-full object-cover object-center" draggable="false"/>              </div>
 
               <!-- Top Right Live Counter Badge -->
               <div class="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 z-20 bg-black/75 backdrop-blur-xs px-2 sm:px-2.5 py-1 text-[10px] sm:text-[11px] font-mono text-white border border-white/20 flex items-center gap-1">
@@ -422,24 +396,51 @@
                 <span class="text-white/70">06</span>
               </div>
 
-              <!-- Play/Pause Indicator -->
-              <button id="carouselPlayPauseBtn" type="button" class="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-20 bg-black/60 hover:bg-black/90 text-white/80 hover:text-white p-1.5 sm:p-2 border border-white/15 transition-colors focus:outline-none touch-target flex items-center justify-center" aria-label="Pause automated slide rotation">
-                <span class="material-symbols-outlined text-sm sm:text-base block" id="carouselPlayPauseIcon">pause</span>
-              </button>
-
-              <!-- Touch-Friendly Navigation Arrows -->
-              <button id="carouselPrevBtn" type="button" class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/70 hover:bg-gold text-white flex items-center justify-center border border-white/20 transition-all opacity-85 sm:opacity-0 sm:group-hover/carousel:opacity-100 focus:opacity-100 touch-target" aria-label="Previous archived work slide">
+              <!-- Navigation Arrows (desktop hover only; mobile uses swipe + dots) -->
+              <button id="carouselPrevBtn" type="button" class="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 hover:bg-gold text-charcoal hover:text-white items-center justify-center border border-gold-light shadow-md transition-all opacity-0 group-hover/carousel:opacity-100 focus:opacity-100" aria-label="Previous archived work slide">
                 <span class="material-symbols-outlined text-lg">arrow_back</span>
               </button>
-              <button id="carouselNextBtn" type="button" class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/70 hover:bg-gold text-white flex items-center justify-center border border-white/20 transition-all opacity-85 sm:opacity-0 sm:group-hover/carousel:opacity-100 focus:opacity-100 touch-target" aria-label="Next archived work slide">
+              <button id="carouselNextBtn" type="button" class="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/90 hover:bg-gold text-charcoal hover:text-white items-center justify-center border border-gold-light shadow-md transition-all opacity-0 group-hover/carousel:opacity-100 focus:opacity-100" aria-label="Next archived work slide">
                 <span class="material-symbols-outlined text-lg">arrow_forward</span>
               </button>
+
+              <!-- Caption: desktop shows on hover over the image; mobile shows it below the image (see #slideCaptionMobile) -->
+              <div class="hidden sm:block absolute bottom-3 left-3 right-3 z-20 opacity-0 translate-y-2 group-hover/carousel:opacity-100 group-hover/carousel:translate-y-0 group-focus-within/carousel:opacity-100 group-focus-within/carousel:translate-y-0 transition-all duration-300">
+                <div class="bg-white/95 backdrop-blur-sm border border-gold-light ring-1 ring-gold-light/60 shadow-[0_0_24px_rgba(203,178,126,0.55)] p-4 flex items-center justify-between gap-3">
+                  <div class="space-y-1 min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>
+                      <span class="slide-cat text-[10px] font-mono uppercase tracking-wider text-gold-dark font-semibold truncate">Previous Commission · Corporate Bespoke</span>
+                    </div>
+                    <h3 class="slide-title font-serif text-xl text-charcoal leading-tight truncate">Founders&#39; Celebration Tray</h3>
+                    <p class="slide-desc text-[11px] text-charcoal-muted line-clamp-1">Cane-panelled tray wrapped in tulle, dried florals, nuts &amp; gourmet treats</p>
+                  </div>
+                  <a href="#work" class="slide-link shrink-0 inline-flex items-center gap-1 px-3 py-2 bg-charcoal hover:bg-gold text-gold-light hover:text-white text-[11px] font-mono uppercase tracking-wider font-semibold whitespace-nowrap transition-colors">
+                    <span>View in Our Work</span>
+                    <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile caption below the image so the photo is never covered -->
+            <div id="slideCaptionMobile" class="sm:hidden mt-2.5 border border-gold-light bg-white px-3 py-2.5 space-y-1">
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-gold inline-block"></span>
+                <span class="slide-cat text-[10px] font-mono uppercase tracking-wider text-gold-dark font-semibold truncate">Previous Commission · Corporate Bespoke</span>
+              </div>
+              <h3 class="slide-title font-serif text-lg text-charcoal leading-tight">Founders&#39; Celebration Tray</h3>
+              <p class="slide-desc text-xs text-charcoal-muted leading-snug">Cane-panelled tray wrapped in tulle, dried florals, nuts &amp; gourmet treats</p>
+              <a href="#work" class="slide-link touch-target inline-flex items-center gap-1 text-[11px] font-mono uppercase tracking-wider font-semibold text-gold-dark">
+                <span>View in Our Work</span>
+                <span class="material-symbols-outlined text-[13px]">arrow_forward</span>
+              </a>
             </div>
 
             <!-- Progress & Controls Row -->
-            <div class="mt-2.5 sm:mt-3 py-2 px-3 bg-[#F7F3EB] border border-[#E9E0D1] flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono">
+            <div class="mt-2.5 sm:mt-3 py-2 px-3 bg-[#F7F3EB] border border-[#E9E0D1] flex flex-row items-center justify-between gap-2 text-xs font-mono">
               <div class="flex items-center gap-2">
-                <span class="text-ash text-[10px] sm:text-[11px]">Archived Work:</span>
+                <span class="hidden sm:inline text-ash text-[11px]">Archived Work:</span>
                 <div class="flex items-center gap-1.5" id="carouselDots">
                   <button type="button" class="carousel-dot w-6 h-2 bg-gold transition-all" data-index="0" aria-label="Jump to slide 1"></button>
                   <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="1" aria-label="Jump to slide 2"></button>
@@ -449,7 +450,7 @@
                   <button type="button" class="carousel-dot w-2.5 h-2 bg-[#DCD2C2] hover:bg-gold/60 transition-all" data-index="5" aria-label="Jump to slide 6"></button>
                 </div>
               </div>
-              <div class="flex items-center justify-end w-full sm:w-auto">
+              <div class="flex items-center justify-end">
                 <a href="#work" class="text-gold-dark font-serif italic text-xs sm:text-sm hover:underline">Explore Full Archive →</a>
               </div>
             </div>
@@ -491,7 +492,7 @@
         <div class="lg:col-span-7">
           <div class="bg-white p-3 sm:p-4 border border-[#E9E0D1] shadow-xl">
             <div id="announcementCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              <div>
+              <div class="announcement-box bg-[#FAF7F2] border border-[#E9E0D1] p-2.5 sm:p-3">
                 <div class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Current Event</div>
                 <div class="announcement-flip" id="announcementFlipCurrent" tabindex="0" aria-label="Flip to view current event details">
                   <div class="announcement-flip-inner">
@@ -511,7 +512,7 @@
                 </div>
               </div>
 
-              <div id="announcementUpcomingWrap">
+              <div id="announcementUpcomingWrap" class="announcement-box bg-[#FAF7F2] border border-[#E9E0D1] p-2.5 sm:p-3">
                 <div class="text-[10px] font-mono uppercase tracking-wider text-gold-dark mb-2">Upcoming Event</div>
                 <div class="announcement-flip" id="announcementFlipUpcoming" tabindex="0" aria-label="Flip to view upcoming event details">
                   <div class="announcement-flip-inner">
@@ -604,7 +605,7 @@
         <div class="lg:col-span-12 xl:col-span-6 bg-white border-2 border-gold/40 p-5 sm:p-8 flex flex-col justify-between shadow-md relative group hover:border-gold transition-all duration-300">
           <div class="space-y-4 sm:space-y-5">
             <div class="flex items-center justify-between text-xs font-mono">
-              <span class="px-2.5 py-1 bg-gold/10 text-gold-dark font-medium uppercase tracking-wider text-[10px] sm:text-xs">CATEGORY 01 · PRIORITY</span>
+              <span class="px-2.5 py-1 bg-gold/10 text-gold-dark font-medium uppercase tracking-wider text-[10px] sm:text-xs">CATEGORY 01</span>
               <span class="text-ash text-[11px]">Institutional & Executive</span>
             </div>
             <div class="overflow-hidden aspect-[16/9] border border-[#E9E0D1]">
@@ -617,8 +618,7 @@
               </p>
             </div>
           </div>
-          <div class="pt-5 mt-5 border-t border-[#E9E0D1] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <span class="text-xs font-mono text-ash">Complete branding & bulk logistics</span>
+          <div class="pt-5 mt-5 border-t border-[#E9E0D1] flex flex-col sm:flex-row sm:items-center sm:justify-end gap-3">
             <a href="corporate.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-charcoal text-white text-xs font-mono uppercase tracking-wider hover:bg-gold transition-colors font-medium touch-target">
               <span>Explore Corporate Gifting</span>
               <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
@@ -905,7 +905,7 @@
       <div class="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10">
         <div class="md:col-span-5 space-y-3 sm:space-y-4">
           <div class="h-9 flex items-center">
-            <img src="https://lh3.googleusercontent.com/aida/AEtjO1UrGDwqYUmENrYL1Z5G1fp-_YodzOqxsYG14bmtJkITsW6Rk5zZjUEPzqjlhdU_ouiJofm4q4OLS5sYwKvOHzF87vzdsNvCH5t1KtUVEI192n2R4XAl2fWwUU0VinvBs9DLkqvhP_UJcvcnV8CUAS0Qn4GoKuTrETpJ7yl51w0mBCucIGqbHrws0UhInzBlm3Xpam5Y-DbohKSIRjd4zfQoXkedAX9CGCm-Kk7S3u9ov7lfiSJXmkJg6Q" onerror="this.onerror=null; this.src='assets/opulence-logo.png';" alt="Opulence Bespoke Gift Hampers" class="h-8 sm:h-9 w-auto brightness-200 invert contrast-200"/>
+            <img src="https://lh3.googleusercontent.com/aida/AEtjO1UrGDwqYUmENrYL1Z5G1fp-_YodzOqxsYG14bmtJkITsW6Rk5zZjUEPzqjlhdU_ouiJofm4q4OLS5sYwKvOHzF87vzdsNvCH5t1KtUVEI192n2R4XAl2fWwUU0VinvBs9DLkqvhP_UJcvcnV8CUAS0Qn4GoKuTrETpJ7yl51w0mBCucIGqbHrws0UhInzBlm3Xpam5Y-DbohKSIRjd4zfQoXkedAX9CGCm-Kk7S3u9ov7lfiSJXmkJg6Q" onerror="this.onerror=null; this.src='assets/opulence-logo.png';" alt="Opulence Bespoke Gift Hampers" class="h-8 sm:h-9 w-auto"/>
           </div>
           <p class="font-serif text-lg sm:text-xl text-gold-light italic">
             Gifts, designed around them.
@@ -918,11 +918,11 @@
           <span class="text-xs font-mono uppercase tracking-wider text-gold-light block font-medium">STUDIO DIRECTORY</span>
           <ul class="text-xs text-[#DDD6CA] space-y-1.5 sm:space-y-2 font-sans font-light">
             <li><a href="#hero" class="hover:text-gold transition-colors py-1 inline-block">Home</a></li>
-            <li><a href="#work" class="hover:text-gold transition-colors py-1 inline-block">Our Work (Archive)</a></li>
+            <li><a href="#work" class="hover:text-gold transition-colors py-1 inline-block">Our Work</a></li>
             <li><a href="#about" class="hover:text-gold transition-colors py-1 inline-block">About Us</a></li>
             <li><a href="#corporate" class="hover:text-gold transition-colors py-1 inline-block">Corporate Gifting</a></li>
             <li><a href="#categories" class="hover:text-gold transition-colors py-1 inline-block">Celebrations & Bulk</a></li>
-            <li><button type="button" onclick="openEnquiryModal()" class="hover:text-gold transition-colors py-1 inline-block cursor-pointer">Bespoke Commission</button></li>
+            <li><button type="button" onclick="openEnquiryModal()" class="hover:text-gold transition-colors py-1 inline-block cursor-pointer">Order a Hamper</button></li>
             <li><a href="#process" class="hover:text-gold transition-colors py-1 inline-block">How It Works</a></li>
           </ul>
         </div>
@@ -1252,12 +1252,11 @@
 
   <!-- FLOATING WHATSAPP CONCIERGE BUTTON (Mobile Priority) -->
   <aside aria-label="WhatsApp Concierge" class="fixed bottom-3 right-3 sm:bottom-4 sm:right-4 z-40">
-    <a href="https://wa.me/918106489375?text=Hi%20Opulence%2C%20I%20would%20like%20to%20enquire%20about%20a%20bespoke%20gift%20hamper" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-1.5 sm:gap-2 bg-[#25D366] text-white px-2.5 py-1.5 sm:px-3 sm:py-1.5 shadow-lg hover:bg-[#20ba5a] transition-all duration-300 font-mono text-[10px] sm:text-[11px] tracking-wider uppercase font-semibold border border-white/20" aria-label="Direct WhatsApp Concierge Chat">
-      <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current shrink-0" viewBox="0 0 24 24">
+    <a href="https://wa.me/918106489375?text=Hi%20Opulence%2C%20I%20would%20like%20to%20enquire%20about%20a%20bespoke%20gift%20hamper" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-center gap-2 bg-[#25D366] text-white w-12 h-12 rounded-full sm:w-auto sm:h-auto sm:rounded-none sm:px-3 sm:py-1.5 shadow-lg hover:bg-[#20ba5a] transition-all duration-300 font-mono text-[10px] sm:text-[11px] tracking-wider uppercase font-semibold border border-white/20" aria-label="Direct WhatsApp Concierge Chat">
+      <svg class="w-6 h-6 sm:w-4 sm:h-4 fill-current shrink-0" viewBox="0 0 24 24">
         <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.669-.699c.969.586 1.761.88 2.791.88 3.182 0 5.768-2.587 5.768-5.766.001-3.18-2.585-5.766-5.768-5.766zm9.969 5.828c0 5.523-4.477 10-10 10-1.777 0-3.447-.464-4.896-1.275l-7.104 1.864 1.898-6.938c-.904-1.516-1.428-3.29-1.428-5.181 0-5.523 4.477-10 10-10s10 4.477 10 10z"/>
       </svg>
       <span class="hidden sm:inline">WhatsApp Concierge</span>
-      <span class="sm:hidden">Chat</span>
     </a>
   </aside>
 
@@ -1273,15 +1272,14 @@
     const heroCarousel = {
       slides: document.querySelectorAll('.hero-slide'),
       dots: document.querySelectorAll('.carousel-dot'),
-      categoryEl: document.getElementById('slideBadgeCategory'),
-      titleEl: document.getElementById('slideBadgeTitle'),
-      descEl: document.getElementById('slideBadgeDesc'),
-      linkEl: document.getElementById('slideBadgeLink'),
+      // Caption appears twice (desktop hover card + mobile card below image)
+      categoryEls: document.querySelectorAll('.slide-cat'),
+      titleEls: document.querySelectorAll('.slide-title'),
+      descEls: document.querySelectorAll('.slide-desc'),
+      linkEls: document.querySelectorAll('.slide-link'),
       currentNumEl: document.getElementById('currentSlideNum'),
       prevBtn: document.getElementById('carouselPrevBtn'),
       nextBtn: document.getElementById('carouselNextBtn'),
-      playPauseBtn: document.getElementById('carouselPlayPauseBtn'),
-      playPauseIcon: document.getElementById('carouselPlayPauseIcon'),
       viewport: document.getElementById('carouselViewport'),
       container: document.getElementById('heroCarousel'),
       currentIndex: 0,
@@ -1318,23 +1316,6 @@
           this.container.addEventListener('mouseleave', () => { if (this.isPlaying) this.startTimer(); });
         }
 
-        // Play/Pause button
-        if (this.playPauseBtn) {
-          this.playPauseBtn.addEventListener('click', () => {
-            if (this.isPlaying) {
-              this.isPlaying = false;
-              this.pauseTimer();
-              if (this.playPauseIcon) this.playPauseIcon.textContent = 'play_arrow';
-              this.playPauseBtn.setAttribute('aria-label', 'Resume slide rotation');
-            } else {
-              this.isPlaying = true;
-              this.startTimer();
-              if (this.playPauseIcon) this.playPauseIcon.textContent = 'pause';
-              this.playPauseBtn.setAttribute('aria-label', 'Pause slide rotation');
-            }
-          });
-        }
-
         // Keyboard arrow navigation
         if (this.viewport) {
           this.viewport.addEventListener('keydown', (e) => {
@@ -1361,10 +1342,8 @@
         if (!prefersReducedMotion) {
           this.isPlaying = true;
           this.startTimer();
-          if (this.playPauseIcon) this.playPauseIcon.textContent = 'pause';
         } else {
           this.isPlaying = false;
-          if (this.playPauseIcon) this.playPauseIcon.textContent = 'play_arrow';
         }
         this.updateSlideDOM(0);
       },
@@ -1419,10 +1398,10 @@
           const desc = activeSlide.getAttribute('data-desc');
           const link = activeSlide.getAttribute('data-link');
 
-          if (this.categoryEl && category) this.categoryEl.textContent = category;
-          if (this.titleEl && title) this.titleEl.innerHTML = title;
-          if (this.descEl && desc) this.descEl.textContent = desc;
-          if (this.linkEl && link) this.linkEl.setAttribute('href', link);
+          if (category) this.categoryEls.forEach(el => el.textContent = category);
+          if (title) this.titleEls.forEach(el => el.textContent = title);
+          if (desc) this.descEls.forEach(el => el.textContent = desc);
+          if (link) this.linkEls.forEach(el => el.setAttribute('href', link));
         }
 
         if (this.currentNumEl) {
@@ -2002,7 +1981,8 @@
         const el = document.getElementById(id);
         if (!el) return;
         const toggle = () => el.classList.toggle('is-flipped');
-        el.addEventListener('click', toggle);
+        // Mouse users flip via CSS hover; a click toggle on top would leave the card stuck flipped
+        el.addEventListener('click', () => { if (!window.matchMedia('(hover: hover)').matches) toggle(); });
         el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
       };
       bindFlip('announcementFlipCurrent');
@@ -2100,7 +2080,7 @@
             card.innerHTML = `
               <div>
                 <div class="overflow-hidden aspect-[4/3] relative border border-[#E9E0D1] mb-3 sm:mb-4">
-                  <img src="${imgUrl}" alt="${esc(item.title || 'Archived Work')}" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
+                  <img src="${imgUrl}" alt="${esc(item.title || 'Archived Work')}" onerror="this.closest('.portfolio-item').remove()" class="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"/>
                   <span class="absolute top-2.5 left-2.5 bg-white/95 px-2 py-1 text-[10px] font-mono uppercase text-charcoal font-medium border border-[#E9E0D1]">${esc(item.category || 'Atelier Commission')}</span>
                 </div>
                 <h3 class="font-serif text-lg sm:text-xl text-charcoal font-medium mb-1">${esc(item.title || 'Bespoke Gift Hamper')}</h3>
