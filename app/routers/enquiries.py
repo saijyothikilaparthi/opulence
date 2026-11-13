@@ -1,17 +1,15 @@
 import os
-import uuid
+import re
 from typing import List, Optional
 from fastapi import APIRouter, BackgroundTasks, HTTPException, status, UploadFile, File
 from app.database import get_connection
 from app.schemas import EnquiryCreate
+from app.services.media_storage import MediaStorageError, delete_media, save_media
 from app.services.whatsapp import send_whatsapp_notification
 
 router = APIRouter(prefix="/api/enquiries", tags=["Enquiries"])
 
 ENQUIRY_STATUSES = {"pending", "contacted", "order_confirmed", "order_canceled"}
-
-UPLOAD_DIR = "uploads/references"
-os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 @router.post("/upload", status_code=status.HTTP_201_CREATED)
@@ -21,7 +19,7 @@ async def upload_enquiry_references(
 ):
     """
     Upload one or more reference photos/files for gifting enquiries.
-    Saves them in uploads/references and returns accessible static URLs.
+    Stores them on the configured media backend and returns accessible URLs.
     """
     all_files: List[UploadFile] = []
     if files:
@@ -35,37 +33,47 @@ async def upload_enquiry_references(
             detail="No files provided for upload."
         )
 
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
     uploaded_urls = []
     # Files are served back from the site's own origin, so the stored extension must be a
     # known-safe type (no .svg/.html, which a browser could execute)
     allowed_extensions = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".bmp", ".heic", ".heif", ".pdf"}
 
-    for upload_item in all_files:
-        ext = os.path.splitext(upload_item.filename or "")[1].lower()
+    try:
+        for upload_item in all_files:
+            ext = os.path.splitext(upload_item.filename or "")[1].lower()
 
-        if ext not in allowed_extensions:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"File '{upload_item.filename}' has unsupported format. Only images and PDF files are accepted."
-            )
+            if ext not in allowed_extensions:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"File '{upload_item.filename}' has unsupported format. Only images and PDF files are accepted."
+                )
 
-        unique_filename = f"{uuid.uuid4()}{ext}"
-        target_path = os.path.join(UPLOAD_DIR, unique_filename)
+            content = await upload_item.read()
+            # Max file size 15MB
+            if len(content) > 15 * 1024 * 1024:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"File '{upload_item.filename}' exceeds maximum allowed size of 15MB."
+                )
 
-        content = await upload_item.read()
-        # Max file size 15MB
-        if len(content) > 15 * 1024 * 1024:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"File '{upload_item.filename}' exceeds maximum allowed size of 15MB."
-            )
-
-        with open(target_path, "wb") as f:
-            f.write(content)
-
-        url_path = f"/uploads/references/{unique_filename}"
-        uploaded_urls.append(url_path)
+            try:
+                saved = save_media(
+                    content,
+                    upload_item.filename,
+                    upload_item.content_type,
+                    folder="references",
+                )
+            except MediaStorageError as exc:
+                raise HTTPException(
+                    status_code=status.HTTP_502_BAD_GATEWAY,
+                    detail=f"Could not store file '{upload_item.filename}': {exc}",
+                )
+            uploaded_urls.append(saved["url"])
+    except Exception:
+        # Don't leave earlier files of a failed batch behind
+        for url in uploaded_urls:
+            delete_media(url)
+        raise
 
     return {
         "success": True,
@@ -251,7 +259,7 @@ def delete_enquiry(enquiry_id: int):
     cursor = connection.cursor()
 
     try:
-        cursor.execute("DELETE FROM enquiries WHERE id = %s RETURNING id", (enquiry_id,))
+        cursor.execute("DELETE FROM enquiries WHERE id = %s RETURNING id, file_url", (enquiry_id,))
         row = cursor.fetchone()
         if not row:
             raise HTTPException(
@@ -260,6 +268,11 @@ def delete_enquiry(enquiry_id: int):
             )
 
         connection.commit()
+
+        # Remove any uploaded reference files too (external links are skipped)
+        for ref in re.split(r"[,|]", row[1] or ""):
+            delete_media(ref.strip())
+
         return {
             "success": True,
             "message": f"Enquiry #{enquiry_id} deleted successfully"
